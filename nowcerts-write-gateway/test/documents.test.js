@@ -11,6 +11,17 @@ import { InMemoryNowCertsSearch } from "../src/documents/duplicate-search.js";
 import { buildProposal, prepareFromExtraction } from "../src/documents/proposal-builder.js";
 import { cleanPolicyExtraction, makeExtraction, validPdf } from "./fixtures.js";
 import { inspectPdf } from "../src/documents/pdf-intake.js";
+import { classifyDocument } from "../src/documents/classification.js";
+
+test("document class cannot be paired with a different writable entity", () => {
+  const result = classifyDocument({
+    document_class: "declaration_page",
+    candidate_entity: "insured",
+  });
+  assert.equal(result.ok, false);
+  assert.equal(result.status, "NEEDS_CLASSIFICATION");
+  assert.match(result.message, /expects entity "policy"/);
+});
 
 const POLICY_CREATE_CONTRACT = {
   method: "api",

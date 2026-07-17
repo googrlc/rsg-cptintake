@@ -1,0 +1,36 @@
+services:
+  intake-gate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rsg-intake-gate:local
+    container_name: rsg-intake-gate
+    restart: unless-stopped
+    environment:
+      GATEWAY_MODE: pilot
+      GATEWAY_DATA_DIR: /data
+      HOST: 0.0.0.0
+      PORT: 8787
+      PYTHON_BIN: /opt/report-venv/bin/python3
+      NOWCERTS_MCP_URL: http://app-nowcerts-mcp-1:8082/mcp
+      NOWCERTS_MCP_TOKEN_FILE: /run/secrets/nowcerts-mcp-token
+    ports:
+      - "127.0.0.1:8790:8787"
+    volumes:
+      - /var/lib/rsg-intake-gate:/data
+      - /etc/rsg-intake-gate/nowcerts-mcp-token:/run/secrets/nowcerts-mcp-token:ro
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - default
+      - nowcerts
+
+networks:
+  nowcerts:
+    external: true
+    name: app_default

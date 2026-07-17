@@ -5,15 +5,21 @@
   "type": "module",
   "description": "Guarded NowCerts MCP write gateway for Lamar and Gretchen",
   "scripts": {
+    "build:ui": "node scripts/build-ui.js",
+    "prestart": "npm run build:ui",
     "start": "node src/server.js",
     "test": "node --test",
-    "check": "node --check src/server.js && node --test"
+    "check": "npm run build:ui && node --check src/server.js && node --test"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.7.4",
     "@modelcontextprotocol/sdk": "^1.20.2",
     "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1"
   }
 }

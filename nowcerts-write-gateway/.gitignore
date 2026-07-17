@@ -3,3 +3,8 @@ node_modules/
 data/*
 !data/.gitkeep
 npm-debug.log*
+
+# build + runtime artifacts (regenerated; may contain client data / IPs)
+dist/
+logs/
+output/

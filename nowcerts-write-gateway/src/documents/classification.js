@@ -32,6 +32,13 @@ export function classifyDocument({ document_class: documentClass, candidate_enti
       message: `Unrecognized document class "${documentClass}". Classify before proposing a write.`,
     };
   }
+  if (candidateEntity !== known.entity) {
+    return {
+      ok: false,
+      status: "NEEDS_CLASSIFICATION",
+      message: `Document class "${documentClass}" expects entity "${known.entity}", not "${candidateEntity}".`,
+    };
+  }
   if (!isKnownEntity(candidateEntity)) {
     return {
       ok: false,

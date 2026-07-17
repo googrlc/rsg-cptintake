@@ -4,7 +4,7 @@ import { fingerprintProposal, validateProposal } from "./validator.js";
 
 export class NowCertsGateway {
   constructor({ store, mode = "shadow" }) {
-    if (mode !== "shadow") {
+    if (!["shadow", "pilot"].includes(mode)) {
       throw new Error("Live mode is not implemented. Refusing to start.");
     }
     this.store = store;

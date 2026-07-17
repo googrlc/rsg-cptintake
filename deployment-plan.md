@@ -1,4 +1,6 @@
-# NowCerts Write Gateway — Azure Deployment Plan
+# NowCerts Write Gateway — Historical Planning Notes
+
+> **Superseded 2026-07-17:** This file preserves the Azure-to-Tailscale design history and is not the deployment authority. The current architecture uses **Tailscale only, with no Microsoft OAuth or application login**. The operator website is exposed through a private Tailscale Serve URL. ChatGPT access, if retained, uses OpenAI Secure MCP Tunnel for transport and remains preview-only; final approval occurs on the Tailscale page where device identity can be verified. See [`nowcerts-write-gateway/docs/CHATGPT-APP-ARCHITECTURE.md`](nowcerts-write-gateway/docs/CHATGPT-APP-ARCHITECTURE.md). Any conflicting Azure, public HTTPS, or Microsoft identity instruction below is historical.
 
 > **Status:** Planning — offline document-intake layer under construction (Increment 1, shadow-only). Still blocked on Azure subscription, region, and Gretchen UPN confirmation before any deployment, live write, or production credential request.
 
