@@ -1,0 +1,33 @@
+services:
+  nowcerts-read:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rsg-nowcerts-read:local
+    container_name: rsg-nowcerts-read
+    restart: unless-stopped
+    # Reuse the Hermes stack's existing NowCerts creds + API_SERVER_KEY.
+    # Provides NOWCERTS_API_URL / NOWCERTS_USERNAME / NOWCERTS_PASSWORD / API_SERVER_KEY.
+    env_file:
+      - /opt/app/.env
+    environment:
+      PORT: "8082"
+      PYTHONDONTWRITEBYTECODE: "1"
+    # Loopback publish for local testing only; the gate reaches it in-network by name.
+    ports:
+      - "127.0.0.1:8791:8082"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - default
+      - app_default
+
+networks:
+  app_default:
+    external: true
+    name: app_default

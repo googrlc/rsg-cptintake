@@ -1,0 +1,759 @@
+{
+  "source": "Official Momentum MCP tools/list",
+  "total_tools": 95,
+  "writable_tools": 49,
+  "schema_aligned": 44,
+  "blocked": 5,
+  "note": "SCHEMA_ALIGNED verifies the declared input and a read-back route. It does not enable writes; live certification still requires a reversible sandbox call, pre-write reread, idempotency, and post-write value comparison.",
+  "contracts": [
+    {
+      "tool": "insert_insured_prospect_tool",
+      "field_count": 11,
+      "required_count": 6,
+      "required": [
+        "commercialName",
+        "addressLine1",
+        "state",
+        "city",
+        "zipCode",
+        "insuredType"
+      ],
+      "read_back_tools": [
+        "get_insured_details_tool",
+        "get_insured_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_driver_tool",
+      "field_count": 15,
+      "required_count": 13,
+      "required": [
+        "insured_database_id",
+        "first_name",
+        "last_name",
+        "insured_commercial_name",
+        "license_number",
+        "driver_license_class",
+        "date_of_birth",
+        "gender",
+        "license_state",
+        "termination_date",
+        "cdl_date",
+        "cdl_year",
+        "license_year"
+      ],
+      "read_back_tools": [
+        "get_driver_list_tool",
+        "get_insured_contact_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_vehicle_tool",
+      "field_count": 7,
+      "required_count": 6,
+      "required": [
+        "insured_database_id",
+        "vehicle_type",
+        "year",
+        "make",
+        "model",
+        "vin"
+      ],
+      "read_back_tools": [
+        "get_vehicle_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_note_tool",
+      "field_count": 3,
+      "required_count": 1,
+      "required": [
+        "subject"
+      ],
+      "read_back_tools": [
+        "get_notes_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_quote_tool",
+      "field_count": 8,
+      "required_count": 5,
+      "required": [
+        "quote_number",
+        "quote_effective_date",
+        "quote_expiry_date",
+        "quote_premium",
+        "line_of_business_name"
+      ],
+      "read_back_tools": [
+        "get_policy_list_tool",
+        "get_policy_details_by_database_id_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_policy_tool",
+      "field_count": 9,
+      "required_count": 5,
+      "required": [
+        "policy_number",
+        "policy_effective_date",
+        "policy_expiry_date",
+        "policy_premium",
+        "line_of_business_name"
+      ],
+      "read_back_tools": [
+        "get_policy_list_tool",
+        "get_policy_details_by_database_id_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_policy_coverages_tool",
+      "field_count": 2,
+      "required_count": 2,
+      "required": [
+        "policyDatabaseId",
+        "policy_details"
+      ],
+      "read_back_tools": [
+        "get_policy_list_tool",
+        "get_policy_details_by_database_id_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_property_location_tool",
+      "field_count": 13,
+      "required_count": 9,
+      "required": [
+        "location_number",
+        "building_number",
+        "address_line_1",
+        "address_line_2",
+        "city",
+        "county",
+        "zip",
+        "state",
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_property_list_tool",
+        "get_insured_location_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_vehicle_tool",
+      "field_count": 13,
+      "required_count": 3,
+      "required": [
+        "database_id",
+        "insured_database_id",
+        "driverId"
+      ],
+      "read_back_tools": [
+        "get_vehicle_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_driver_tool",
+      "field_count": 15,
+      "required_count": 1,
+      "required": [
+        "driver_database_id"
+      ],
+      "read_back_tools": [
+        "get_driver_list_tool",
+        "get_insured_contact_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_opportunity_tool",
+      "field_count": 8,
+      "required_count": 4,
+      "required": [
+        "line_of_business_name",
+        "needed_by",
+        "win_probability",
+        "agency_commission"
+      ],
+      "read_back_tools": [
+        "get_opportunity_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_task_tool",
+      "field_count": 9,
+      "required_count": 1,
+      "required": [
+        "title"
+      ],
+      "read_back_tools": [
+        "get_task_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_task_tool",
+      "field_count": 8,
+      "required_count": 1,
+      "required": [
+        "database_id"
+      ],
+      "read_back_tools": [
+        "get_task_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_task_bulk_tool",
+      "field_count": 1,
+      "required_count": 1,
+      "required": [
+        "tasks_list"
+      ],
+      "read_back_tools": [
+        "get_task_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_certificate_holder_tool",
+      "field_count": 8,
+      "required_count": 7,
+      "required": [
+        "certificate_holder_name",
+        "certificate_holder_state_name",
+        "certificate_holder_city",
+        "certificate_holder_address_line1",
+        "certificate_holder_zip_code",
+        "certificate_holder_phone",
+        "certificate_holder_email"
+      ],
+      "read_back_tools": [
+        "get_certificate_holder_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "send_certificate_tool",
+      "field_count": 6,
+      "required_count": 3,
+      "required": [
+        "insured_database_id",
+        "certificate_holder_id",
+        "email"
+      ],
+      "read_back_tools": [],
+      "status": "BLOCKED",
+      "errors": [
+        "no deterministic read-back tool mapped"
+      ]
+    },
+    {
+      "tool": "apply_insured_tag_tool",
+      "field_count": 4,
+      "required_count": 1,
+      "required": [
+        "tag_name"
+      ],
+      "read_back_tools": [
+        "get_insured_tags_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "remove_insured_tag_tool",
+      "field_count": 2,
+      "required_count": 2,
+      "required": [
+        "insured_database_id",
+        "tag_names"
+      ],
+      "read_back_tools": [
+        "get_insured_tags_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "remove_policy_tag_tool",
+      "field_count": 2,
+      "required_count": 0,
+      "required": [],
+      "read_back_tools": [
+        "get_policy_tags_tool"
+      ],
+      "status": "BLOCKED",
+      "errors": [
+        "mutation declares no required fields"
+      ]
+    },
+    {
+      "tool": "apply_policy_tag_tool",
+      "field_count": 3,
+      "required_count": 3,
+      "required": [
+        "tag_name",
+        "tag_description",
+        "policy_database_id"
+      ],
+      "read_back_tools": [
+        "get_policy_tags_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_bulk_tag_for_policies_in_ams_tool",
+      "field_count": 1,
+      "required_count": 1,
+      "required": [
+        "tags"
+      ],
+      "read_back_tools": [
+        "get_policy_tags_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "bulk_insert_driver_tool",
+      "field_count": 3,
+      "required_count": 1,
+      "required": [
+        "drivers"
+      ],
+      "read_back_tools": [
+        "get_driver_list_tool",
+        "get_insured_contact_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "bulk_insert_vehicle_tool",
+      "field_count": 3,
+      "required_count": 1,
+      "required": [
+        "vehicles"
+      ],
+      "read_back_tools": [
+        "get_vehicle_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_service_request_tool",
+      "field_count": 23,
+      "required_count": 3,
+      "required": [
+        "subject",
+        "status",
+        "service_request_type"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_service_request_tool",
+      "field_count": 24,
+      "required_count": 4,
+      "required": [
+        "database_id",
+        "subject",
+        "status",
+        "service_request_type"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_coi_tool",
+      "field_count": 22,
+      "required_count": 3,
+      "required": [
+        "holder_name",
+        "insured_database_id",
+        "insured_name"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_general_tool",
+      "field_count": 17,
+      "required_count": 3,
+      "required": [
+        "subject",
+        "insured_database_id",
+        "insured_name"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_generic_tool",
+      "field_count": 14,
+      "required_count": 2,
+      "required": [
+        "subject",
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_replace_vehicle_tool",
+      "field_count": 21,
+      "required_count": 4,
+      "required": [
+        "subject",
+        "insured_database_id",
+        "vin_number_to_remove",
+        "vin_number_to_add"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_policy_change_tool",
+      "field_count": 15,
+      "required_count": 3,
+      "required": [
+        "subject",
+        "insured_database_id",
+        "insured_name"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_add_driver_tool",
+      "field_count": 31,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_address_change_tool",
+      "field_count": 14,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_remove_driver_tool",
+      "field_count": 14,
+      "required_count": 2,
+      "required": [
+        "insured_database_id",
+        "driver_name_to_remove"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_replace_driver_tool",
+      "field_count": 15,
+      "required_count": 3,
+      "required": [
+        "insured_database_id",
+        "driver_name_to_remove",
+        "driver_name_to_add"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_vehicle_transfer_tool",
+      "field_count": 13,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_or_update_service_request_add_vehicle_tool",
+      "field_count": 25,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_service_request_details_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "bulk_insert_insured_tool",
+      "field_count": 1,
+      "required_count": 1,
+      "required": [
+        "insured_list"
+      ],
+      "read_back_tools": [
+        "get_insured_details_tool",
+        "get_insured_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_opportunity_tool",
+      "field_count": 9,
+      "required_count": 5,
+      "required": [
+        "database_id",
+        "line_of_business_name",
+        "needed_by",
+        "win_probability",
+        "agency_commission"
+      ],
+      "read_back_tools": [
+        "get_opportunity_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_insured_prospect_primary_contact_in_ams_tool",
+      "field_count": 27,
+      "required_count": 3,
+      "required": [
+        "insured_database_id",
+        "commercialName",
+        "insuredType"
+      ],
+      "read_back_tools": [
+        "get_insured_details_tool",
+        "get_insured_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_claim_tool",
+      "field_count": 12,
+      "required_count": 1,
+      "required": [
+        "claim_number"
+      ],
+      "read_back_tools": [
+        "get_claim_list_tool",
+        "get_loss_claims_details_for_insured_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_insured_file_tool",
+      "field_count": 3,
+      "required_count": 3,
+      "required": [
+        "insured_database_id",
+        "file_name",
+        "file_url"
+      ],
+      "read_back_tools": [],
+      "status": "BLOCKED",
+      "errors": [
+        "no deterministic read-back tool mapped"
+      ]
+    },
+    {
+      "tool": "insert_insured_policy_file_tool",
+      "field_count": 5,
+      "required_count": 4,
+      "required": [
+        "insured_database_id",
+        "policy_id",
+        "file_name",
+        "file_url"
+      ],
+      "read_back_tools": [
+        "get_policy_files_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "insert_equipment_tool",
+      "field_count": 14,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_equipment_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "bulk_insert_equipment_tool",
+      "field_count": 1,
+      "required_count": 1,
+      "required": [
+        "equipment_list"
+      ],
+      "read_back_tools": [
+        "get_equipment_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "send_email_tool",
+      "field_count": 5,
+      "required_count": 3,
+      "required": [
+        "recipient_mail_address",
+        "mail_subject",
+        "mail_body"
+      ],
+      "read_back_tools": [],
+      "status": "BLOCKED",
+      "errors": [
+        "no deterministic read-back tool mapped"
+      ]
+    },
+    {
+      "tool": "update_property_location_tool",
+      "field_count": 14,
+      "required_count": 10,
+      "required": [
+        "database_id",
+        "location_number",
+        "building_number",
+        "address_line_1",
+        "address_line_2",
+        "city",
+        "county",
+        "zip",
+        "state",
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_property_list_tool",
+        "get_insured_location_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_cl_rating_data_tool",
+      "field_count": 9,
+      "required_count": 1,
+      "required": [
+        "insured_database_id"
+      ],
+      "read_back_tools": [
+        "get_additional_details_for_insured_tool",
+        "get_insured_detail_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "update_acord_80_data_in_ams_tool",
+      "field_count": 14,
+      "required_count": 2,
+      "required": [
+        "insured_database_id",
+        "property_database_id"
+      ],
+      "read_back_tools": [
+        "get_property_list_tool",
+        "get_insured_location_list_tool"
+      ],
+      "status": "SCHEMA_ALIGNED",
+      "errors": []
+    },
+    {
+      "tool": "create_acord_form_tool",
+      "field_count": 15,
+      "required_count": 3,
+      "required": [
+        "insured_database_id",
+        "policy_database_id",
+        "acord_form_type"
+      ],
+      "read_back_tools": [],
+      "status": "BLOCKED",
+      "errors": [
+        "no deterministic read-back tool mapped"
+      ]
+    }
+  ]
+}

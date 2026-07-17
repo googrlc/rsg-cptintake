@@ -12,8 +12,9 @@ services:
       HOST: 0.0.0.0
       PORT: 8787
       PYTHON_BIN: /opt/report-venv/bin/python3
-      NOWCERTS_MCP_URL: http://app-nowcerts-mcp-1:8082/mcp
+      NOWCERTS_MCP_URL: http://rsg-nowcerts-read:8082/mcp
       NOWCERTS_MCP_TOKEN_FILE: /run/secrets/nowcerts-mcp-token
+      HERMES_PREVIEW_URL: http://hermes-api:8787
     ports:
       - "127.0.0.1:8790:8787"
     volumes:
@@ -29,8 +30,12 @@ services:
     networks:
       - default
       - nowcerts
+      - hermes
 
 networks:
   nowcerts:
     external: true
     name: app_default
+  hermes:
+    external: true
+    name: hermes-shared
