@@ -31,10 +31,6 @@ function makeStore() {
   return { saved: [], audits: [], async save(r) { this.saved.push(r); }, async audit(e) { this.audits.push(e); } };
 }
 
-function makeWriteClient(result = { ok: true, insured_database_id: "NEW-INSURED-1" }) {
-  return { calls: [], async insertInsuredProspect(payload) { this.calls.push(payload); return result; } };
-}
-
 const SAVED_MATCH = {
   commercialName: "Acme Welding LLC",
   addressLine1: "123 Industrial Way",
@@ -42,6 +38,14 @@ const SAVED_MATCH = {
   state: "OH",
   zipCode: "45402",
 };
+
+function makeWriteClient(result = { ok: true, insured_database_id: "NEW-INSURED-1" }, readback = SAVED_MATCH) {
+  return {
+    calls: [],
+    async insertInsuredProspect(payload) { this.calls.push(payload); return result; },
+    async getInsuredById() { return readback; },
+  };
+}
 
 test("happy path: no duplicate, commit once, read-back matches -> VERIFIED", async () => {
   const store = makeStore();
@@ -89,9 +93,9 @@ test("override=true confirms past the duplicate review and writes", async () => 
 
 test("read-back tolerates entity-suffix normalization on the name -> VERIFIED", async () => {
   const store = makeStore();
-  const writeClient = makeWriteClient();
   // Sent "Acme Welding LLC"; AMS saved it as "Acme Welding" -> still VERIFIED.
-  const readClient = { async searchInsureds() { return []; }, async getInsured() { return { ...SAVED_MATCH, commercialName: "Acme Welding" }; } };
+  const writeClient = makeWriteClient(undefined, { ...SAVED_MATCH, commercialName: "Acme Welding" });
+  const readClient = { async searchInsureds() { return []; } };
 
   const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, now: NOW });
 
@@ -108,8 +112,8 @@ test("classifyMatch and canonicalName handle entity suffixes", () => {
 
 test("read-back mismatch -> MISMATCH, not reported as success", async () => {
   const store = makeStore();
-  const writeClient = makeWriteClient();
-  const readClient = { async searchInsureds() { return []; }, async getInsured() { return { ...SAVED_MATCH, city: "Columbus" }; } };
+  const writeClient = makeWriteClient(undefined, { ...SAVED_MATCH, city: "Columbus" });
+  const readClient = { async searchInsureds() { return []; } };
   const record = approvedRecord();
 
   const result = await commitApprovedInsured({ record, store, writeClient, readClient, now: NOW });

@@ -62,6 +62,22 @@ export class MomentumWriteClient {
   async insertInsuredProspect(fields) {
     return parseInsertResult(await this.callTool("insert_insured_prospect_tool", fields));
   }
+
+  // Read-back by id — the audit-certified verification tool for insured create.
+  async getInsuredById(insuredDatabaseId) {
+    const text = await this.callTool("get_insured_detail_list_tool", { insured_database_id: insuredDatabaseId });
+    let parsed = null;
+    try {
+      parsed = typeof text === "string" ? JSON.parse(text) : text;
+    } catch {
+      parsed = null;
+    }
+    const records = Array.isArray(parsed)
+      ? parsed
+      : parsed?.value ?? parsed?.items ?? parsed?.results ?? (parsed && typeof parsed === "object" ? [parsed] : []);
+    const target = String(insuredDatabaseId);
+    return records.find((r) => String(r?.databaseId ?? r?.DatabaseId ?? r?.id ?? r?.Id ?? "") === target) ?? records[0] ?? null;
+  }
 }
 
 export function resultText(result) {

@@ -49,10 +49,21 @@ export function extractInsuredFields(changes = []) {
   return fields;
 }
 
+// NowCerts read-back records vary in field casing/naming, so try known aliases.
+const READBACK_VARIANTS = {
+  commercialName: ["commercialName", "CommercialName", "commercialname", "name", "Name"],
+  addressLine1: ["addressLine1", "AddressLine1", "addressline1", "address", "Address"],
+  city: ["city", "City"],
+  state: ["state", "State"],
+  zipCode: ["zipCode", "ZipCode", "zipcode", "zip", "Zip"],
+};
+
 function readbackValue(record, field) {
   if (record == null) return null;
-  const capitalized = field.charAt(0).toUpperCase() + field.slice(1);
-  return record[field] ?? record[capitalized] ?? null;
+  for (const key of READBACK_VARIANTS[field] ?? [field]) {
+    if (record[key] != null && record[key] !== "") return record[key];
+  }
+  return null;
 }
 
 function buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches = [], nowIso, note = null }) {
@@ -161,7 +172,8 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
   // 4) Read back the saved record and compare every intended field.
   let readback;
   try {
-    readback = await readClient.getInsured(insuredId);
+    readback = await writeClient.getInsuredById(insuredId);
+    if (!readback) throw new Error("the created record was not returned by the read-back tool.");
   } catch (error) {
     const receipt = buildLiveReceipt({ record, insuredId, idempotencyKey, verified: false, nowIso: now(), note: `Read-back failed: ${error.message}` });
     await persistCommit(store, record, receipt, "COMMITTED_UNVERIFIED");
