@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import html
 import sys
 from pathlib import Path
 
@@ -30,8 +31,8 @@ def safe(value, fallback="Not provided"):
     if value is None or value == "" or value == []:
         return fallback
     if isinstance(value, list):
-        return ", ".join(str(item) for item in value)
-    return str(value)
+        value = ", ".join(str(item) for item in value)
+    return html.escape(str(value))
 
 
 def on_page(canvas, doc):

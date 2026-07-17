@@ -14,6 +14,7 @@ const state = {
   connected: false,
   clientName: "",
   existingClientId: "",
+  lookup: { status: "idle", query: "", matches: [], error: null, selected: null },
   sourceKind: "pdf",
   draftTitle: "",
   draftContent: "",
@@ -22,6 +23,8 @@ const state = {
   outputTab: "overview",
   message: "Add every source for one client, then prepare the combined intake.",
 };
+let lookupTimer = null;
+let lookupRequest = 0;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -37,6 +40,16 @@ function sourceIcon(kind) {
 
 function statusLabel(value) {
   return String(value ?? "pending").replaceAll("_", " ");
+}
+
+function renderLookup() {
+  const lookup = state.lookup;
+  if (lookup.status === "idle") return `<div class="client-lookup idle">Type at least 2 characters to search live NowCerts.</div>`;
+  if (lookup.status === "searching") return `<div class="client-lookup searching"><span></span>Searching live NowCerts for “${escapeHtml(lookup.query)}”…</div>`;
+  if (lookup.status === "error") return `<div class="client-lookup error"><strong>NowCerts search unavailable.</strong> ${escapeHtml(lookup.error)}</div>`;
+  if (lookup.status === "selected") return `<div class="client-lookup selected"><strong>Selected existing client:</strong> ${escapeHtml(lookup.selected.display_name)} <span>NowCerts ID ${escapeHtml(lookup.selected.database_id)}</span><button id="clear-client-match">Change</button></div>`;
+  if (!lookup.matches.length) return `<div class="client-lookup no-match"><strong>No matching insured found.</strong> Check the spelling before treating this as a new prospect.</div>`;
+  return `<div class="client-lookup results"><div><strong>${lookup.matches.length} possible match${lookup.matches.length === 1 ? "" : "es"} found.</strong> Select the correct client—name alone is never selected automatically.</div><div class="match-list">${lookup.matches.map((match, index) => `<button class="client-match" data-index="${index}"><strong>${escapeHtml(match.display_name)}</strong><span>${escapeHtml([match.email, match.phone, match.address].filter(Boolean).join(" · ") || "No contact details returned")}</span><small>NowCerts ID ${escapeHtml(match.database_id)}</small></button>`).join("")}</div></div>`;
 }
 
 function renderSourceComposer() {
@@ -86,7 +99,10 @@ function renderPipeline() {
 function renderOutput() {
   const assessment = state.bundle?.assessment;
   if (state.outputTab === "ams") {
-    return `<div class="output-block"><h3>AMS write preview</h3><p>Only fields supported by a verified NowCerts write contract appear here. Every field will show its current value, proposed value, and source citation before approval.</p><div class="blank-state">${state.bundle ? "Synthesis and NowCerts matching are not connected yet." : "Prepare the intake to begin routing fields."}</div></div>`;
+    const fields = state.bundle?.routing?.ams_fields ?? [];
+    return `<div class="output-block"><h3>AMS candidate preview</h3><p>Hermes extracted these candidate fields. They remain locked until each destination is mapped to a verified NowCerts contract and the current record is reread.</p>
+      ${fields.length ? `<div class="contract-summary"><strong>${fields.length} field contract${fields.length === 1 ? "" : "s"} lined up</strong><span>Exact write property + read-back property found. Executor certification is still required.</span></div><div class="data-list">${fields.map((item) => `<div><span>${escapeHtml(item.field)}</span><strong>${escapeHtml(item.value)}</strong><small>${escapeHtml(item.citation)} · ${escapeHtml(statusLabel(item.contract_status))}${item.contract ? ` · ${escapeHtml(item.contract.write_tool)}.${escapeHtml(item.contract.write_field)} → ${escapeHtml(item.contract.read_tool)}.${escapeHtml(item.contract.read_field)}` : ""}</small></div>`).join("")}</div>` : `<div class="blank-state">${state.bundle ? "No operation-specific field contracts line up yet; extracted facts remain in the PDF." : "Prepare the intake to begin routing fields."}</div>`}
+      ${state.bundle?.approval ? `<div class="approval-lock"><strong>Live submission locked</strong><span>${escapeHtml(state.bundle.approval.reason)}</span></div>` : ""}</div>`;
   }
   if (state.outputTab === "risk") {
     return `<div class="output-block"><h3>Risk assessment</h3><p>Each business operation will be assessed separately. NAICS, SIC, GL, and WC codes must be found in the RSG reference tables—never guessed.</p>
@@ -95,7 +111,8 @@ function renderOutput() {
         <div><span>NAICS</span><strong>${assessment?.naics?.length ?? "—"}</strong></div>
         <div><span>Red flags</span><strong>${assessment?.red_flags?.length ?? "—"}</strong></div>
         <div><span>Confidence</span><strong>${assessment?.confidence == null ? "—" : `${assessment.confidence}%`}</strong></div>
-      </div><div class="blank-state">${assessment ? statusLabel(assessment.status) : "No assessment prepared yet."}</div></div>`;
+      </div>${assessment ? `<div class="assessment-summary">${escapeHtml(assessment.summary)}</div>
+        <div class="risk-columns"><div><h4>Coverage needs</h4>${(assessment.coverage_requirements ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Red flags</h4>${(assessment.red_flags ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Missing / verify</h4>${(assessment.missing_items ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None identified</span>"}</div></div>` : `<div class="blank-state">No assessment prepared yet.</div>`}</div>`;
   }
   if (state.outputTab === "report") {
     const ready = state.bundle?.assessment?.status === "COMPLETE" && state.bundle?.report_url;
@@ -110,12 +127,13 @@ function renderOutput() {
 function render() {
   const prepared = Boolean(state.bundle);
   root.innerHTML = `<section class="shell">
-    <header><div class="brand"><img src="${brandLogo}" alt="Risk Solutions Group"><div class="product-name"><h1>Client Intake Gate</h1><p>Evidence in · assessed, routed, and verified out</p></div></div><div class="mode"><i></i> SHADOW MODE</div></header>
+    <header><div class="brand"><img src="${brandLogo}" alt="Risk Solutions Group"><div class="product-name"><h1>Client Intake Gate</h1><p>Evidence in · assessed, routed, and verified out</p></div></div><div class="mode"><i></i> LIVE DATA PILOT · WRITES LOCKED</div></header>
     <section class="client-bar">
       <label>Client or prospect name<input id="client-name" value="${escapeHtml(state.clientName)}" placeholder="Example Contracting LLC"></label>
       <label>Existing NowCerts ID <span>optional</span><input id="client-id" value="${escapeHtml(state.existingClientId)}" placeholder="Leave blank for a new prospect"></label>
       <div class="privacy"><b>Private Tailscale workspace</b><span>Nothing writes without a reviewed proposal and confirmation.</span></div>
     </section>
+    ${renderLookup()}
     <div class="workspace">
       <aside class="sources-panel">
         <div class="section-heading"><div><span class="eyebrow">1 · COLLECT</span><h2>Add client evidence</h2></div><span class="count">${state.sources.length}</span></div>
@@ -133,13 +151,22 @@ function render() {
         <div class="routing-note"><div><b>AMS destination</b><span>Verified client, contact, policy, vehicle, driver, location, and supported fields</span></div><div><b>Retained PDF</b><span>Operations narrative, assessment detail, evidence map, research, flags, and unsupported fields</span></div></div>
       </main>
     </div>
-    <footer><div><span class="pulse"></span><p>${escapeHtml(state.message)}</p></div><button disabled>Final approval occurs after the full preview</button></footer>
+    <footer><div><span class="pulse"></span><p>${escapeHtml(state.message)}</p></div><button disabled>${state.bundle?.approval?.status === "LOCKED" ? "Live AMS submission locked pending certification" : "Final approval occurs after the full preview"}</button></footer>
   </section>`;
   bindEvents();
 }
 
 function bindEvents() {
-  document.querySelector("#client-name")?.addEventListener("input", (event) => { state.clientName = event.target.value; updatePrepareButton(); });
+  document.querySelector("#client-name")?.addEventListener("input", (event) => {
+    state.clientName = event.target.value;
+    state.existingClientId = "";
+    state.lookup.selected = null;
+    updatePrepareButton();
+    scheduleClientLookup();
+  });
+  document.querySelector("#client-name")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") { event.preventDefault(); runClientLookup(); }
+  });
   document.querySelector("#client-id")?.addEventListener("input", (event) => { state.existingClientId = event.target.value; });
   document.querySelectorAll(".source-tab").forEach((button) => button.addEventListener("click", () => { state.sourceKind = button.dataset.kind; state.draftTitle = ""; state.draftContent = ""; render(); }));
   document.querySelectorAll(".output-tab").forEach((button) => button.addEventListener("click", () => { state.outputTab = button.dataset.output; render(); }));
@@ -150,6 +177,56 @@ function bindEvents() {
   document.querySelector("#add-text")?.addEventListener("click", addTextSource);
   document.querySelectorAll(".remove-source").forEach((button) => button.addEventListener("click", () => { state.sources.splice(Number(button.dataset.index), 1); state.bundle = null; render(); }));
   document.querySelector("#prepare")?.addEventListener("click", prepareIntake);
+  document.querySelectorAll(".client-match").forEach((button) => button.addEventListener("click", () => selectClientMatch(Number(button.dataset.index))));
+  document.querySelector("#clear-client-match")?.addEventListener("click", clearClientMatch);
+}
+
+function scheduleClientLookup() {
+  if (lookupTimer) clearTimeout(lookupTimer);
+  const query = state.clientName.trim();
+  if (query.length < 2) {
+    state.lookup = { status: "idle", query, matches: [], error: null, selected: null };
+    return;
+  }
+  lookupTimer = setTimeout(runClientLookup, 650);
+}
+
+async function runClientLookup() {
+  if (!isStandalone) return;
+  if (lookupTimer) clearTimeout(lookupTimer);
+  const query = state.clientName.trim();
+  if (query.length < 2) return;
+  const request = ++lookupRequest;
+  state.lookup = { status: "searching", query, matches: [], error: null, selected: null };
+  render();
+  try {
+    const response = await fetch(`/api/nowcerts/insureds/search?q=${encodeURIComponent(query)}`);
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.message || result.status || "Search failed.");
+    if (request !== lookupRequest || query !== state.clientName.trim()) return;
+    state.lookup = { status: "results", query, matches: result.matches ?? [], error: null, selected: null };
+  } catch (error) {
+    if (request !== lookupRequest) return;
+    state.lookup = { status: "error", query, matches: [], error: error.message, selected: null };
+  }
+  render();
+}
+
+function selectClientMatch(index) {
+  const match = state.lookup.matches[index];
+  if (!match) return;
+  state.clientName = match.display_name;
+  state.existingClientId = match.database_id;
+  state.lookup = { status: "selected", query: match.display_name, matches: [], error: null, selected: match };
+  state.message = `Existing NowCerts client selected: ${match.display_name}. No data has been changed.`;
+  render();
+}
+
+function clearClientMatch() {
+  state.existingClientId = "";
+  state.lookup = { status: "idle", query: state.clientName, matches: [], error: null, selected: null };
+  render();
+  scheduleClientLookup();
 }
 
 function updatePrepareButton() {
@@ -224,7 +301,7 @@ async function uploadPdfs(files) {
 
 async function prepareIntake() {
   state.busy = true;
-  state.message = "Combining source inventory and preparing the client pipeline…";
+  state.message = "Extracting PDFs, synthesizing evidence, enriching the business, and building the review package…";
   render();
   const input = {
     client_name: state.clientName.trim(),
@@ -243,7 +320,8 @@ async function prepareIntake() {
     } else throw new Error("The intake service is not connected.");
     state.bundle = result;
     state.outputTab = "overview";
-    state.message = "Sources accepted and retained. Live synthesis, code lookup, and risk assessment are the next connector stage; nothing was written to NowCerts.";
+    const gaps = result.assessment?.missing_items?.length ?? 0;
+    state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; nothing was written to NowCerts.`;
   } catch (error) {
     state.message = `The combined intake could not be prepared: ${error.message}`;
   } finally {

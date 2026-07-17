@@ -18,7 +18,7 @@ ENV NODE_ENV=production \
     PYTHON_BIN=/opt/report-venv/bin/python3
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates python3 python3-venv \
+    && apt-get install -y --no-install-recommends ca-certificates poppler-utils python3 python3-venv \
     && python3 -m venv /opt/report-venv \
     && /opt/report-venv/bin/pip install --no-cache-dir reportlab==4.4.3 \
     && rm -rf /var/lib/apt/lists/*

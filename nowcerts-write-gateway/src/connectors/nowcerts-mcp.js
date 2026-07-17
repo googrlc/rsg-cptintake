@@ -44,3 +44,29 @@ export class NowCertsMcpClient {
     return [];
   }
 }
+
+function first(record, names) {
+  for (const name of names) {
+    if (record?.[name] !== undefined && record[name] !== null && record[name] !== "") return record[name];
+  }
+  return null;
+}
+
+export function summarizeInsured(record) {
+  const commercialName = first(record, ["commercialName", "CommercialName", "name", "Name"]);
+  const firstName = first(record, ["firstName", "FirstName"]);
+  const lastName = first(record, ["lastName", "LastName"]);
+  const personalName = [firstName, lastName].filter(Boolean).join(" ");
+  const addressLine1 = first(record, ["addressLine1", "AddressLine1", "address", "Address"]);
+  const city = first(record, ["city", "City"]);
+  const state = first(record, ["state", "State"]);
+  const zipCode = first(record, ["zipCode", "ZipCode", "zip", "Zip"]);
+  return {
+    database_id: String(first(record, ["databaseId", "DatabaseId", "id", "Id"]) ?? ""),
+    display_name: String(commercialName || personalName || "Unnamed insured"),
+    email: first(record, ["eMail", "EMail", "email", "Email"]),
+    phone: first(record, ["phone", "Phone", "phoneNumber", "PhoneNumber", "cellPhone", "CellPhone"]),
+    address: [addressLine1, city, state, zipCode].filter(Boolean).join(", ") || null,
+    active: first(record, ["active", "Active"]),
+  };
+}

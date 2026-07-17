@@ -16,7 +16,10 @@ import { TempDocumentStore } from "./documents/temp-store.js";
 import { prepareSourceBundle, prepareSourceBundleSchema } from "./intake/source-bundle.js";
 import { FileIntakeSourceStore } from "./intake/source-store.js";
 import { generateIntakeReport } from "./reports/intake-report.js";
-import { NowCertsMcpClient } from "./connectors/nowcerts-mcp.js";
+import { NowCertsMcpClient, summarizeInsured } from "./connectors/nowcerts-mcp.js";
+import { HermesPreviewClient } from "./connectors/hermes-preview.js";
+import { extractPdfText } from "./documents/pdf-text.js";
+import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -30,6 +33,9 @@ const nowcertsReader = process.env.NOWCERTS_MCP_URL && process.env.NOWCERTS_MCP_
       url: process.env.NOWCERTS_MCP_URL,
       tokenFile: process.env.NOWCERTS_MCP_TOKEN_FILE,
     })
+  : null;
+const hermesPreview = process.env.HERMES_PREVIEW_URL
+  ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL })
   : null;
 const documentStore = new TempDocumentStore(path.join(dataDir, "documents"));
 const intakeStore = new FileIntakeSourceStore(path.join(dataDir, "intakes"));
@@ -134,6 +140,11 @@ function sendJson(res, statusCode, value) {
     "x-content-type-options": "nosniff",
   });
   res.end(JSON.stringify(value));
+}
+
+function requestActor(req) {
+  const identity = String(req.headers["tailscale-user-login"] ?? "").toLowerCase();
+  return identity.includes("gretchen") ? "gretchen" : "lamar";
 }
 
 function createMcpServer() {
@@ -297,6 +308,7 @@ const httpServer = createServer(async (req, res) => {
         service: "rsg-nowcerts-write-gateway",
         mode,
         live_data: mode === "pilot" && Boolean(nowcertsReader),
+        synthesis_ready: Boolean(hermesPreview),
         live_writes: false,
         operator_page: "/app",
       }));
@@ -340,7 +352,9 @@ const httpServer = createServer(async (req, res) => {
       return;
     }
     try {
-      const matches = await nowcertsReader.searchInsureds(query, 10);
+      const matches = (await nowcertsReader.searchInsureds(query, 10))
+        .map(summarizeInsured)
+        .filter((match) => match.database_id);
       sendJson(res, 200, { status: "CONNECTED", query, matches, live_writes: false });
     } catch (error) {
       sendJson(res, 502, { status: "UNAVAILABLE", message: error.message, matches: [] });
@@ -374,7 +388,45 @@ const httpServer = createServer(async (req, res) => {
     try {
       const bytes = await readBody(req, 1024 * 1024);
       const input = JSON.parse(bytes.toString("utf8"));
-      const bundle = prepareSourceBundle(input);
+      let bundle = prepareSourceBundle(input);
+      if (!hermesPreview) {
+        await intakeStore.save(bundle);
+        sendJson(res, 503, { ...bundle, status: "SYNTHESIS_NOT_CONFIGURED", message: "Hermes preview service is not connected." });
+        return;
+      }
+
+      const pdfTexts = new Map();
+      const pdfWarnings = [];
+      for (const source of bundle.sources.filter((item) => item.kind === "pdf")) {
+        const pdfBytes = await documentStore.getBytes(source.document_id);
+        if (!pdfBytes) {
+          pdfWarnings.push(`${source.title}: uploaded PDF bytes are no longer available.`);
+          continue;
+        }
+        try {
+          const extracted = await extractPdfText(pdfBytes);
+          pdfTexts.set(source.document_id, extracted);
+          if (!extracted.text) pdfWarnings.push(`${source.title}: no machine-readable text found; OCR or manual review is required.`);
+          if (extracted.truncated) pdfWarnings.push(`${source.title}: extracted text was truncated at the safety limit.`);
+        } catch (error) {
+          pdfWarnings.push(`${source.title}: ${error.message}`);
+        }
+      }
+
+      const rawText = buildEvidenceText(bundle, pdfTexts);
+      const draft = await hermesPreview.stageDraft({
+        rawText,
+        submittedBy: requestActor(req),
+        sourceRef: `rsg-intake-gate:${bundle.intake_id}`,
+      });
+      const operations = draft.payload_preview?.account?.operations_summary;
+      let research = null;
+      try {
+        research = await hermesPreview.researchBusiness([bundle.client.display_name, operations].filter(Boolean).join(" — "));
+      } catch (error) {
+        pdfWarnings.push(`Business enrichment unavailable: ${error.message}`);
+      }
+      bundle = applyHermesPreview(bundle, draft, research, pdfWarnings);
       await intakeStore.save(bundle);
       sendJson(res, 201, bundle);
     } catch (error) {
