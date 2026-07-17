@@ -14,6 +14,35 @@ export function normalizeValue(value) {
     .replace(/\s+/g, " ");
 }
 
+// Canonical business name for leeway: drop punctuation and common entity
+// suffixes so "ZZZZ Enterprise LLC" and "ZZZZ Enterprise" compare as the same.
+const ENTITY_SUFFIXES = /\b(l\.?l\.?c\.?|inc\.?|incorporated|corp\.?|corporation|co\.?|company|ltd\.?|limited|l\.?l\.?p\.?|l\.?p\.?|pllc|p\.?c\.?)\b/g;
+
+export function canonicalName(value) {
+  return normalizeValue(value)
+    .replace(/\./g, "")
+    .replace(/[,'"&/]/g, " ")
+    .replace(ENTITY_SUFFIXES, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// EXACT (identical), LIKELY (same after canonicalization, or one contains the
+// other), or NONE. EXACT/LIKELY both prompt a human confirmation rather than a
+// silent create or a hard block.
+export function classifyMatch(candidateName, targetName) {
+  const candidate = normalizeValue(candidateName);
+  const target = normalizeValue(targetName);
+  if (!candidate || !target) return "NONE";
+  if (candidate === target) return "EXACT";
+  const canonCandidate = canonicalName(candidateName);
+  const canonTarget = canonicalName(targetName);
+  if (!canonCandidate || !canonTarget) return "NONE";
+  if (canonCandidate === canonTarget) return "LIKELY";
+  if (canonCandidate.includes(canonTarget) || canonTarget.includes(canonCandidate)) return "LIKELY";
+  return "NONE";
+}
+
 export function extractInsuredFields(changes = []) {
   const fields = {};
   for (const change of changes) fields[change.field] = change.proposed;
@@ -58,7 +87,7 @@ async function persistCommit(store, record, liveReceipt, status) {
   });
 }
 
-export async function commitApprovedInsured({ record, store, writeClient, readClient, now = () => new Date().toISOString() }) {
+export async function commitApprovedInsured({ record, store, writeClient, readClient, override = false, now = () => new Date().toISOString() }) {
   if (!record) return { ok: false, status: "NOT_FOUND", message: "Proposal not found." };
 
   // Idempotency: a completed live write is never repeated.
@@ -91,15 +120,25 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
   } catch (error) {
     return { ok: false, status: "REREAD_FAILED", message: `Pre-write duplicate check failed; nothing was written: ${error.message}` };
   }
-  const duplicates = (candidates ?? []).filter(
-    (candidate) => normalizeValue(candidate.commercialName ?? candidate.CommercialName ?? candidate.name) === normalizeValue(commercialName),
-  );
-  if (duplicates.length) {
+  const matches = (candidates ?? [])
+    .map((candidate) => {
+      const name = candidate.commercialName ?? candidate.CommercialName ?? candidate.name ?? "";
+      return {
+        database_id: String(candidate.databaseId ?? candidate.DatabaseId ?? candidate.id ?? ""),
+        name: String(name),
+        match: classifyMatch(name, commercialName),
+      };
+    })
+    .filter((candidate) => candidate.match !== "NONE");
+  // Near/exact match -> ask the operator to confirm rather than silently
+  // creating a duplicate or hard-blocking. Confirming re-sends with override.
+  if (matches.length && !override) {
     return {
       ok: false,
-      status: "DUPLICATE_STOP",
-      message: `An insured named "${commercialName}" already exists in NowCerts — not creating a duplicate.`,
-      matches: duplicates.map((d) => String(d.databaseId ?? d.DatabaseId ?? d.id ?? "")).filter(Boolean),
+      status: "DUPLICATE_REVIEW",
+      requires_confirmation: true,
+      message: `Possible existing match in NowCerts: ${matches.map((m) => `"${m.name}"`).join(", ")}. Confirm to create a new record anyway, or cancel if it is the same client.`,
+      matches,
     };
   }
 
@@ -129,7 +168,16 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
     return { ok: false, status: "COMMITTED_UNVERIFIED", message: `Record was created (${insuredId}) but read-back failed — verify it manually in NowCerts: ${error.message}`, receipt };
   }
 
-  const mismatches = CORE_COMPARE_FIELDS.filter((field) => normalizeValue(readbackValue(readback, field)) !== normalizeValue(fields[field]));
+  // Read-back compare with leeway: the business name is compared canonically so
+  // the AMS normalizing "ZZZZ Enterprise LLC" to "ZZZZ Enterprise" is not a
+  // false mismatch; the rest compare on trimmed/case-folded value.
+  const mismatches = CORE_COMPARE_FIELDS.filter((field) => {
+    const sent = fields[field];
+    const saved = readbackValue(readback, field);
+    return field === "commercialName"
+      ? canonicalName(saved) !== canonicalName(sent)
+      : normalizeValue(saved) !== normalizeValue(sent);
+  });
   const verified = mismatches.length === 0;
   const receipt = buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches, nowIso: now() });
   await persistCommit(store, record, receipt, verified ? "COMMITTED_VERIFIED" : "COMMITTED_MISMATCH");

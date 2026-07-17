@@ -145,7 +145,15 @@ function renderProposalSection() {
 function renderSendToAms() {
   const c = state.commitResult;
   if (c) {
-    const tone = c.status === "VERIFIED" ? "verified" : c.status === "DUPLICATE_STOP" || c.status === "ALREADY_COMMITTED" ? "warn" : "error";
+    if (c.status === "DUPLICATE_REVIEW") {
+      return `<div class="ams-send-result warn">
+      <strong>Possible existing match</strong>
+      <span>${escapeHtml(c.message ?? "")}</span>
+      ${(c.matches ?? []).map((m) => `<small>${escapeHtml(m.name)}${m.database_id ? ` — NowCerts ID ${escapeHtml(m.database_id)}` : ""} (${escapeHtml(statusLabel(m.match))})</small>`).join("")}
+    </div>
+    <div class="dup-actions"><button id="confirm-duplicate" class="primary danger" ${state.commitBusy ? "disabled" : ""}>${state.commitBusy ? "Sending…" : "Create new record anyway"}</button><button id="reset-commit" class="secondary">It is the same client — cancel</button></div>`;
+    }
+    const tone = c.status === "VERIFIED" ? "verified" : c.status === "ALREADY_COMMITTED" ? "warn" : "error";
     const settled = c.status === "VERIFIED" || c.status === "ALREADY_COMMITTED";
     return `<div class="ams-send-result ${tone}">
       <strong>${statusLabel(c.status)}</strong>
@@ -181,7 +189,10 @@ function renderOutput() {
     const ready = state.bundle?.assessment?.status === "COMPLETE" && state.bundle?.report_url;
     return `<div class="output-block report-block"><h3>Retained client PDF</h3><p>The final downloadable report will contain the source inventory, underwriting summary, evidence map, validated classifications, coverage requirements, red flags, missing items, AMS routing, and all assessment-only facts.</p>
       <div class="report-card"><div class="report-page"><span>RSG</span><strong>${escapeHtml(state.clientName || "Client risk assessment")}</strong><small>Evidence-backed intake report</small></div><div><strong>${ready ? "Report ready" : "Waiting for completed assessment"}</strong><span>PDF · retained with the client intake</span></div></div>
-      ${ready ? `<a class="download" href="${escapeHtml(state.bundle.report_url)}" download>Download completed PDF</a>` : `<button class="download" disabled>Download completed PDF</button>`}
+      ${ready ? `<div class="download-row">
+        <a class="download" href="${escapeHtml(state.bundle.report_url)}" download>Download full assessment <small>(internal)</small></a>
+        <a class="download client" href="/api/intakes/${escapeHtml(state.bundle.intake_id)}/client-report.pdf" download>Download client-ready review</a>
+      </div>` : `<button class="download" disabled>Download completed PDF</button>`}
     </div>`;
   }
   return `<div class="output-block"><div class="overview-head"><div><h3>Combined intake</h3><p>One evidence bundle for this client, separated into AMS and assessment-only destinations.</p></div><span class="bundle-status">${statusLabel(state.bundle?.status ?? "not prepared")}</span></div>${renderPipeline()}</div>`;
@@ -257,11 +268,13 @@ function bindEvents() {
     const button = document.querySelector("#approve-proposal");
     if (button) button.disabled = state.proposalBusy || state.confirmInput.trim() !== (state.proposal?.expected_confirmation ?? " ");
   });
-  document.querySelector("#send-ams")?.addEventListener("click", sendToAms);
-  document.querySelector("#retry-commit")?.addEventListener("click", sendToAms);
+  document.querySelector("#send-ams")?.addEventListener("click", () => sendToAms());
+  document.querySelector("#retry-commit")?.addEventListener("click", () => sendToAms());
+  document.querySelector("#confirm-duplicate")?.addEventListener("click", () => sendToAms(true));
+  document.querySelector("#reset-commit")?.addEventListener("click", () => { state.commitResult = null; render(); });
 }
 
-async function sendToAms() {
+async function sendToAms(override = false) {
   if (!state.proposal?.id) return;
   state.commitBusy = true;
   render();
@@ -269,7 +282,7 @@ async function sendToAms() {
     const response = await fetch(`/api/proposals/${state.proposal.id}/commit`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: "{}",
+      body: JSON.stringify({ override_duplicate: Boolean(override) }),
     });
     const result = await response.json();
     state.commitResult = result;

@@ -52,6 +52,13 @@ export class MomentumWriteClient {
     }
   }
 
+  // Real auth check: a no-arg read tool that actually hits NowCerts, so it
+  // validates the operating key (unlike tools/list, served from the catalog).
+  async probeAuth() {
+    await this.callTool("get_agent_list_tool", {});
+    return true;
+  }
+
   async insertInsuredProspect(fields) {
     return parseInsertResult(await this.callTool("insert_insured_prospect_tool", fields));
   }

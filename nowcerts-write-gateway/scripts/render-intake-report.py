@@ -164,8 +164,110 @@ def build_report(bundle, destination):
     doc.build(story)
 
 
+def rich(value, fallback=""):
+    text = safe(value, fallback)
+    return text.replace("\n", "<br/>") if text else text
+
+
+def on_client_page(canvas, doc):
+    canvas.saveState()
+    width, height = LETTER
+    canvas.setFillColor(GOLD)
+    canvas.rect(0, height - 0.16 * inch, width, 0.16 * inch, fill=1, stroke=0)
+    canvas.setFillColor(MUTED)
+    canvas.setFont("Helvetica", 8)
+    canvas.drawString(0.75 * inch, 0.45 * inch, "Risk Solutions Group  ·  Insurance Review & Recommendations")
+    canvas.drawRightString(width - 0.75 * inch, 0.45 * inch, f"Page {doc.page}")
+    canvas.restoreState()
+
+
+def build_client_report(bundle, destination):
+    """Clean, client-presentable version. Deliberately omits internal mechanics:
+    intake IDs, AMS routing, evidence map, source inventory, AI confidence,
+    red flags, and processing warnings."""
+    client = bundle.get("client", {})
+    assessment = bundle.get("assessment", {})
+
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name="CTitle", parent=styles["Title"], fontName="Times-Bold", fontSize=24, leading=28, textColor=GREEN, spaceAfter=2))
+    styles.add(ParagraphStyle(name="CSubtitle", parent=styles["Normal"], fontSize=11, leading=15, textColor=MUTED))
+    styles.add(ParagraphStyle(name="CSection", parent=styles["Heading2"], fontName="Times-Bold", fontSize=14.5, leading=18, textColor=GREEN, spaceBefore=17, spaceAfter=6))
+    styles.add(ParagraphStyle(name="CBody", parent=styles["BodyText"], fontSize=10.5, leading=15.5, textColor=colors.HexColor("#243038"), spaceAfter=7))
+    styles.add(ParagraphStyle(name="CBullet", parent=styles["BodyText"], fontSize=10.5, leading=15, leftIndent=16, bulletIndent=3, textColor=colors.HexColor("#243038"), spaceAfter=4))
+
+    destination = Path(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    doc = BaseDocTemplate(
+        str(destination),
+        pagesize=LETTER,
+        rightMargin=0.75 * inch,
+        leftMargin=0.75 * inch,
+        topMargin=0.72 * inch,
+        bottomMargin=0.75 * inch,
+        title=f"{safe(client.get('display_name'), 'Client')} - Insurance Review",
+        author="Risk Solutions Group",
+    )
+    frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="main")
+    doc.addPageTemplates([PageTemplate(id="client", frames=[frame], onPage=on_client_page)])
+
+    story = []
+    logo_path = Path(__file__).resolve().parent.parent / "web" / "assets" / "rsg-logo.jpg"
+    if logo_path.exists():
+        logo = Image(str(logo_path), width=1.7 * inch, height=1.46 * inch)
+        logo.hAlign = "LEFT"
+        story.append(logo)
+        story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(safe(client.get("display_name")), styles["CTitle"]))
+    story.append(Paragraph("Insurance Review &amp; Coverage Recommendations", styles["CSubtitle"]))
+    story.append(Paragraph("Prepared by Risk Solutions Group", styles["CSubtitle"]))
+    story.append(Spacer(1, 0.22 * inch))
+
+    story.append(Paragraph(
+        "Thank you for the opportunity to review your business. Based on the information you provided, "
+        "the following summarizes our understanding of your operations and the coverages we recommend "
+        "for your consideration.",
+        styles["CBody"],
+    ))
+
+    summary = assessment.get("summary")
+    if summary and summary != "INSUFFICIENT EVIDENCE":
+        story.append(Paragraph("Your Business at a Glance", styles["CSection"]))
+        story.append(Paragraph(rich(summary), styles["CBody"]))
+
+    operations = [op.get("name") for op in assessment.get("operations", []) if op.get("name")]
+    if operations:
+        story.append(Paragraph("Operations We Reviewed", styles["CSection"]))
+        for name in operations:
+            story.append(Paragraph(safe(name), styles["CBullet"], bulletText="•"))
+
+    coverages = [item for item in assessment.get("coverage_requirements", []) if item]
+    if coverages:
+        story.append(Paragraph("Recommended Coverages", styles["CSection"]))
+        for item in coverages:
+            story.append(Paragraph(safe(item), styles["CBullet"], bulletText="•"))
+
+    favorable = [item for item in assessment.get("favorable_factors", []) if item]
+    if favorable:
+        story.append(Paragraph("Strengths We Noted", styles["CSection"]))
+        for item in favorable:
+            story.append(Paragraph(safe(item), styles["CBullet"], bulletText="•"))
+
+    story.append(Paragraph("Next Steps", styles["CSection"]))
+    story.append(Paragraph(
+        "We would welcome the chance to review these recommendations with you, answer any questions, "
+        "and tailor coverage to your needs. Please reach out at your convenience and we will take it from there.",
+        styles["CBody"],
+    ))
+
+    doc.build(story)
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        raise SystemExit("Usage: render-intake-report.py OUTPUT.pdf")
+    if len(sys.argv) < 2:
+        raise SystemExit("Usage: render-intake-report.py OUTPUT.pdf [audience]")
+    audience = sys.argv[2] if len(sys.argv) > 2 else "internal"
     payload = json.load(sys.stdin)
-    build_report(payload, sys.argv[1])
+    if audience == "client":
+        build_client_report(payload, sys.argv[1])
+    else:
+        build_report(payload, sys.argv[1])

@@ -2,16 +2,17 @@ import { spawn } from "node:child_process";
 import { chmod, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-export async function generateIntakeReport(bundle, outputDir, { pythonBin = process.env.PYTHON_BIN ?? "python3" } = {}) {
+export async function generateIntakeReport(bundle, outputDir, { pythonBin = process.env.PYTHON_BIN ?? "python3", audience = "internal" } = {}) {
   if (bundle?.assessment?.status !== "COMPLETE") {
     throw Object.assign(new Error("Risk assessment must be complete before generating the PDF."), { statusCode: 409 });
   }
   await mkdir(outputDir, { recursive: true, mode: 0o700 });
-  const outputPath = path.resolve(outputDir, `${bundle.intake_id}-risk-assessment.pdf`);
+  const suffix = audience === "client" ? "client-review" : "risk-assessment";
+  const outputPath = path.resolve(outputDir, `${bundle.intake_id}-${suffix}.pdf`);
   const scriptPath = path.resolve(import.meta.dirname, "../../scripts/render-intake-report.py");
 
   await new Promise((resolve, reject) => {
-    const child = spawn(pythonBin, [scriptPath, outputPath], { stdio: ["pipe", "ignore", "pipe"] });
+    const child = spawn(pythonBin, [scriptPath, outputPath, audience], { stdio: ["pipe", "ignore", "pipe"] });
     let errorText = "";
     child.stderr.on("data", (chunk) => { errorText += chunk.toString("utf8"); });
     child.on("error", reject);

@@ -159,3 +159,9 @@ footer button { border: 0; border-radius: 8px; padding: 8px 11px; color: #7e827e
 .ams-send-result.warn strong { color: #6f5311; }
 .ams-send-result.error { border-color: #e6b7a2; background: #fdf1ec; }
 .ams-send-result.error strong { color: #8a4523; }
+
+.dup-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.dup-actions button { flex: 1 1 auto; }
+
+.download-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.download.client { background: var(--gold); color: var(--navy); }

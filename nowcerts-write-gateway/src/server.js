@@ -487,6 +487,30 @@ const httpServer = createServer(async (req, res) => {
     return;
   }
 
+  const clientReportMatch = req.method === "GET" && url.pathname.match(/^\/api\/intakes\/([a-f0-9-]{36})\/client-report\.pdf$/);
+  if (clientReportMatch) {
+    try {
+      const bundle = await intakeStore.get(clientReportMatch[1]);
+      if (!bundle) {
+        sendJson(res, 404, { status: "NOT_FOUND" });
+        return;
+      }
+      const report = await generateIntakeReport(bundle, path.join(dataDir, "reports"), { audience: "client" });
+      const filename = `${bundle.client.display_name.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "client"}-insurance-review.pdf`;
+      res.writeHead(200, {
+        "content-type": "application/pdf",
+        "content-length": report.bytes.length,
+        "content-disposition": `attachment; filename="${filename}"`,
+        "cache-control": "no-store",
+        "x-content-type-options": "nosniff",
+      });
+      res.end(report.bytes);
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 500, { status: "REPORT_NOT_READY", message: error.message });
+    }
+    return;
+  }
+
   // Standalone (ChatGPT-free) write-proposal + approval over REST. Mirrors the
   // MCP prepare/approve tools: same gateway.prepare()/approve() guardrails, with
   // actor/approver derived from the tailnet identity rather than caller-supplied.
@@ -550,11 +574,23 @@ const httpServer = createServer(async (req, res) => {
     }
     try {
       const tools = await momentumWriter.listTools();
-      sendJson(res, 200, {
-        status: "CONNECTED",
+      // tools/list only proves connectivity; probe a real read tool to confirm
+      // the key is actually accepted for NowCerts operations.
+      let authOk = false;
+      let authError = null;
+      try {
+        await momentumWriter.probeAuth();
+        authOk = true;
+      } catch (error) {
+        authError = error.message;
+      }
+      sendJson(res, authOk ? 200 : 502, {
+        status: authOk ? "CONNECTED" : "AUTH_FAILED",
         live_writes: true,
+        auth_ok: authOk,
         tool_count: tools.length,
         has_insert_insured: tools.includes("insert_insured_prospect_tool"),
+        ...(authError ? { auth_error: authError } : {}),
       });
     } catch (error) {
       sendJson(res, 502, { status: "UNAVAILABLE", live_writes: true, message: error.message });
@@ -572,11 +608,19 @@ const httpServer = createServer(async (req, res) => {
         sendJson(res, 404, { ok: false, status: "NOT_FOUND", message: "Proposal not found." });
         return;
       }
+      let override = false;
+      try {
+        const raw = await readBody(req, 8 * 1024);
+        override = Boolean(JSON.parse(raw.toString("utf8") || "{}").override_duplicate);
+      } catch {
+        override = false;
+      }
       const result = await commitApprovedInsured({
         record,
         store,
         writeClient: momentumWriter,
         readClient: nowcertsReader,
+        override,
       });
       const code = result.ok
         ? 200
@@ -584,7 +628,7 @@ const httpServer = createServer(async (req, res) => {
           ? 404
           : result.status === "NOT_ENABLED"
             ? 503
-            : result.status === "DUPLICATE_STOP" || result.status === "ALREADY_COMMITTED"
+            : result.status === "DUPLICATE_REVIEW" || result.status === "ALREADY_COMMITTED"
               ? 409
               : 422;
       sendJson(res, code, result);

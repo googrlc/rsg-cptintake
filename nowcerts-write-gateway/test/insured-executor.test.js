@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { commitApprovedInsured, extractInsuredFields, normalizeValue } from "../src/executor/insured-executor.js";
+import { commitApprovedInsured, extractInsuredFields, normalizeValue, classifyMatch, canonicalName } from "../src/executor/insured-executor.js";
 
 const NOW = () => "2026-07-17T21:00:00.000Z";
 
@@ -61,16 +61,49 @@ test("happy path: no duplicate, commit once, read-back matches -> VERIFIED", asy
   assert.ok(store.audits.some((a) => a.event === "live_commit" && a.verified === true));
 });
 
-test("duplicate found in pre-write reread -> DUPLICATE_STOP, nothing written", async () => {
+test("near/exact match -> DUPLICATE_REVIEW (confirm, not silent create), nothing written", async () => {
   const store = makeStore();
   const writeClient = makeWriteClient();
-  const readClient = { async searchInsureds() { return [{ databaseId: "EXISTING-9", commercialName: "acme welding llc" }]; }, async getInsured() { throw new Error("should not be called"); } };
+  // Existing "Acme Welding" vs incoming "Acme Welding LLC" -> LIKELY, needs confirm.
+  const readClient = { async searchInsureds() { return [{ databaseId: "EXISTING-9", commercialName: "Acme Welding" }]; }, async getInsured() { throw new Error("should not be called"); } };
 
   const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, now: NOW });
 
   assert.equal(result.ok, false);
-  assert.equal(result.status, "DUPLICATE_STOP");
-  assert.equal(writeClient.calls.length, 0, "no write attempted");
+  assert.equal(result.status, "DUPLICATE_REVIEW");
+  assert.equal(result.requires_confirmation, true);
+  assert.equal(result.matches[0].match, "LIKELY");
+  assert.equal(writeClient.calls.length, 0, "no write until confirmed");
+});
+
+test("override=true confirms past the duplicate review and writes", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  const readClient = { async searchInsureds() { return [{ databaseId: "EXISTING-9", commercialName: "Acme Welding" }]; }, async getInsured() { return SAVED_MATCH; } };
+
+  const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, override: true, now: NOW });
+
+  assert.equal(result.status, "VERIFIED");
+  assert.equal(writeClient.calls.length, 1);
+});
+
+test("read-back tolerates entity-suffix normalization on the name -> VERIFIED", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  // Sent "Acme Welding LLC"; AMS saved it as "Acme Welding" -> still VERIFIED.
+  const readClient = { async searchInsureds() { return []; }, async getInsured() { return { ...SAVED_MATCH, commercialName: "Acme Welding" }; } };
+
+  const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, now: NOW });
+
+  assert.equal(result.status, "VERIFIED");
+  assert.deepEqual(result.receipt.mismatched_fields, []);
+});
+
+test("classifyMatch and canonicalName handle entity suffixes", () => {
+  assert.equal(classifyMatch("Acme Welding", "Acme Welding LLC"), "LIKELY");
+  assert.equal(classifyMatch("Acme Welding LLC", "Acme Welding LLC"), "EXACT");
+  assert.equal(classifyMatch("Globex Corp", "Acme Welding LLC"), "NONE");
+  assert.equal(canonicalName("ZZZZ Enterprise, L.L.C."), "zzzz enterprise");
 });
 
 test("read-back mismatch -> MISMATCH, not reported as success", async () => {
