@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Env / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Local shadow proposal data / audit
+nowcerts-write-gateway/data/*
+!nowcerts-write-gateway/data/.gitkeep
