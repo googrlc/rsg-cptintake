@@ -541,6 +541,27 @@ const httpServer = createServer(async (req, res) => {
     return;
   }
 
+  // Connectivity dry-run for the Momentum write MCP: proves URL + token +
+  // handshake work by listing tools. Read-only — nothing is written.
+  if (req.method === "GET" && url.pathname === "/api/ams/check") {
+    if (!momentumWriter) {
+      sendJson(res, 503, { status: "NOT_ENABLED", live_writes: false, message: "Live AMS writes are not configured." });
+      return;
+    }
+    try {
+      const tools = await momentumWriter.listTools();
+      sendJson(res, 200, {
+        status: "CONNECTED",
+        live_writes: true,
+        tool_count: tools.length,
+        has_insert_insured: tools.includes("insert_insured_prospect_tool"),
+      });
+    } catch (error) {
+      sendJson(res, 502, { status: "UNAVAILABLE", live_writes: true, message: error.message });
+    }
+    return;
+  }
+
   // "Send to AMS" — the guarded live write. Runs only on a reviewed + approved
   // proposal, and only when live writes are enabled; otherwise NOT_ENABLED.
   const proposalCommit = req.method === "POST" && url.pathname.match(/^\/api\/proposals\/([0-9a-f-]{36})\/commit$/);

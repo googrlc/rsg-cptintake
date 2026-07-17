@@ -15,11 +15,17 @@ services:
       NOWCERTS_MCP_URL: http://rsg-nowcerts-read:8082/mcp
       NOWCERTS_MCP_TOKEN_FILE: /run/secrets/nowcerts-mcp-token
       HERMES_PREVIEW_URL: http://hermes-api:8787
+      # Live AMS writes (insured create -> Prospect). Armed only when the token
+      # file below is present; each write still requires human review + approval.
+      LIVE_AMS_WRITES: "on"
+      MOMENTUM_MCP_URL: https://mcp.momentumamp.com/mcp
+      MOMENTUM_MCP_TOKEN_FILE: /run/secrets/momentum-mcp-token
     ports:
       - "127.0.0.1:8790:8787"
     volumes:
       - /var/lib/rsg-intake-gate:/data
       - /etc/rsg-intake-gate/nowcerts-mcp-token:/run/secrets/nowcerts-mcp-token:ro
+      - /etc/rsg-intake-gate/momentum-mcp-token:/run/secrets/momentum-mcp-token:ro
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m

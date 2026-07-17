@@ -1,18 +1,22 @@
 // Momentum (NowCerts) MCP WRITE connector — the only code path that can create
 // a live AMS record, and only ever invoked by the guarded executor on a
-// reviewed + approved, fingerprinted proposal. Modeled on the read connector's
-// JSON-RPC-over-HTTP shape. Configured via MOMENTUM_MCP_URL + a token file; when
-// unconfigured it does not exist (server passes null) and no write is possible.
+// reviewed + approved, fingerprinted proposal. The Momentum server is a FastMCP
+// Streamable-HTTP (SSE) endpoint, so we use the MCP SDK client which performs
+// the initialize handshake, carries the session id, and parses SSE responses.
+// Auth is Bearer <api_key>. Configured via MOMENTUM_MCP_URL + a token file;
+// when unconfigured the server passes null and no write is possible.
 
 import { readFile } from "node:fs/promises";
-import { randomUUID } from "node:crypto";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
 export class MomentumWriteClient {
-  constructor({ url, tokenFile, fetchImpl = fetch, timeoutMs = 45_000 }) {
+  constructor({ url, tokenFile, timeoutMs = 45_000, clientFactory } = {}) {
     this.url = url;
     this.tokenFile = tokenFile;
-    this.fetchImpl = fetchImpl;
     this.timeoutMs = timeoutMs;
+    // Injectable so the connector can be exercised without a live server.
+    this.clientFactory = clientFactory ?? defaultClientFactory;
   }
 
   async #authorization() {
@@ -21,40 +25,48 @@ export class MomentumWriteClient {
     return /^bearer\s/i.test(token) ? token : `Bearer ${token}`;
   }
 
-  async call(name, args = {}) {
+  async callTool(name, args = {}) {
     if (!this.url || !this.tokenFile) throw new Error("Momentum write connector is not configured.");
-    const response = await this.fetchImpl(this.url, {
-      method: "POST",
-      headers: {
-        authorization: await this.#authorization(),
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: randomUUID(),
-        method: "tools/call",
-        params: { name, arguments: args },
-      }),
-      signal: AbortSignal.timeout(this.timeoutMs),
-    });
-    if (!response.ok) throw new Error(`Momentum MCP returned HTTP ${response.status}.`);
-    const body = await response.json();
-    if (body.error) throw new Error(body.error.message ?? "Momentum MCP error.");
-    const result = body.result;
-    const text = result?.content?.[0]?.text ?? "";
-    if (result?.isError) throw new Error(text || "Momentum tool reported an error.");
-    return text;
+    const authorization = await this.#authorization();
+    const { client, close } = await this.clientFactory({ url: this.url, authorization, timeoutMs: this.timeoutMs });
+    try {
+      const result = await client.callTool({ name, arguments: args }, undefined, { timeout: this.timeoutMs });
+      const text = resultText(result);
+      if (result?.isError) throw new Error(text || "Momentum tool reported an error.");
+      return text;
+    } finally {
+      await close();
+    }
+  }
+
+  // Read-only connectivity check — proves URL + token + handshake without writing.
+  async listTools() {
+    if (!this.url || !this.tokenFile) throw new Error("Momentum write connector is not configured.");
+    const authorization = await this.#authorization();
+    const { client, close } = await this.clientFactory({ url: this.url, authorization, timeoutMs: this.timeoutMs });
+    try {
+      const result = await client.listTools();
+      return (result?.tools ?? []).map((tool) => tool.name);
+    } finally {
+      await close();
+    }
   }
 
   async insertInsuredProspect(fields) {
-    return parseInsertResult(await this.call("insert_insured_prospect_tool", fields));
+    return parseInsertResult(await this.callTool("insert_insured_prospect_tool", fields));
   }
 }
 
+export function resultText(result) {
+  const content = result?.content;
+  if (Array.isArray(content)) return content.map((part) => part?.text ?? "").join("").trim();
+  if (typeof content === "string") return content.trim();
+  return "";
+}
+
 // insert_insured_prospect_tool returns "a success response with insuredDatabaseId
-// or an error message" — shape is not guaranteed, so parse defensively. This is
-// exactly what the pre-go-live dry-run against the real MCP must confirm.
+// or an error message" — shape is not guaranteed, so parse defensively. The
+// pre-go-live dry-run against the real MCP confirms the exact shape.
 export function parseInsertResult(text) {
   let parsed = null;
   try {
@@ -68,6 +80,7 @@ export function parseInsertResult(text) {
     parsed?.databaseId ??
     parsed?.DatabaseId ??
     parsed?.id ??
+    parsed?.data?.insuredDatabaseId ??
     null;
   if (id) return { ok: true, insured_database_id: String(id), raw: parsed ?? text };
   if (typeof text === "string" && /^[0-9a-f-]{36}$/i.test(text.trim())) {
@@ -75,4 +88,13 @@ export function parseInsertResult(text) {
   }
   const message = (typeof text === "string" ? text : JSON.stringify(parsed ?? "")).slice(0, 300);
   return { ok: false, insured_database_id: null, message: message || "No insuredDatabaseId returned.", raw: parsed ?? text };
+}
+
+async function defaultClientFactory({ url, authorization }) {
+  const transport = new StreamableHTTPClientTransport(new URL(url), {
+    requestInit: { headers: { Authorization: authorization } },
+  });
+  const client = new Client({ name: "rsg-intake-gate", version: "0.1.0" }, { capabilities: {} });
+  await client.connect(transport);
+  return { client, close: () => transport.close().catch(() => {}) };
 }
