@@ -20,6 +20,7 @@ import { NowCertsMcpClient, summarizeInsured } from "./connectors/nowcerts-mcp.j
 import { HermesPreviewClient } from "./connectors/hermes-preview.js";
 import { extractPdfText } from "./documents/pdf-text.js";
 import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js";
+import { buildInsuredProposal } from "./intake/intake-proposal.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -465,6 +466,60 @@ const httpServer = createServer(async (req, res) => {
       res.end(report.bytes);
     } catch (error) {
       sendJson(res, error.statusCode ?? 500, { status: "REPORT_NOT_READY", message: error.message });
+    }
+    return;
+  }
+
+  // Standalone (ChatGPT-free) write-proposal + approval over REST. Mirrors the
+  // MCP prepare/approve tools: same gateway.prepare()/approve() guardrails, with
+  // actor/approver derived from the tailnet identity rather than caller-supplied.
+  if (req.method === "POST" && url.pathname === "/api/proposals") {
+    try {
+      const bytes = await readBody(req, 64 * 1024);
+      const { intake_id: intakeId } = JSON.parse(bytes.toString("utf8"));
+      if (!intakeId || !/^[a-f0-9-]{36}$/.test(String(intakeId))) {
+        sendJson(res, 400, { status: "INVALID", message: "A valid intake_id is required." });
+        return;
+      }
+      const bundle = await intakeStore.get(String(intakeId));
+      if (!bundle) {
+        sendJson(res, 404, { status: "NOT_FOUND", message: "Intake bundle not found." });
+        return;
+      }
+      const built = buildInsuredProposal(bundle, requestActor(req));
+      if (!built.ok) {
+        sendJson(res, 422, built);
+        return;
+      }
+      const record = await gateway.prepare(built.proposal);
+      sendJson(res, 201, record);
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 400, { status: "REJECTED", message: error.message });
+    }
+    return;
+  }
+
+  const proposalGet = req.method === "GET" && url.pathname.match(/^\/api\/proposals\/([0-9a-f-]{36})$/);
+  if (proposalGet) {
+    const record = await gateway.get(proposalGet[1]);
+    sendJson(res, record ? 200 : 404, record ?? { status: "NOT_FOUND" });
+    return;
+  }
+
+  const proposalApprove = req.method === "POST" && url.pathname.match(/^\/api\/proposals\/([0-9a-f-]{36})\/approve$/);
+  if (proposalApprove) {
+    try {
+      const bytes = await readBody(req, 8 * 1024);
+      const { confirmation } = JSON.parse(bytes.toString("utf8"));
+      const result = await gateway.approve({
+        proposal_id: proposalApprove[1],
+        approver: requestActor(req),
+        confirmation: String(confirmation ?? ""),
+      });
+      const code = result.ok ? 200 : result.status === "NOT_FOUND" ? 404 : 409;
+      sendJson(res, code, result);
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 400, { status: "REJECTED", message: error.message });
     }
     return;
   }

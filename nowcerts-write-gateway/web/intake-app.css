@@ -127,3 +127,19 @@ footer button { border: 0; border-radius: 8px; padding: 8px 11px; color: #7e827e
 @media (max-width: 850px) { .client-bar { grid-template-columns: 1fr 1fr; } .privacy { grid-column: 1 / -1; } .workspace { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .risk-columns { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { header { align-items: flex-start; } .brand { gap: 8px; } .brand img { width: 98px; height: 48px; } .product-name { padding-left: 9px; } h1 { font-size: 15px; } .brand p { display: none; } .client-bar { grid-template-columns: 1fr; } .privacy { grid-column: auto; } .workspace { padding: 9px; } .source-tabs, .output-tabs { flex-wrap: wrap; } .source-tab, .output-tab { min-width: 44%; } .metric-grid { grid-template-columns: 1fr 1fr; } .routing-note { grid-template-columns: 1fr; } footer { align-items: stretch; flex-direction: column; } }
+
+/* Standalone NowCerts write proposal (prepare/approve) */
+.proposal-block { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #d9d6ce; display: grid; gap: 10px; }
+.proposal-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.proposal-head h4 { margin: 0; color: var(--navy); font-size: 13px; }
+.proposal-hint { margin: 0; color: #6d746f; font-size: 11px; line-height: 1.5; }
+.proposal-status { justify-self: start; border-radius: 999px; padding: 3px 11px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; background: #eef0f2; color: #5b6470; }
+.proposal-status.ready { background: #edf7ee; color: #245b31; }
+.proposal-approve { display: grid; gap: 8px; border: 1px solid #e6c36f; background: #fffdf6; border-radius: 11px; padding: 12px; }
+.proposal-approve label { display: grid; gap: 6px; font-size: 11px; color: #746442; }
+.proposal-approve code { justify-self: start; background: #f5f7f9; border: 1px solid #d9d6ce; border-radius: 6px; padding: 2px 7px; font-size: 12px; color: var(--navy); }
+.proposal-approve input { border: 1px solid #cfd3d0; border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.proposal-approved { border: 1px solid #b8dcc0; background: #edf7ee; border-radius: 11px; padding: 12px; display: grid; gap: 4px; }
+.proposal-approved strong { color: #245b31; font-size: 12px; }
+.proposal-approved span { color: #3f6a49; font-size: 12px; }
+.proposal-issues { border: 1px solid #e6b7a2; background: #fdf1ec; border-radius: 10px; padding: 10px 12px; color: #8a4523; font-size: 12px; line-height: 1.45; }

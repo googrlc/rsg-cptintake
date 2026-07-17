@@ -21,6 +21,10 @@ const state = {
   sources: [],
   bundle: null,
   outputTab: "overview",
+  proposal: null,
+  proposalBusy: false,
+  confirmInput: "",
+  approvalResult: null,
   message: "Add every source for one client, then prepare the combined intake.",
 };
 let lookupTimer = null;
@@ -96,13 +100,53 @@ function renderPipeline() {
   }).join("")}</div>`;
 }
 
+function renderProposalSection() {
+  // Standalone (ChatGPT-free) prepare/approve. In the embedded ChatGPT surface,
+  // proposals stay on the private Tailscale page, so only render this there.
+  if (!isStandalone) return "";
+  if (!(state.bundle?.routing?.ams_fields ?? []).length) return "";
+  const p = state.proposal;
+  const approval = state.approvalResult;
+  const changeRows = (record) =>
+    (record?.proposal?.changes ?? [])
+      .map((c) => `<div><span>${escapeHtml(c.field)}</span><strong>${escapeHtml(String(c.proposed))}</strong><small>${escapeHtml(c.source?.reference ?? "")}</small></div>`)
+      .join("");
+  if (!p) {
+    return `<div class="proposal-block">
+      <div class="proposal-head"><h4>NowCerts write proposal</h4><button id="prepare-proposal" class="secondary" ${state.proposalBusy ? "disabled" : ""}>${state.proposalBusy ? "Preparing…" : "Prepare insured create proposal"}</button></div>
+      <p class="proposal-hint">Builds a cited, confirmation-gated <strong>create</strong> proposal for the primary insured, then records a shadow approval. Nothing is written to NowCerts.</p>
+    </div>`;
+  }
+  if (!p.id) {
+    return `<div class="proposal-block">
+      <div class="proposal-head"><h4>NowCerts write proposal</h4><button id="reset-proposal" class="secondary">Start over</button></div>
+      <div class="proposal-issues">${escapeHtml(p.message ?? p.status ?? "A proposal could not be prepared from this intake.")}</div>
+    </div>`;
+  }
+  const approved = Boolean(approval?.receipt);
+  const ready = p.status === "READY_FOR_APPROVAL" && !approved;
+  return `<div class="proposal-block">
+    <div class="proposal-head"><h4>NowCerts write proposal</h4><button id="reset-proposal" class="secondary">Start over</button></div>
+    <div class="proposal-status ${ready ? "ready" : ""}">${statusLabel(approved ? approval.status : p.status)}</div>
+    <div class="data-list">${changeRows(p)}</div>
+    ${p.validation?.errors?.length ? `<div class="proposal-issues"><strong>Blocked:</strong> ${p.validation.errors.map(escapeHtml).join("; ")}</div>` : ""}
+    ${p.proposal?.missing_fields?.length ? `<div class="proposal-issues"><strong>Needs information:</strong> missing ${p.proposal.missing_fields.map(escapeHtml).join(", ")}</div>` : ""}
+    ${approved ? `<div class="proposal-approved"><strong>${statusLabel(approval.status)}</strong><span>${escapeHtml(approval.message)}</span></div>` : ""}
+    ${ready ? `<div class="proposal-approve">
+      <label>Type to confirm — <code>${escapeHtml(p.expected_confirmation)}</code><input id="confirm-input" value="${escapeHtml(state.confirmInput)}" placeholder="${escapeHtml(p.expected_confirmation)}" autocomplete="off"></label>
+      <button id="approve-proposal" class="primary" ${state.proposalBusy || state.confirmInput.trim() !== p.expected_confirmation ? "disabled" : ""}>Approve (shadow)</button>
+    </div>` : ""}
+    ${approval && !approval.ok && !approved ? `<div class="proposal-issues">${escapeHtml(approval.message ?? approval.status)}</div>` : ""}
+  </div>`;
+}
+
 function renderOutput() {
   const assessment = state.bundle?.assessment;
   if (state.outputTab === "ams") {
     const fields = state.bundle?.routing?.ams_fields ?? [];
     return `<div class="output-block"><h3>AMS candidate preview</h3><p>Hermes extracted these candidate fields. They remain locked until each destination is mapped to a verified NowCerts contract and the current record is reread.</p>
       ${fields.length ? `<div class="contract-summary"><strong>${fields.length} field contract${fields.length === 1 ? "" : "s"} lined up</strong><span>Exact write property + read-back property found. Executor certification is still required.</span></div><div class="data-list">${fields.map((item) => `<div><span>${escapeHtml(item.field)}</span><strong>${escapeHtml(item.value)}</strong><small>${escapeHtml(item.citation)} · ${escapeHtml(statusLabel(item.contract_status))}${item.contract ? ` · ${escapeHtml(item.contract.write_tool)}.${escapeHtml(item.contract.write_field)} → ${escapeHtml(item.contract.read_tool)}.${escapeHtml(item.contract.read_field)}` : ""}</small></div>`).join("")}</div>` : `<div class="blank-state">${state.bundle ? "No operation-specific field contracts line up yet; extracted facts remain in the PDF." : "Prepare the intake to begin routing fields."}</div>`}
-      ${state.bundle?.approval ? `<div class="approval-lock"><strong>Live submission locked</strong><span>${escapeHtml(state.bundle.approval.reason)}</span></div>` : ""}</div>`;
+      ${state.bundle?.approval ? `<div class="approval-lock"><strong>Live submission locked</strong><span>${escapeHtml(state.bundle.approval.reason)}</span></div>` : ""}${renderProposalSection()}</div>`;
   }
   if (state.outputTab === "risk") {
     return `<div class="output-block"><h3>Risk assessment</h3><p>Each business operation will be assessed separately. NAICS, SIC, GL, and WC codes must be found in the RSG reference tables—never guessed.</p>
@@ -179,6 +223,67 @@ function bindEvents() {
   document.querySelector("#prepare")?.addEventListener("click", prepareIntake);
   document.querySelectorAll(".client-match").forEach((button) => button.addEventListener("click", () => selectClientMatch(Number(button.dataset.index))));
   document.querySelector("#clear-client-match")?.addEventListener("click", clearClientMatch);
+  document.querySelector("#prepare-proposal")?.addEventListener("click", prepareProposal);
+  document.querySelector("#approve-proposal")?.addEventListener("click", approveProposal);
+  document.querySelector("#reset-proposal")?.addEventListener("click", () => {
+    state.proposal = null;
+    state.approvalResult = null;
+    state.confirmInput = "";
+    render();
+  });
+  document.querySelector("#confirm-input")?.addEventListener("input", (event) => {
+    state.confirmInput = event.target.value;
+    const button = document.querySelector("#approve-proposal");
+    if (button) button.disabled = state.proposalBusy || state.confirmInput.trim() !== (state.proposal?.expected_confirmation ?? " ");
+  });
+}
+
+async function prepareProposal() {
+  if (!state.bundle?.intake_id) return;
+  state.proposalBusy = true;
+  state.approvalResult = null;
+  render();
+  try {
+    const response = await fetch("/api/proposals", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ intake_id: state.bundle.intake_id }),
+    });
+    const result = await response.json();
+    state.proposal = result;
+    state.confirmInput = "";
+    state.message = result.id
+      ? `Proposal ${statusLabel(result.status)}. Review each field, then type the confirmation to shadow-approve.`
+      : `No proposal prepared: ${result.message ?? result.status}`;
+  } catch (error) {
+    state.message = `Proposal request failed: ${error.message}`;
+  } finally {
+    state.proposalBusy = false;
+    render();
+  }
+}
+
+async function approveProposal() {
+  if (!state.proposal?.id) return;
+  state.proposalBusy = true;
+  render();
+  try {
+    const response = await fetch(`/api/proposals/${state.proposal.id}/approve`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ confirmation: state.confirmInput.trim() }),
+    });
+    const result = await response.json();
+    state.approvalResult = result;
+    state.message = result.ok
+      ? "Shadow-approved. Nothing was written to NowCerts."
+      : `Approval blocked: ${result.message ?? result.status}`;
+  } catch (error) {
+    state.message = `Approval request failed: ${error.message}`;
+  } finally {
+    state.proposalBusy = false;
+    render();
+  }
 }
 
 function scheduleClientLookup() {
@@ -319,6 +424,9 @@ async function prepareIntake() {
       result = result.structuredContent ?? result;
     } else throw new Error("The intake service is not connected.");
     state.bundle = result;
+    state.proposal = null;
+    state.approvalResult = null;
+    state.confirmInput = "";
     state.outputTab = "overview";
     const gaps = result.assessment?.missing_items?.length ?? 0;
     state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; nothing was written to NowCerts.`;
