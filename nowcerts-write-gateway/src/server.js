@@ -21,6 +21,8 @@ import { HermesPreviewClient } from "./connectors/hermes-preview.js";
 import { extractPdfText } from "./documents/pdf-text.js";
 import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js";
 import { buildInsuredProposal } from "./intake/intake-proposal.js";
+import { MomentumWriteClient } from "./connectors/momentum-write.js";
+import { commitApprovedInsured } from "./executor/insured-executor.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -38,6 +40,21 @@ const nowcertsReader = process.env.NOWCERTS_MCP_URL && process.env.NOWCERTS_MCP_
 const hermesPreview = process.env.HERMES_PREVIEW_URL
   ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL })
   : null;
+// Live AMS writes stay OFF unless ALL of: the explicit LIVE_AMS_WRITES=on flag,
+// a configured Momentum write connector, AND a read connector (needed for the
+// pre-write duplicate check and post-write read-back). Missing any one => no
+// write is possible and the "Send to AMS" endpoint reports NOT_ENABLED.
+const momentumWriter =
+  process.env.LIVE_AMS_WRITES === "on" &&
+  process.env.MOMENTUM_MCP_URL &&
+  process.env.MOMENTUM_MCP_TOKEN_FILE &&
+  nowcertsReader
+    ? new MomentumWriteClient({
+        url: process.env.MOMENTUM_MCP_URL,
+        tokenFile: process.env.MOMENTUM_MCP_TOKEN_FILE,
+      })
+    : null;
+const liveWritesEnabled = Boolean(momentumWriter);
 const documentStore = new TempDocumentStore(path.join(dataDir, "documents"));
 const intakeStore = new FileIntakeSourceStore(path.join(dataDir, "intakes"));
 const intakeAppUri = "ui://rsg/intake-gate.html";
@@ -310,7 +327,7 @@ const httpServer = createServer(async (req, res) => {
         mode,
         live_data: mode === "pilot" && Boolean(nowcertsReader),
         synthesis_ready: Boolean(hermesPreview),
-        live_writes: false,
+        live_writes: liveWritesEnabled,
         operator_page: "/app",
       }));
     return;
@@ -520,6 +537,38 @@ const httpServer = createServer(async (req, res) => {
       sendJson(res, code, result);
     } catch (error) {
       sendJson(res, error.statusCode ?? 400, { status: "REJECTED", message: error.message });
+    }
+    return;
+  }
+
+  // "Send to AMS" — the guarded live write. Runs only on a reviewed + approved
+  // proposal, and only when live writes are enabled; otherwise NOT_ENABLED.
+  const proposalCommit = req.method === "POST" && url.pathname.match(/^\/api\/proposals\/([0-9a-f-]{36})\/commit$/);
+  if (proposalCommit) {
+    try {
+      const record = await gateway.get(proposalCommit[1]);
+      if (!record) {
+        sendJson(res, 404, { ok: false, status: "NOT_FOUND", message: "Proposal not found." });
+        return;
+      }
+      const result = await commitApprovedInsured({
+        record,
+        store,
+        writeClient: momentumWriter,
+        readClient: nowcertsReader,
+      });
+      const code = result.ok
+        ? 200
+        : result.status === "NOT_FOUND"
+          ? 404
+          : result.status === "NOT_ENABLED"
+            ? 503
+            : result.status === "DUPLICATE_STOP" || result.status === "ALREADY_COMMITTED"
+              ? 409
+              : 422;
+      sendJson(res, code, result);
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 500, { ok: false, status: "ERROR", message: error.message });
     }
     return;
   }

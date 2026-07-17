@@ -143,3 +143,19 @@ footer button { border: 0; border-radius: 8px; padding: 8px 11px; color: #7e827e
 .proposal-approved strong { color: #245b31; font-size: 12px; }
 .proposal-approved span { color: #3f6a49; font-size: 12px; }
 .proposal-issues { border: 1px solid #e6b7a2; background: #fdf1ec; border-radius: 10px; padding: 10px 12px; color: #8a4523; font-size: 12px; line-height: 1.45; }
+
+/* Send to AMS — guarded live write */
+.ams-send { display: grid; gap: 8px; margin-top: 10px; border: 1px solid #e6c36f; background: #fffdf6; border-radius: 11px; padding: 12px; }
+.ams-send p { margin: 0; color: #746442; font-size: 12px; line-height: 1.5; }
+.primary.danger { background: #8a2f1a; border-color: #8a2f1a; }
+.primary.danger:hover:not(:disabled) { background: #732718; }
+.ams-send-result { margin-top: 10px; border-radius: 11px; padding: 12px; display: grid; gap: 4px; border: 1px solid #d9d6ce; background: #fff; }
+.ams-send-result strong { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.ams-send-result span { font-size: 12px; line-height: 1.45; }
+.ams-send-result small { font-size: 11px; color: #55705b; }
+.ams-send-result.verified { border-color: #b8dcc0; background: #edf7ee; }
+.ams-send-result.verified strong { color: #245b31; }
+.ams-send-result.warn { border-color: #e6c36f; background: #fff8e5; }
+.ams-send-result.warn strong { color: #6f5311; }
+.ams-send-result.error { border-color: #e6b7a2; background: #fdf1ec; }
+.ams-send-result.error strong { color: #8a4523; }

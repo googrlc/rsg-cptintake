@@ -25,6 +25,8 @@ const state = {
   proposalBusy: false,
   confirmInput: "",
   approvalResult: null,
+  commitBusy: false,
+  commitResult: null,
   message: "Add every source for one client, then prepare the combined intake.",
 };
 let lookupTimer = null;
@@ -131,12 +133,29 @@ function renderProposalSection() {
     <div class="data-list">${changeRows(p)}</div>
     ${p.validation?.errors?.length ? `<div class="proposal-issues"><strong>Blocked:</strong> ${p.validation.errors.map(escapeHtml).join("; ")}</div>` : ""}
     ${p.proposal?.missing_fields?.length ? `<div class="proposal-issues"><strong>Needs information:</strong> missing ${p.proposal.missing_fields.map(escapeHtml).join(", ")}</div>` : ""}
-    ${approved ? `<div class="proposal-approved"><strong>${statusLabel(approval.status)}</strong><span>${escapeHtml(approval.message)}</span></div>` : ""}
+    ${approved ? `<div class="proposal-approved"><strong>${statusLabel(approval.status)}</strong><span>${escapeHtml(approval.message)}</span></div>${renderSendToAms()}` : ""}
     ${ready ? `<div class="proposal-approve">
       <label>Type to confirm — <code>${escapeHtml(p.expected_confirmation)}</code><input id="confirm-input" value="${escapeHtml(state.confirmInput)}" placeholder="${escapeHtml(p.expected_confirmation)}" autocomplete="off"></label>
       <button id="approve-proposal" class="primary" ${state.proposalBusy || state.confirmInput.trim() !== p.expected_confirmation ? "disabled" : ""}>Approve (shadow)</button>
     </div>` : ""}
     ${approval && !approval.ok && !approved ? `<div class="proposal-issues">${escapeHtml(approval.message ?? approval.status)}</div>` : ""}
+  </div>`;
+}
+
+function renderSendToAms() {
+  const c = state.commitResult;
+  if (c) {
+    const tone = c.status === "VERIFIED" ? "verified" : c.status === "DUPLICATE_STOP" || c.status === "ALREADY_COMMITTED" ? "warn" : "error";
+    const settled = c.status === "VERIFIED" || c.status === "ALREADY_COMMITTED";
+    return `<div class="ams-send-result ${tone}">
+      <strong>${statusLabel(c.status)}</strong>
+      <span>${escapeHtml(c.message ?? "")}</span>
+      ${c.receipt?.insured_database_id ? `<small>NowCerts insured ID ${escapeHtml(c.receipt.insured_database_id)}</small>` : ""}
+    </div>${settled ? "" : `<button id="retry-commit" class="secondary" ${state.commitBusy ? "disabled" : ""}>${state.commitBusy ? "Sending…" : "Try send again"}</button>`}`;
+  }
+  return `<div class="ams-send">
+    <p>Reviewed and approved. Sending writes the insured to NowCerts, re-checks for duplicates first, then reads the saved record back and verifies every field.</p>
+    <button id="send-ams" class="primary danger" ${state.commitBusy ? "disabled" : ""}>${state.commitBusy ? "Sending to AMS…" : "Send to AMS →"}</button>
   </div>`;
 }
 
@@ -229,6 +248,8 @@ function bindEvents() {
     state.proposal = null;
     state.approvalResult = null;
     state.confirmInput = "";
+    state.commitResult = null;
+    state.commitBusy = false;
     render();
   });
   document.querySelector("#confirm-input")?.addEventListener("input", (event) => {
@@ -236,6 +257,31 @@ function bindEvents() {
     const button = document.querySelector("#approve-proposal");
     if (button) button.disabled = state.proposalBusy || state.confirmInput.trim() !== (state.proposal?.expected_confirmation ?? " ");
   });
+  document.querySelector("#send-ams")?.addEventListener("click", sendToAms);
+  document.querySelector("#retry-commit")?.addEventListener("click", sendToAms);
+}
+
+async function sendToAms() {
+  if (!state.proposal?.id) return;
+  state.commitBusy = true;
+  render();
+  try {
+    const response = await fetch(`/api/proposals/${state.proposal.id}/commit`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{}",
+    });
+    const result = await response.json();
+    state.commitResult = result;
+    state.message = result.ok
+      ? `Written to NowCerts and verified (insured ${result.receipt?.insured_database_id}).`
+      : `Send stopped (${statusLabel(result.status)}): ${result.message ?? ""}`;
+  } catch (error) {
+    state.message = `Send failed: ${error.message}`;
+  } finally {
+    state.commitBusy = false;
+    render();
+  }
 }
 
 async function prepareProposal() {
@@ -252,6 +298,7 @@ async function prepareProposal() {
     const result = await response.json();
     state.proposal = result;
     state.confirmInput = "";
+    state.commitResult = null;
     state.message = result.id
       ? `Proposal ${statusLabel(result.status)}. Review each field, then type the confirmation to shadow-approve.`
       : `No proposal prepared: ${result.message ?? result.status}`;
@@ -427,6 +474,8 @@ async function prepareIntake() {
     state.proposal = null;
     state.approvalResult = null;
     state.confirmInput = "";
+    state.commitResult = null;
+    state.commitBusy = false;
     state.outputTab = "overview";
     const gaps = result.assessment?.missing_items?.length ?? 0;
     state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; nothing was written to NowCerts.`;

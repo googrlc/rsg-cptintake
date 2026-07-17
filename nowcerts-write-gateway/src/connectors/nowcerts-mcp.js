@@ -43,6 +43,16 @@ export class NowCertsMcpClient {
     }
     return [];
   }
+
+  // Read-back for post-write verification: fetch a single insured by id.
+  async getInsured(id) {
+    const parsed = JSON.parse(await this.call("get_insured", { id }));
+    if (Array.isArray(parsed)) return parsed[0] ?? null;
+    for (const key of ["value", "items", "results"]) {
+      if (Array.isArray(parsed?.[key])) return parsed[key][0] ?? null;
+    }
+    return parsed ?? null;
+  }
 }
 
 function first(record, names) {
