@@ -63,6 +63,13 @@ export class MomentumWriteClient {
     return parseInsertResult(await this.callTool("insert_insured_prospect_tool", fields));
   }
 
+  // Attach a note to an insured (the risk assessment). subject holds the note
+  // text per the tool contract. Throws on error so the caller can record it.
+  async insertNote({ insuredDatabaseId, subject }) {
+    await this.callTool("insert_note_tool", { insured_database_id: insuredDatabaseId, subject });
+    return { ok: true };
+  }
+
   // Read-back by id — the audit-certified verification tool for insured create.
   async getInsuredById(insuredDatabaseId) {
     const text = await this.callTool("get_insured_detail_list_tool", { insured_database_id: insuredDatabaseId });

@@ -533,6 +533,9 @@ const httpServer = createServer(async (req, res) => {
         return;
       }
       const record = await gateway.prepare(built.proposal);
+      // Remember the source intake so the guarded commit can attach its note.
+      record.intake_id = String(intakeId);
+      await store.save(record);
       sendJson(res, 201, record);
     } catch (error) {
       sendJson(res, error.statusCode ?? 400, { status: "REJECTED", message: error.message });
@@ -615,12 +618,15 @@ const httpServer = createServer(async (req, res) => {
       } catch {
         override = false;
       }
+      const sourceBundle = record.intake_id ? await intakeStore.get(record.intake_id) : null;
+      const intakeNote = sourceBundle?.synthesis?.payload?.note ?? null;
       const result = await commitApprovedInsured({
         record,
         store,
         writeClient: momentumWriter,
         readClient: nowcertsReader,
         override,
+        intakeNote,
       });
       const code = result.ok
         ? 200

@@ -66,7 +66,7 @@ function readbackValue(record, field) {
   return null;
 }
 
-function buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches = [], nowIso, note = null }) {
+function buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches = [], nowIso, note = null, noteAttached = null, noteError = null }) {
   return {
     result: verified ? "VERIFIED" : mismatches.length ? "MISMATCH" : "UNVERIFIED",
     proposal_id: record.id,
@@ -79,6 +79,8 @@ function buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatc
     committed_by: record.receipt?.approved_by ?? record.proposal.actor,
     committed_at: nowIso,
     note,
+    note_attached: noteAttached,
+    ...(noteError ? { note_error: noteError } : {}),
   };
 }
 
@@ -98,7 +100,7 @@ async function persistCommit(store, record, liveReceipt, status) {
   });
 }
 
-export async function commitApprovedInsured({ record, store, writeClient, readClient, override = false, now = () => new Date().toISOString() }) {
+export async function commitApprovedInsured({ record, store, writeClient, readClient, override = false, intakeNote = null, now = () => new Date().toISOString() }) {
   if (!record) return { ok: false, status: "NOT_FOUND", message: "Proposal not found." };
 
   // Idempotency: a completed live write is never repeated.
@@ -191,14 +193,33 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
       : normalizeValue(saved) !== normalizeValue(sent);
   });
   const verified = mismatches.length === 0;
-  const receipt = buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches, nowIso: now() });
+
+  // Attach the risk assessment as a NowCerts note on the new insured. Additive
+  // and non-blocking: a note failure does not undo the (verified) create.
+  let noteAttached = null;
+  let noteError = null;
+  const noteSubject = intakeNote?.body
+    ? [intakeNote.title, intakeNote.body].filter(Boolean).join("\n\n").slice(0, 20000)
+    : null;
+  if (noteSubject && typeof writeClient.insertNote === "function") {
+    try {
+      await writeClient.insertNote({ insuredDatabaseId: insuredId, subject: noteSubject });
+      noteAttached = true;
+    } catch (error) {
+      noteAttached = false;
+      noteError = error.message;
+    }
+  }
+
+  const receipt = buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches, nowIso: now(), noteAttached, noteError });
   await persistCommit(store, record, receipt, verified ? "COMMITTED_VERIFIED" : "COMMITTED_MISMATCH");
+  const noteSuffix = noteAttached ? " Risk assessment note attached." : noteAttached === false ? " (Note attach failed — add it manually.)" : "";
   return {
     ok: verified,
     status: verified ? "VERIFIED" : "MISMATCH",
     message: verified
-      ? `Created and verified in NowCerts (insured ${insuredId}).`
-      : `Created (${insuredId}) but ${mismatches.length} field(s) did not match on read-back: ${mismatches.join(", ")}. Verify manually.`,
+      ? `Created and verified in NowCerts (insured ${insuredId}).${noteSuffix}`
+      : `Created (${insuredId}) but ${mismatches.length} field(s) did not match on read-back: ${mismatches.join(", ")}. Verify manually.${noteSuffix}`,
     receipt,
   };
 }

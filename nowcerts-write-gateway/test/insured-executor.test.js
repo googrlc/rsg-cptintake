@@ -42,8 +42,10 @@ const SAVED_MATCH = {
 function makeWriteClient(result = { ok: true, insured_database_id: "NEW-INSURED-1" }, readback = SAVED_MATCH) {
   return {
     calls: [],
+    noteCalls: [],
     async insertInsuredProspect(payload) { this.calls.push(payload); return result; },
     async getInsuredById() { return readback; },
+    async insertNote(args) { this.noteCalls.push(args); return { ok: true }; },
   };
 }
 
@@ -101,6 +103,35 @@ test("read-back tolerates entity-suffix normalization on the name -> VERIFIED", 
 
   assert.equal(result.status, "VERIFIED");
   assert.deepEqual(result.receipt.mismatched_fields, []);
+});
+
+test("attaches the risk assessment note after a verified create", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  const readClient = { async searchInsureds() { return []; } };
+  const intakeNote = { title: "Underwriting Summary", body: "### Facts\n- 24-bed facility" };
+
+  const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, intakeNote, now: NOW });
+
+  assert.equal(result.status, "VERIFIED");
+  assert.equal(result.receipt.note_attached, true);
+  assert.equal(writeClient.noteCalls.length, 1);
+  assert.equal(writeClient.noteCalls[0].insuredDatabaseId, "NEW-INSURED-1");
+  assert.match(writeClient.noteCalls[0].subject, /Underwriting Summary/);
+  assert.match(writeClient.noteCalls[0].subject, /24-bed facility/);
+});
+
+test("a note-attach failure does not undo a verified create", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  writeClient.insertNote = async () => { throw new Error("note service down"); };
+  const readClient = { async searchInsureds() { return []; } };
+
+  const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, intakeNote: { title: "X", body: "Y" }, now: NOW });
+
+  assert.equal(result.status, "VERIFIED");
+  assert.equal(result.receipt.note_attached, false);
+  assert.match(result.receipt.note_error, /note service down/);
 });
 
 test("classifyMatch and canonicalName handle entity suffixes", () => {
