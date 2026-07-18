@@ -23,6 +23,10 @@ import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js
 import { buildInsuredProposal } from "./intake/intake-proposal.js";
 import { MomentumWriteClient } from "./connectors/momentum-write.js";
 import { commitApprovedInsured } from "./executor/insured-executor.js";
+import { attomClientFromEnv } from "./connectors/attom-client.js";
+import { FemaFloodClient } from "./connectors/fema-flood-client.js";
+import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
+import { lookupPropertyProfile } from "./intake/property-lookup.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -40,6 +44,17 @@ const nowcertsReader = process.env.NOWCERTS_MCP_URL && process.env.NOWCERTS_MCP_
 const hermesPreview = process.env.HERMES_PREVIEW_URL
   ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL })
   : null;
+// Optional, operator-triggered property enrichment (ATTOM). Null unless a key is
+// configured — the "Get property details" button reports NOT_ENABLED then.
+const attomClient = attomClientFromEnv();
+// FEMA flood zone (free, keyless) — chained onto a property match via its coords.
+// ATTOM_NO_FLOOD=on disables it if the NFHL service is ever a problem.
+const floodClient = process.env.ATTOM_NO_FLOOD === "on" ? null : new FemaFloodClient();
+// Deferred provider seams (Noop until a licensed source is wired): ISO fire
+// protection class and replacement cost. They keep those two property_profile
+// fields plumbed so they fill the moment a provider exists, and stay null now.
+const protectionClassClient = protectionClassClientFromEnv();
+const replacementCostClient = replacementCostClientFromEnv();
 // Live AMS writes stay OFF unless ALL of: the explicit LIVE_AMS_WRITES=on flag,
 // a configured Momentum write connector, AND a read connector (needed for the
 // pre-write duplicate check and post-write read-back). Missing any one => no
@@ -507,6 +522,46 @@ const httpServer = createServer(async (req, res) => {
       res.end(report.bytes);
     } catch (error) {
       sendJson(res, error.statusCode ?? 500, { status: "REPORT_NOT_READY", message: error.message });
+    }
+    return;
+  }
+
+  // Operator-triggered property lookup ("Get property details" button). Optional
+  // and off the automatic path — an auto-only quote never calls this. Reads the
+  // insured address off the saved bundle, asks ATTOM, and attaches a SUGGESTED
+  // property_profile[] to the bundle so it flows into the risk report. Read-only;
+  // no AMS write.
+  const propertyMatch = req.method === "POST" && url.pathname.match(/^\/api\/intakes\/([a-f0-9-]{36})\/property$/);
+  if (propertyMatch) {
+    try {
+      if (!attomClient) {
+        sendJson(res, 503, { ok: false, status: "NOT_ENABLED", message: "Property lookup is not configured (ATTOM_API_KEY not set)." });
+        return;
+      }
+      const bundle = await intakeStore.get(propertyMatch[1]);
+      if (!bundle) {
+        sendJson(res, 404, { ok: false, status: "NOT_FOUND", message: "Intake bundle not found." });
+        return;
+      }
+      const result = await lookupPropertyProfile(bundle, attomClient, { floodClient, protectionClassClient, replacementCostClient });
+      if (result.status === "NO_ADDRESS") {
+        sendJson(res, 422, { ok: false, status: "NO_ADDRESS", message: "No property street address is on this intake to look up." });
+        return;
+      }
+      // Persist the suggestion onto the bundle so the retained report includes it.
+      bundle.property_profile = result.property_profile;
+      await intakeStore.save(bundle);
+      sendJson(res, 200, {
+        ok: result.status === "OK",
+        status: result.status,
+        address: result.address,
+        property_profile: result.property_profile,
+        message: result.status === "OK"
+          ? "Property details retrieved and attached to the report (suggested — confirm before relying on them)."
+          : "No ATTOM property record matched this address.",
+      });
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 502, { ok: false, status: "LOOKUP_FAILED", message: error.message });
     }
     return;
   }

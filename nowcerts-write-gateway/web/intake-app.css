@@ -165,3 +165,12 @@ footer button { border: 0; border-radius: 8px; padding: 8px 11px; color: #7e827e
 
 .download-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .download.client { background: var(--gold); color: var(--navy); }
+
+/* Operator-triggered property lookup (ATTOM) on the Risk assessment tab. */
+.property-block { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #d9d6ce; display: grid; gap: 10px; }
+.property-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.property-head h4 { margin: 0; color: var(--navy); font-size: 13px; }
+.property-hint { color: #7c817d; font-size: 11px; line-height: 1.5; }
+.property-result small { display: block; color: #7c817d; font-size: 10px; margin-bottom: 8px; }
+.metric-grid.small { grid-template-columns: repeat(3,1fr); margin-top: 0; }
+.metric-grid.small strong { font-size: 15px; }

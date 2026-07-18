@@ -41,3 +41,40 @@ test("unfinished assessment cannot generate a final PDF", async () => {
   const bundle = prepareSourceBundle({ client_name: "Example LLC", existing_client_id: null, sources: [{ kind: "notes", title: "Notes", content: "Some notes", captured_at: "2026-07-17T12:00:00.000Z" }] });
   await assert.rejects(() => generateIntakeReport(bundle, os.tmpdir()), /must be complete/i);
 });
+
+test("personal-lines bundle with property profile and scores renders both audiences", async () => {
+  const bundle = prepareSourceBundle(
+    {
+      client_name: "The Okafor Household",
+      existing_client_id: null,
+      sources: [{ kind: "notes", title: "Client notes", content: "Homeowner, two vehicles, prior AmFam 6 years.", captured_at: "2026-07-17T12:00:00.000Z" }],
+    },
+    { intakeId: "55555555-5555-4555-8555-555555555555", now: "2026-07-17T12:00:00.000Z" },
+  );
+  // Personal-lines shape: household snapshot, property profile, loss history, 1-5 scores.
+  bundle.lines_of_business = ["Homeowners", "Personal Auto"];
+  bundle.property_profile = [
+    { address: "123 Maple St, Austin, TX", year_built: "1998", square_feet: "2,450", construction: "Frame", roof: "8 yr / comp", protection_class: "3", flood_zone: "X", replacement_cost: "$412,000" },
+  ];
+  bundle.assessment = {
+    ...bundle.assessment,
+    status: "COMPLETE",
+    review_status: "Ready for Review",
+    summary: "Homeowner with two vehicles and continuous prior coverage.",
+    confidence: 70,
+    household: { named_insured: "Ada Okafor", co_applicant: "N. Okafor", prior_carrier: "American Family", prior_liability_limit: "100/300/100", continuous_coverage: "Yes", umbrella: "None" },
+    coverage_requirements: ["Homeowners HO-3", "Personal Auto", "Personal Umbrella"],
+    favorable_factors: ["Continuous prior coverage", "No lapses"],
+    red_flags: ["Umbrella gap given asset profile"],
+    loss_history: [{ date: "2024-05", line: "Home", description: "Wind/hail", amount_paid: "$6,200", status: "Closed" }],
+    scores: { "Loss / Claims History": 4, "Coverage Adequacy": 3, "Household Stability / Retention Likelihood": 4, "Monoline -> Multiline Upside": 5, "Household Lifetime Value": 4 },
+    evidence_map: [{ source: "SRC-001", reference: "Client notes", fact: "Homeowner with two vehicles" }],
+  };
+  const outputDir = process.env.REPORT_TEST_OUTPUT_DIR ?? await mkdtemp(path.join(os.tmpdir(), "rsg-report-pl-"));
+  const internal = await generateIntakeReport(bundle, outputDir);
+  const client = await generateIntakeReport(bundle, outputDir, { audience: "client" });
+  assert.equal(internal.bytes.subarray(0, 5).toString("latin1"), "%PDF-");
+  assert.equal(client.bytes.subarray(0, 5).toString("latin1"), "%PDF-");
+  assert.ok(internal.bytes.length > 3000);
+  assert.ok(client.bytes.length > 2000);
+});
