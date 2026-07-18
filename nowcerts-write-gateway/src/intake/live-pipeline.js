@@ -57,7 +57,10 @@ export function buildEvidenceText(bundle, pdfTexts = new Map()) {
       const extracted = pdfTexts.get(source.document_id);
       parts.push(`=== PDF ${marker} ===\n${extracted?.text || "[No machine-readable text found. Manual review/OCR required.]"}`);
     } else {
-      parts.push(`=== ${source.kind.toUpperCase()} ${marker} ===\n${source.content}`);
+      const heading = source.kind === "manual_facts"
+        ? `OPERATOR-PROVIDED FACTS (authoritative — treat as confirmed) ${marker}`
+        : `${source.kind.toUpperCase()} ${marker}`;
+      parts.push(`=== ${heading} ===\n${source.content}`);
     }
   }
   return parts.join("\n\n");

@@ -199,6 +199,18 @@ function renderOutput() {
 }
 
 function render() {
+  // Preserve focus + caret across the full re-render so typing in the name/
+  // composer fields isn't interrupted when a background search/render fires.
+  const active = document.activeElement;
+  const activeId = active && active.id ? active.id : null;
+  let caretStart = null;
+  let caretEnd = null;
+  try {
+    caretStart = active?.selectionStart ?? null;
+    caretEnd = active?.selectionEnd ?? null;
+  } catch {
+    caretStart = null;
+  }
   const prepared = Boolean(state.bundle);
   root.innerHTML = `<section class="shell">
     <header><div class="brand"><img src="${brandLogo}" alt="Risk Solutions Group"><div class="product-name"><h1>Client Intake Gate</h1><p>Evidence in · assessed, routed, and verified out</p></div></div><div class="mode"><i></i> LIVE DATA PILOT · WRITES LOCKED</div></header>
@@ -228,6 +240,15 @@ function render() {
     <footer><div><span class="pulse"></span><p>${escapeHtml(state.message)}</p></div><button disabled>${state.bundle?.approval?.status === "LOCKED" ? "Live AMS submission locked pending certification" : "Final approval occurs after the full preview"}</button></footer>
   </section>`;
   bindEvents();
+  if (activeId) {
+    const restored = document.getElementById(activeId);
+    if (restored) {
+      restored.focus();
+      if (caretStart != null && typeof restored.setSelectionRange === "function") {
+        try { restored.setSelectionRange(caretStart, caretEnd); } catch { /* not a text field */ }
+      }
+    }
+  }
 }
 
 function bindEvents() {
@@ -353,7 +374,7 @@ function scheduleClientLookup() {
     state.lookup = { status: "idle", query, matches: [], error: null, selected: null };
     return;
   }
-  lookupTimer = setTimeout(runClientLookup, 650);
+  lookupTimer = setTimeout(runClientLookup, 1100);
 }
 
 async function runClientLookup() {
@@ -465,6 +486,18 @@ async function uploadPdfs(files) {
 }
 
 async function prepareIntake() {
+  // Safety net: fold any typed-but-not-yet-added manual facts / notes / transcript
+  // into the bundle so operator-entered text is never silently dropped on Prepare.
+  if (state.sourceKind !== "pdf" && state.draftContent.trim()) {
+    state.sources.push({
+      kind: state.sourceKind,
+      title: state.draftTitle.trim() || sourceLabels[state.sourceKind],
+      content: state.draftContent.trim(),
+      captured_at: new Date().toISOString(),
+    });
+    state.draftTitle = "";
+    state.draftContent = "";
+  }
   state.busy = true;
   state.message = "Extracting PDFs, synthesizing evidence, enriching the business, and building the review package…";
   render();
