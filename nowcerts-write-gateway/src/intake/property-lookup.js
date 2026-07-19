@@ -47,7 +47,7 @@ export async function lookupPropertyProfile(bundle, client, {
   // ISO fire protection class — deferred provider seam; fills only when supplied.
   if (protectionClassClient) {
     try {
-      const pc = await protectionClassClient.protectionClass({ address: profile.address, latitude: profile.latitude, longitude: profile.longitude });
+      const pc = await protectionClassClient.protectionClass({ state: profile.state, county: profile.county, address: profile.address, latitude: profile.latitude, longitude: profile.longitude });
       if (pc?.protection_class) profile.protection_class = pc.protection_class;
     } catch { /* provider optional — never block the match */ }
   }

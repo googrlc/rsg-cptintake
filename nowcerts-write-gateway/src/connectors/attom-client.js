@@ -107,6 +107,9 @@ export function toPropertyProfile(node) {
     // Coordinates carry forward so the flood-zone step can query FEMA's NFHL.
     latitude: pick(node, ["location.latitude"]),
     longitude: pick(node, ["location.longitude"]),
+    // State + county drive the county-level ISO protection-class lookup.
+    state: pick(node, ["address.countrySubd"]),
+    county: pick(node, ["area.countrysecsubd", "area.munname"]),
     // Not available from /property/detail — sourced elsewhere, never guessed.
     // flood_zone is filled by the FEMA NFHL step in the property lookup.
     protection_class: null,

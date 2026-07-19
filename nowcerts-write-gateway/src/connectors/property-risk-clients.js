@@ -8,6 +8,8 @@
 // fills the instant a provider is supplied, and stays null (never guessed) until
 // then. Each provider returns { <field>, source } on a hit, or null.
 
+import { readFileSync } from "node:fs";
+
 // --- ISO Public Protection Classification (fire protection class) ---------
 
 // Default: contributes nothing. protection_class stays null.
@@ -31,10 +33,48 @@ export class StubProtectionClassClient {
   }
 }
 
-export function protectionClassClientFromEnv(/* env = process.env */) {
-  // No licensed ISO/Verisk provider is wired yet → Noop. When one is available,
-  // build and return the live client here; the property lookup already consumes it.
-  return new NoopProtectionClassClient();
+// County-level ISO fire protection class from a structured table (e.g. the
+// Georgia DCA GOMI "predominant county rating" dataset). This is an APPROXIMATION
+// — true ISO PPC is per fire district/property — so the value is explicitly
+// labeled "county estimate". The table must come from the structured source, not
+// a hand-read map: an unknown county returns null, never a guessed class.
+export class CountyProtectionClassClient {
+  constructor(table = {}, { year = null, note = "county estimate" } = {}) {
+    // table: { GA: { fulton: 3, ... } } — state code → lowercased county → 1..10
+    this.table = {};
+    for (const [state, counties] of Object.entries(table)) {
+      this.table[String(state).toUpperCase()] = Object.fromEntries(
+        Object.entries(counties).map(([c, r]) => [String(c).toLowerCase().trim(), r]),
+      );
+    }
+    this.year = year;
+    this.note = note;
+  }
+
+  async protectionClass({ state, county } = {}) {
+    if (!state || !county) return null;
+    const rating = this.table[String(state).toUpperCase()]?.[String(county).toLowerCase().trim()];
+    if (rating == null) return null;
+    const provenance = ["GOMI county fire ISO", this.year].filter(Boolean).join(" ");
+    return {
+      protection_class: `ISO ${rating} (${this.note}${this.year ? `, ${this.year}` : ""})`,
+      source: provenance,
+    };
+  }
+}
+
+// Loads a structured county→ISO table from PROTECTION_CLASS_TABLE_FILE (JSON:
+// {"year":2018,"table":{"GA":{"fulton":3,...}}}). Absent/unreadable → Noop, so
+// the field simply stays null. No table is ever inferred from an image.
+export function protectionClassClientFromEnv(env = process.env) {
+  const file = env.PROTECTION_CLASS_TABLE_FILE;
+  if (!file) return new NoopProtectionClassClient();
+  try {
+    const data = JSON.parse(readFileSync(file, "utf8"));
+    return new CountyProtectionClassClient(data.table ?? data, { year: data.year ?? null });
+  } catch {
+    return new NoopProtectionClassClient();
+  }
 }
 
 // --- Replacement cost estimate (RCE) --------------------------------------

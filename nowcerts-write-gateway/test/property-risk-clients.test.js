@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   NoopProtectionClassClient,
   StubProtectionClassClient,
+  CountyProtectionClassClient,
   protectionClassClientFromEnv,
   NoopReplacementCostClient,
   StubReplacementCostClient,
@@ -18,6 +19,21 @@ test("Stub protection class returns a seeded value for a known address only", as
   const c = new StubProtectionClassClient({ "4529 WINONA CT, DENVER, CO 80212": "4" });
   assert.equal((await c.protectionClass({ address: "4529 WINONA CT, DENVER, CO 80212" })).protection_class, "4");
   assert.equal(await c.protectionClass({ address: "unknown" }), null);
+});
+
+test("County protection class looks up (state, county) case-insensitively and labels it an estimate", async () => {
+  const c = new CountyProtectionClassClient({ GA: { fulton: 3, "ben hill": 6 } }, { year: 2018 });
+  const out = await c.protectionClass({ state: "ga", county: "Fulton" });
+  assert.match(out.protection_class, /ISO 3 \(county estimate, 2018\)/);
+  assert.match(out.source, /GOMI county fire ISO 2018/);
+  assert.equal((await c.protectionClass({ state: "GA", county: "Ben Hill" })).protection_class.startsWith("ISO 6"), true);
+});
+
+test("County protection class returns null for an unknown county — never a guessed class", async () => {
+  const c = new CountyProtectionClassClient({ GA: { fulton: 3 } });
+  assert.equal(await c.protectionClass({ state: "GA", county: "Cobb" }), null);
+  assert.equal(await c.protectionClass({ state: "FL", county: "Fulton" }), null);
+  assert.equal(await c.protectionClass({ county: "Fulton" }), null); // no state
 });
 
 test("Stub replacement cost estimates from square footage, or null without a rate", async () => {
