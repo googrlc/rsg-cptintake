@@ -1,0 +1,2671 @@
+{
+  "source": "Standard Industrial Classification (SIC) Codes",
+  "term_set": "SIC Codes",
+  "count": 444,
+  "codes": [
+    {
+      "code": "0100",
+      "description": "AGRICULTURAL PRODUCTION-CROPS",
+      "category": "Agriculture, Forestry & Fishing",
+      "subcategory": "Agricultural Production"
+    },
+    {
+      "code": "0200",
+      "description": "AGRICULTURAL PROD-LIVESTOCK & ANIMAL SPECIALTIES",
+      "category": "Agriculture, Forestry & Fishing",
+      "subcategory": "Agricultural Production"
+    },
+    {
+      "code": "0700",
+      "description": "AGRICULTURAL SERVICES",
+      "category": "Agriculture, Forestry & Fishing",
+      "subcategory": "Agricultural Services"
+    },
+    {
+      "code": "0800",
+      "description": "FORESTRY",
+      "category": "Agriculture, Forestry & Fishing",
+      "subcategory": "Forestry & Fishing"
+    },
+    {
+      "code": "0900",
+      "description": "FISHING, HUNTING AND TRAPPING",
+      "category": "Agriculture, Forestry & Fishing",
+      "subcategory": "Forestry & Fishing"
+    },
+    {
+      "code": "1000",
+      "description": "METAL MINING",
+      "category": "Mining & Extraction",
+      "subcategory": "Metal Mining"
+    },
+    {
+      "code": "1040",
+      "description": "GOLD AND SILVER ORES",
+      "category": "Mining & Extraction",
+      "subcategory": "Metal Mining"
+    },
+    {
+      "code": "1090",
+      "description": "MISCELLANEOUS METAL ORES",
+      "category": "Mining & Extraction",
+      "subcategory": "Metal Mining"
+    },
+    {
+      "code": "1220",
+      "description": "BITUMINOUS COAL & LIGNITE MINING",
+      "category": "Mining & Extraction",
+      "subcategory": "Coal Mining"
+    },
+    {
+      "code": "1221",
+      "description": "BITUMINOUS COAL & LIGNITE SURFACE MINING",
+      "category": "Mining & Extraction",
+      "subcategory": "Coal Mining"
+    },
+    {
+      "code": "1311",
+      "description": "CRUDE PETROLEUM & NATURAL GAS",
+      "category": "Mining & Extraction",
+      "subcategory": "Oil & Gas Extraction"
+    },
+    {
+      "code": "1381",
+      "description": "DRILLING OIL & GAS WELLS",
+      "category": "Mining & Extraction",
+      "subcategory": "Oil & Gas Extraction"
+    },
+    {
+      "code": "1382",
+      "description": "OIL & GAS FIELD EXPLORATION SERVICES",
+      "category": "Mining & Extraction",
+      "subcategory": "Oil & Gas Extraction"
+    },
+    {
+      "code": "1389",
+      "description": "OIL & GAS FIELD SERVICES, NEC",
+      "category": "Mining & Extraction",
+      "subcategory": "Oil & Gas Extraction"
+    },
+    {
+      "code": "1400",
+      "description": "MINING & QUARRYING OF NONMETALLIC MINERALS (NO FUELS)",
+      "category": "Mining & Extraction",
+      "subcategory": "Nonmetallic Minerals"
+    },
+    {
+      "code": "1520",
+      "description": "GENERAL BLDG CONTRACTORS - RESIDENTIAL BLDGS",
+      "category": "Construction",
+      "subcategory": "General Building Contractors"
+    },
+    {
+      "code": "1531",
+      "description": "OPERATIVE BUILDERS",
+      "category": "Construction",
+      "subcategory": "General Building Contractors"
+    },
+    {
+      "code": "1540",
+      "description": "GENERAL BLDG CONTRACTORS - NONRESIDENTIAL BLDGS",
+      "category": "Construction",
+      "subcategory": "General Building Contractors"
+    },
+    {
+      "code": "1600",
+      "description": "HEAVY CONSTRUCTION OTHER THAN BLDG CONST - CONTRACTORS",
+      "category": "Construction",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "1623",
+      "description": "WATER, SEWER, PIPELINE, COMM & POWER LINE CONSTRUCTION",
+      "category": "Construction",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "1700",
+      "description": "CONSTRUCTION - SPECIAL TRADE CONTRACTORS",
+      "category": "Construction",
+      "subcategory": "Special Trade Contractors"
+    },
+    {
+      "code": "1731",
+      "description": "ELECTRICAL WORK",
+      "category": "Construction",
+      "subcategory": "Special Trade Contractors"
+    },
+    {
+      "code": "2000",
+      "description": "FOOD AND KINDRED PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2011",
+      "description": "MEAT PACKING PLANTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2013",
+      "description": "SAUSAGES & OTHER PREPARED MEAT PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2015",
+      "description": "POULTRY SLAUGHTERING AND PROCESSING",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2020",
+      "description": "DAIRY PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2024",
+      "description": "ICE CREAM & FROZEN DESSERTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2030",
+      "description": "CANNED, FROZEN & PRESERVD FRUIT, VEG & FOOD SPECIALTIES",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2033",
+      "description": "CANNED, FRUITS, VEG, PRESERVES, JAMS & JELLIES",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2040",
+      "description": "GRAIN MILL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2050",
+      "description": "BAKERY PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2052",
+      "description": "COOKIES & CRACKERS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2060",
+      "description": "SUGAR & CONFECTIONERY PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2070",
+      "description": "FATS & OILS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2080",
+      "description": "BEVERAGES",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2082",
+      "description": "MALT BEVERAGES",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2086",
+      "description": "BOTTLED & CANNED SOFT DRINKS & CARBONATED WATERS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2090",
+      "description": "MISCELLANEOUS FOOD PREPARATIONS & KINDRED PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2092",
+      "description": "PREPARED FRESH OR FROZEN FISH & SEAFOODS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2100",
+      "description": "TOBACCO PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2111",
+      "description": "CIGARETTES",
+      "category": "Manufacturing",
+      "subcategory": "Food & Beverages"
+    },
+    {
+      "code": "2200",
+      "description": "TEXTILE MILL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2211",
+      "description": "BROADWOVEN FABRIC MILLS, COTTON",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2221",
+      "description": "BROADWOVEN FABRIC MILLS, MAN MADE FIBER & SILK",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2250",
+      "description": "KNITTING MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2253",
+      "description": "KNIT OUTERWEAR MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2273",
+      "description": "CARPETS & RUGS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2300",
+      "description": "APPAREL & OTHER FINISHD PRODS OF FABRICS & SIMILAR MATL",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2320",
+      "description": "MEN'S & BOYS' FURNISHGS, WORK CLOTHG, & ALLIED GARMENTS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2330",
+      "description": "WOMEN'S, MISSES', AND JUNIORS OUTERWEAR",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2340",
+      "description": "WOMEN'S, MISSES', CHILDREN'S & INFANTS' UNDERGARMENTS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2390",
+      "description": "MISCELLANEOUS FABRICATED TEXTILE PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Textiles & Apparel"
+    },
+    {
+      "code": "2400",
+      "description": "LUMBER & WOOD PRODUCTS (NO FURNITURE)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2421",
+      "description": "SAWMILLS & PLANTING MILLS, GENERAL",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2430",
+      "description": "MILLWOOD, VENEER, PLYWOOD, & STRUCTURAL WOOD MEMBERS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2451",
+      "description": "MOBILE HOMES",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2452",
+      "description": "PREFABRICATED WOOD BLDGS & COMPONENTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2510",
+      "description": "HOUSEHOLD FURNITURE",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2511",
+      "description": "WOOD HOUSEHOLD FURNITURE, (NO UPHOLSTERED)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2520",
+      "description": "OFFICE FURNITURE",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2522",
+      "description": "OFFICE FURNITURE (NO WOOD)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2531",
+      "description": "PUBLIC BLDG & RELATED FURNITURE",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2540",
+      "description": "PARTITIONS, SHELVG, LOCKERS, & OFFICE & STORE FIXTURES",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2590",
+      "description": "MISCELLANEOUS FURNITURE & FIXTURES",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2600",
+      "description": "PAPERS & ALLIED PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2611",
+      "description": "PULP MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2621",
+      "description": "PAPER MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2631",
+      "description": "PAPERBOARD MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2650",
+      "description": "PAPERBOARD CONTAINERS & BOXES",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2670",
+      "description": "CONVERTED PAPER & PAPERBOARD PRODS (NO CONTANERS/BOXES)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2673",
+      "description": "PLASTICS, FOIL & COATED PAPER BAGS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2711",
+      "description": "NEWSPAPERS: PUBLISHING OR PUBLISHING & PRINTING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2721",
+      "description": "PERIODICALS: PUBLISHING OR PUBLISHING & PRINTING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2731",
+      "description": "BOOKS: PUBLISHING OR PUBLISHING & PRINTING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2732",
+      "description": "BOOK PRINTING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2741",
+      "description": "MISCELLANEOUS PUBLISHING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2750",
+      "description": "COMMERCIAL PRINTING",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2761",
+      "description": "MANIFOLD BUSINESS FORMS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2771",
+      "description": "GREETING CARDS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2780",
+      "description": "BLANKBOOKS, LOOSELEAF BINDERS & BOOKBINDG & RELATD WORK",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2790",
+      "description": "SERVICE INDUSTRIES FOR THE PRINTING TRADE",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2800",
+      "description": "CHEMICALS & ALLIED PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2810",
+      "description": "INDUSTRIAL INORGANIC CHEMICALS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2820",
+      "description": "PLASTIC MATERIAL, SYNTH RESIN/RUBBER, CELLULOS (NO GLASS)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2821",
+      "description": "PLASTIC MATERIALS, SYNTH RESINS & NONVULCAN ELASTOMERS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2833",
+      "description": "MEDICINAL CHEMICALS & BOTANICAL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2834",
+      "description": "PHARMACEUTICAL PREPARATIONS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2835",
+      "description": "IN VITRO & IN VIVO DIAGNOSTIC SUBSTANCES",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2836",
+      "description": "BIOLOGICAL PRODUCTS, (NO DISGNOSTIC SUBSTANCES)",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2840",
+      "description": "SOAP, DETERGENTS, CLEANG PREPARATIONS, PERFUMES, COSMETICS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2842",
+      "description": "SPECIALTY CLEANING, POLISHING AND SANITATION PREPARATIONS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2844",
+      "description": "PERFUMES, COSMETICS & OTHER TOILET PREPARATIONS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2851",
+      "description": "PAINTS, VARNISHES, LACQUERS, ENAMELS & ALLIED PRODS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2860",
+      "description": "INDUSTRIAL ORGANIC CHEMICALS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2870",
+      "description": "AGRICULTURAL CHEMICALS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2890",
+      "description": "MISCELLANEOUS CHEMICAL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2891",
+      "description": "ADHESIVES & SEALANTS",
+      "category": "Manufacturing",
+      "subcategory": "Paper & Chemicals"
+    },
+    {
+      "code": "2911",
+      "description": "PETROLEUM REFINING",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "2950",
+      "description": "ASPHALT PAVING & ROOFING MATERIALS",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "2990",
+      "description": "MISCELLANEOUS PRODUCTS OF PETROLEUM & COAL",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3011",
+      "description": "TIRES & INNER TUBES",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3021",
+      "description": "RUBBER & PLASTICS FOOTWEAR",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3050",
+      "description": "GASKETS, PACKG & SEALG DEVICES & RUBBER & PLASTICS HOSE",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3060",
+      "description": "FABRICATED RUBBER PRODUCTS, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3080",
+      "description": "MISCELLANEOUS PLASTICS PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3081",
+      "description": "UNSUPPORTED PLASTICS FILM & SHEET",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3086",
+      "description": "PLASTICS FOAM PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3089",
+      "description": "PLASTICS PRODUCTS, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3100",
+      "description": "LEATHER & LEATHER PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3140",
+      "description": "FOOTWEAR, (NO RUBBER)",
+      "category": "Manufacturing",
+      "subcategory": "Petroleum & Rubber"
+    },
+    {
+      "code": "3211",
+      "description": "FLAT GLASS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3220",
+      "description": "GLASS & GLASSWARE, PRESSED OR BLOWN",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3221",
+      "description": "GLASS CONTAINERS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3231",
+      "description": "GLASS PRODUCTS, MADE OF PURCHASED GLASS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3241",
+      "description": "CEMENT, HYDRAULIC",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3250",
+      "description": "STRUCTURAL CLAY PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3260",
+      "description": "POTTERY & RELATED PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3270",
+      "description": "CONCRETE, GYPSUM & PLASTER PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3272",
+      "description": "CONCRETE PRODUCTS, EXCEPT BLOCK & BRICK",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3281",
+      "description": "CUT STONE & STONE PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3290",
+      "description": "ABRASIVE, ASBESTOS & MISC NONMETALLIC MINERAL PRODS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3310",
+      "description": "STEEL WORKS, BLAST FURNACES & ROLLING & FINISHING MILLS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3312",
+      "description": "STEEL WORKS, BLAST FURNACES & ROLLING MILLS (COKE OVENS)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3317",
+      "description": "STEEL PIPE & TUBES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3320",
+      "description": "IRON & STEEL FOUNDRIES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3330",
+      "description": "PRIMARY SMELTING & REFINING OF NONFERROUS METALS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3334",
+      "description": "PRIMARY PRODUCTION OF ALUMINUM",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3341",
+      "description": "SECONDARY SMELTING & REFINING OF NONFERROUS METALS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3350",
+      "description": "ROLLING DRAWING & EXTRUDING OF NONFERROUS METALS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3357",
+      "description": "DRAWING & INSULATING OF NONFERROUS WIRE",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3360",
+      "description": "NONFERROUS FOUNDRIES (CASTINGS)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3390",
+      "description": "MISCELLANEOUS PRIMARY METAL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3411",
+      "description": "METAL CANS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3412",
+      "description": "METAL SHIPPING BARRELS, DRUMS, KEGS & PAILS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3420",
+      "description": "CUTLERY, HANDTOOLS & GENERAL HARDWARE",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3430",
+      "description": "HEATING EQUIP, EXCEPT ELEC & WARM AIR; & PLUMBING FIXTURES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3433",
+      "description": "HEATING EQUIPMENT, EXCEPT ELECTRIC & WARM AIR FURNACES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3440",
+      "description": "FABRICATED STRUCTURAL METAL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3442",
+      "description": "METAL DOORS, SASH, FRAMES, MOLDINGS & TRIM",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3443",
+      "description": "FABRICATED PLATE WORK (BOILER SHOPS)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3444",
+      "description": "SHEET METAL WORK",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3448",
+      "description": "PREFABRICATED METAL BUILDINGS & COMPONENTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3451",
+      "description": "SCREW MACHINE PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3452",
+      "description": "BOLTS, NUTS, SCREWS, RIVETS & WASHERS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3460",
+      "description": "METAL FORGINGS & STAMPINGS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3470",
+      "description": "COATING, ENGRAVING & ALLIED SERVICES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3480",
+      "description": "ORDNANCE & ACCESSORIES, (NO VEHICLES/GUIDED MISSILES)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3490",
+      "description": "MISCELLANEOUS FABRICATED METAL PRODUCTS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3510",
+      "description": "ENGINES & TURBINES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3523",
+      "description": "FARM MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3524",
+      "description": "LAWN & GARDEN TRACTORS & HOME LAWN & GARDENS EQUIP",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3530",
+      "description": "CONSTRUCTION, MINING & MATERIALS HANDLING MACHINERY & EQUIP",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3531",
+      "description": "CONSTRUCTION MACHINERY & EQUIP",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3532",
+      "description": "MINING MACHINERY & EQUIP (NO OIL & GAS FIELD MACH & EQUIP)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3533",
+      "description": "OIL & GAS FIELD MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3537",
+      "description": "INDUSTRIAL TRUCKS, TRACTORS, TRAILORS & STACKERS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3540",
+      "description": "METALWORKG MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3541",
+      "description": "MACHINE TOOLS, METAL CUTTING TYPES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3550",
+      "description": "SPECIAL INDUSTRY MACHINERY (NO METALWORKING MACHINERY)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3555",
+      "description": "PRINTING TRADES MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3559",
+      "description": "SPECIAL INDUSTRY MACHINERY, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3560",
+      "description": "GENERAL INDUSTRIAL MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3561",
+      "description": "PUMPS & PUMPING EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3562",
+      "description": "BALL & ROLLER BEARINGS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3564",
+      "description": "INDUSTRIAL & COMMERCIAL FANS & BLOWERS & AIR PURIFING EQUIP",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3567",
+      "description": "INDUSTRIAL PROCESS FURNACES & OVENS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3569",
+      "description": "GENERAL INDUSTRIAL MACHINERY & EQUIPMENT, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3570",
+      "description": "COMPUTER & OFFICE EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3571",
+      "description": "ELECTRONIC COMPUTERS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3572",
+      "description": "COMPUTER STORAGE DEVICES",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3575",
+      "description": "COMPUTER TERMINALS",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3576",
+      "description": "COMPUTER COMMUNICATIONS EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3577",
+      "description": "COMPUTER PERIPHERAL EQUIPMENT, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3578",
+      "description": "CALCULATING & ACCOUNTING MACHINES (NO ELECTRONIC COMPUTERS)",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3579",
+      "description": "OFFICE MACHINES, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3580",
+      "description": "REFRIGERATION & SERVICE INDUSTRY MACHINERY",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3585",
+      "description": "AIR-COND & WARM AIR HEATG EQUIP & COMM & INDL REFRIG EQUIP",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3590",
+      "description": "MISC INDUSTRIAL & COMMERCIAL MACHINERY & EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Metal & Machinery"
+    },
+    {
+      "code": "3600",
+      "description": "ELECTRONIC & OTHER ELECTRICAL EQUIPMENT (NO COMPUTER EQUIP)",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3612",
+      "description": "POWER, DISTRIBUTION & SPECIALTY TRANSFORMERS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3613",
+      "description": "SWITCHGEAR & SWITCHBOARD APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3620",
+      "description": "ELECTRICAL INDUSTRIAL APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3621",
+      "description": "MOTORS & GENERATORS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3630",
+      "description": "HOUSEHOLD APPLIANCES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3634",
+      "description": "ELECTRIC HOUSEWARES & FANS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3640",
+      "description": "ELECTRIC LIGHTING & WIRING EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3651",
+      "description": "HOUSEHOLD AUDIO & VIDEO EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3652",
+      "description": "PHONOGRAPH RECORDS & PRERECORDED AUDIO TAPES & DISKS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3661",
+      "description": "TELEPHONE & TELEGRAPH APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3663",
+      "description": "RADIO & TV BROADCASTING & COMMUNICATIONS EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3669",
+      "description": "COMMUNICATIONS EQUIPMENT, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3670",
+      "description": "ELECTRONIC COMPONENTS & ACCESSORIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3672",
+      "description": "PRINTED CIRCUIT BOARDS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3674",
+      "description": "SEMICONDUCTORS & RELATED DEVICES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3677",
+      "description": "ELECTRONIC COILS, TRANSFORMERS & OTHER INDUCTORS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3678",
+      "description": "ELECTRONIC CONNECTORS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3679",
+      "description": "ELECTRONIC COMPONENTS, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3690",
+      "description": "MISCELLANEOUS ELECTRICAL MACHINERY, EQUIPMENT & SUPPLIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3695",
+      "description": "MAGNETIC & OPTICAL RECORDING MEDIA",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3711",
+      "description": "MOTOR VEHICLES & PASSENGER CAR BODIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3713",
+      "description": "TRUCK & BUS BODIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3714",
+      "description": "MOTOR VEHICLE PARTS & ACCESSORIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3715",
+      "description": "TRUCK TRAILERS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3716",
+      "description": "MOTOR HOMES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3720",
+      "description": "AIRCRAFT & PARTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3721",
+      "description": "AIRCRAFT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3724",
+      "description": "AIRCRAFT ENGINES & ENGINE PARTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3728",
+      "description": "AIRCRAFT PARTS & AUXILIARY EQUIPMENT, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3730",
+      "description": "SHIP & BOAT BUILDING & REPAIRING",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3743",
+      "description": "RAILROAD EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3751",
+      "description": "MOTORCYCLES, BICYCLES & PARTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3760",
+      "description": "GUIDED MISSILES & SPACE VEHICLES & PARTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3790",
+      "description": "MISCELLANEOUS TRANSPORTATION EQUIPMENT",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3812",
+      "description": "SEARCH, DETECTION, NAVAGATION, GUIDANCE, AERONAUTICAL SYS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3821",
+      "description": "LABORATORY APPARATUS & FURNITURE",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3822",
+      "description": "AUTO CONTROLS FOR REGULATING RESIDENTIAL & COMML ENVIRONMENTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3823",
+      "description": "INDUSTRIAL INSTRUMENTS FOR MEASUREMENT, DISPLAY, AND CONTROL",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3824",
+      "description": "TOTALIZING FLUID METERS & COUNTING DEVICES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3825",
+      "description": "INSTRUMENTS FOR MEAS & TESTING OF ELECTRICITY & ELEC SIGNALS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3826",
+      "description": "LABORATORY ANALYTICAL INSTRUMENTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3827",
+      "description": "OPTICAL INSTRUMENTS & LENSES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3829",
+      "description": "MEASURING & CONTROLLING DEVICES, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3841",
+      "description": "SURGICAL & MEDICAL INSTRUMENTS & APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3842",
+      "description": "ORTHOPEDIC, PROSTHETIC & SURGICAL APPLIANCES & SUPPLIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3843",
+      "description": "DENTAL EQUIPMENT & SUPPLIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3844",
+      "description": "X-RAY APPARATUS & TUBES & RELATED IRRADIATION APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3845",
+      "description": "ELECTROMEDICAL & ELECTROTHERAPEUTIC APPARATUS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3851",
+      "description": "OPHTHALMIC GOODS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3861",
+      "description": "PHOTOGRAPHIC EQUIPMENT & SUPPLIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3873",
+      "description": "WATCHES, CLOCKS, CLOCKWORK OPERATED DEVICES/PARTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3910",
+      "description": "JEWELRY, SILVERWARE & PLATED WARE",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3911",
+      "description": "JEWELRY, PRECIOUS METAL",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3931",
+      "description": "MUSICAL INSTRUMENTS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3942",
+      "description": "DOLLS & STUFFED TOYS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3944",
+      "description": "GAMES, TOYS & CHILDREN'S VEHICLES (NO DOLLS & BICYCLES)",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3949",
+      "description": "SPORTING & ATHLETIC GOODS, NEC",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3950",
+      "description": "PENS, PENCILS & OTHER ARTISTS' MATERIALS",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3960",
+      "description": "COSTUME JEWELRY & NOVELTIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "3990",
+      "description": "MISCELLANEOUS MANUFACTURING INDUSTRIES",
+      "category": "Manufacturing",
+      "subcategory": "Electronics & Transportation Equipment"
+    },
+    {
+      "code": "4011",
+      "description": "RAILROADS, LINE-HAUL OPERATING",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4013",
+      "description": "RAILROAD SWITCHING & TERMINAL ESTABLISHMENTS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4100",
+      "description": "LOCAL & SUBURBAN TRANSIT & INTERURBAN HWY PASSENGER TRANS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4210",
+      "description": "TRUCKING & COURIER SERVICES (NO AIR)",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4213",
+      "description": "TRUCKING (NO LOCAL)",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4220",
+      "description": "PUBLIC WAREHOUSING & STORAGE",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4231",
+      "description": "TERMINAL MAINTENANCE FACILITIES FOR MOTOR FREIGHT TRANSPORT",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4400",
+      "description": "WATER TRANSPORTATION",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4412",
+      "description": "DEEP SEA FOREIGN TRANSPORTATION OF FREIGHT",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4512",
+      "description": "AIR TRANSPORTATION, SCHEDULED",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4513",
+      "description": "AIR COURIER SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4522",
+      "description": "AIR TRANSPORTATION, NONSCHEDULED",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4581",
+      "description": "AIRPORTS, FLYING FIELDS & AIRPORT TERMINAL SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4610",
+      "description": "PIPE LINES (NO NATURAL GAS)",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4700",
+      "description": "TRANSPORTATION SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4731",
+      "description": "ARRANGEMENT OF TRANSPORTATION OF FREIGHT & CARGO",
+      "category": "Transportation & Utilities",
+      "subcategory": "Transportation"
+    },
+    {
+      "code": "4812",
+      "description": "RADIOTELEPHONE COMMUNICATIONS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4813",
+      "description": "TELEPHONE COMMUNICATIONS (NO RADIOTELEPHONE)",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4822",
+      "description": "TELEGRAPH & OTHER MESSAGE COMMUNICATIONS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4832",
+      "description": "RADIO BROADCASTING STATIONS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4833",
+      "description": "TELEVISION BROADCASTING STATIONS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4841",
+      "description": "CABLE & OTHER PAY TELEVISION SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4899",
+      "description": "COMMUNICATIONS SERVICES, NEC",
+      "category": "Transportation & Utilities",
+      "subcategory": "Communications"
+    },
+    {
+      "code": "4900",
+      "description": "ELECTRIC, GAS & SANITARY SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4911",
+      "description": "ELECTRIC SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4922",
+      "description": "NATURAL GAS TRANSMISSION",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4923",
+      "description": "NATURAL GAS TRANSMISISON & DISTRIBUTION",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4924",
+      "description": "NATURAL GAS DISTRIBUTION",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4931",
+      "description": "ELECTRIC & OTHER SERVICES COMBINED",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4932",
+      "description": "GAS & OTHER SERVICES COMBINED",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4941",
+      "description": "WATER SUPPLY",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4950",
+      "description": "SANITARY SERVICES",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4953",
+      "description": "REFUSE SYSTEMS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4955",
+      "description": "HAZARDOUS WASTE MANAGEMENT",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4961",
+      "description": "STEAM & AIR-CONDITIONING SUPPLY",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "4991",
+      "description": "COGENERATION SERVICES & SMALL POWER PRODUCERS",
+      "category": "Transportation & Utilities",
+      "subcategory": "Electric, Gas & Sanitary Services"
+    },
+    {
+      "code": "5000",
+      "description": "WHOLESALE-DURABLE GOODS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5010",
+      "description": "WHOLESALE-MOTOR VEHICLES & MOTOR VEHICLE PARTS & SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5013",
+      "description": "WHOLESALE-MOTOR VEHICLE SUPPLIES & NEW PARTS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5020",
+      "description": "WHOLESALE-FURNITURE & HOME FURNISHINGS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5030",
+      "description": "WHOLESALE-LUMBER & OTHER CONSTRUCTION MATERIALS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5031",
+      "description": "WHOLESALE-LUMBER, PLYWOOD, MILLWORK & WOOD PANELS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5040",
+      "description": "WHOLESALE-PROFESSIONAL & COMMERCIAL EQUIPMENT & SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5045",
+      "description": "WHOLESALE-COMPUTERS & PERIPHERAL EQUIPMENT & SOFTWARE",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5047",
+      "description": "WHOLESALE-MEDICAL, DENTAL & HOSPITAL EQUIPMENT & SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5050",
+      "description": "WHOLESALE-METALS & MINERALS (NO PETROLEUM)",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5051",
+      "description": "WHOLESALE-METALS SERVICE CENTERS & OFFICES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5063",
+      "description": "WHOLESALE-ELECTRICAL APPARATUS & EQUIPMENT, WIRING SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5064",
+      "description": "WHOLESALE-ELECTRICAL APPLIANCES, TV & RADIO SETS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5065",
+      "description": "WHOLESALE-ELECTRONIC PARTS & EQUIPMENT, NEC",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5070",
+      "description": "WHOLESALE-HARDWARE & PLUMBING & HEATING EQUIPMENT & SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5072",
+      "description": "WHOLESALE-HARDWARE",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5080",
+      "description": "WHOLESALE-MACHINERY, EQUIPMENT & SUPPLIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5082",
+      "description": "WHOLESALE-CONSTRUCTION & MINING (NO PETRO) MACHINERY & EQUIP",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5084",
+      "description": "WHOLESALE-INDUSTRIAL MACHINERY & EQUIPMENT",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5090",
+      "description": "WHOLESALE-MISC DURABLE GOODS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5094",
+      "description": "WHOLESALE-JEWELRY, WATCHES, PRECIOUS STONES & METALS",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5099",
+      "description": "WHOLESALE-DURABLE GOODS, NEC",
+      "category": "Wholesale Trade",
+      "subcategory": "Durable Goods"
+    },
+    {
+      "code": "5110",
+      "description": "WHOLESALE-PAPER & PAPER PRODUCTS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5122",
+      "description": "WHOLESALE-DRUGS, PROPRIETARIES & DRUGGISTS' SUNDRIES",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5130",
+      "description": "WHOLESALE-APPAREL, PIECE GOODS & NOTIONS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5140",
+      "description": "WHOLESALE-GROCERIES & RELATED PRODUCTS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5141",
+      "description": "WHOLESALE-GROCERIES, GENERAL LINE",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5150",
+      "description": "WHOLESALE-FARM PRODUCT RAW MATERIALS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5160",
+      "description": "WHOLESALE-CHEMICALS & ALLIED PRODUCTS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5171",
+      "description": "WHOLESALE-PETROLEUM BULK STATIONS & TERMINALS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5172",
+      "description": "WHOLESALE-PETROLEUM & PETROLEUM PRODUCTS (NO BULK STATIONS)",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5180",
+      "description": "WHOLESALE-BEER, WINE & DISTILLED ALCOHOLIC BEVERAGES",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5190",
+      "description": "WHOLESALE-MISCELLANEOUS NONDURABLE GOODS",
+      "category": "Wholesale Trade",
+      "subcategory": "Nondurable Goods"
+    },
+    {
+      "code": "5200",
+      "description": "RETAIL-BUILDING MATERIALS, HARDWARE, GARDEN SUPPLY",
+      "category": "Retail Trade",
+      "subcategory": "Building Materials & Garden"
+    },
+    {
+      "code": "5211",
+      "description": "RETAIL-LUMBER & OTHER BUILDING MATERIALS DEALERS",
+      "category": "Retail Trade",
+      "subcategory": "Building Materials & Garden"
+    },
+    {
+      "code": "5271",
+      "description": "RETAIL-MOBILE HOME DEALERS",
+      "category": "Retail Trade",
+      "subcategory": "Building Materials & Garden"
+    },
+    {
+      "code": "5311",
+      "description": "RETAIL-DEPARTMENT STORES",
+      "category": "Retail Trade",
+      "subcategory": "General Merchandise"
+    },
+    {
+      "code": "5331",
+      "description": "RETAIL-VARIETY STORES",
+      "category": "Retail Trade",
+      "subcategory": "General Merchandise"
+    },
+    {
+      "code": "5399",
+      "description": "RETAIL-MISC GENERAL MERCHANDISE STORES",
+      "category": "Retail Trade",
+      "subcategory": "General Merchandise"
+    },
+    {
+      "code": "5400",
+      "description": "RETAIL-FOOD STORES",
+      "category": "Retail Trade",
+      "subcategory": "Food Stores"
+    },
+    {
+      "code": "5411",
+      "description": "RETAIL-GROCERY STORES",
+      "category": "Retail Trade",
+      "subcategory": "Food Stores"
+    },
+    {
+      "code": "5412",
+      "description": "RETAIL-CONVENIENCE STORES",
+      "category": "Retail Trade",
+      "subcategory": "Food Stores"
+    },
+    {
+      "code": "5500",
+      "description": "RETAIL-AUTO DEALERS & GASOLINE STATIONS",
+      "category": "Retail Trade",
+      "subcategory": "Automotive & Gas Stations"
+    },
+    {
+      "code": "5531",
+      "description": "RETAIL-AUTO & HOME SUPPLY STORES",
+      "category": "Retail Trade",
+      "subcategory": "Automotive & Gas Stations"
+    },
+    {
+      "code": "5600",
+      "description": "RETAIL-APPAREL & ACCESSORY STORES",
+      "category": "Retail Trade",
+      "subcategory": "Apparel & Accessories"
+    },
+    {
+      "code": "5621",
+      "description": "RETAIL-WOMEN'S CLOTHING STORES",
+      "category": "Retail Trade",
+      "subcategory": "Apparel & Accessories"
+    },
+    {
+      "code": "5651",
+      "description": "RETAIL-FAMILY CLOTHING STORES",
+      "category": "Retail Trade",
+      "subcategory": "Apparel & Accessories"
+    },
+    {
+      "code": "5661",
+      "description": "RETAIL-SHOE STORES",
+      "category": "Retail Trade",
+      "subcategory": "Apparel & Accessories"
+    },
+    {
+      "code": "5700",
+      "description": "RETAIL-HOME FURNITURE, FURNISHINGS & EQUIPMENT STORES",
+      "category": "Retail Trade",
+      "subcategory": "Home Furnishings"
+    },
+    {
+      "code": "5712",
+      "description": "RETAIL-FURNITURE STORES",
+      "category": "Retail Trade",
+      "subcategory": "Home Furnishings"
+    },
+    {
+      "code": "5731",
+      "description": "RETAIL-RADIO, TV & CONSUMER ELECTRONICS STORES",
+      "category": "Retail Trade",
+      "subcategory": "Home Furnishings"
+    },
+    {
+      "code": "5734",
+      "description": "RETAIL-COMPUTER & COMPUTER SOFTWARE STORES",
+      "category": "Retail Trade",
+      "subcategory": "Home Furnishings"
+    },
+    {
+      "code": "5735",
+      "description": "RETAIL-RECORD & PRERECORDED TAPE STORES",
+      "category": "Retail Trade",
+      "subcategory": "Home Furnishings"
+    },
+    {
+      "code": "5810",
+      "description": "RETAIL-EATING & DRINKING PLACES",
+      "category": "Retail Trade",
+      "subcategory": "Eating & Drinking Places"
+    },
+    {
+      "code": "5812",
+      "description": "RETAIL-EATING PLACES",
+      "category": "Retail Trade",
+      "subcategory": "Eating & Drinking Places"
+    },
+    {
+      "code": "5900",
+      "description": "RETAIL-MISCELLANEOUS RETAIL",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5912",
+      "description": "RETAIL-DRUG STORES AND PROPRIETARY STORES",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5940",
+      "description": "RETAIL-MISCELLANEOUS SHOPPING GOODS STORES",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5944",
+      "description": "RETAIL-JEWELRY STORES",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5945",
+      "description": "RETAIL-HOBBY, TOY & GAME SHOPS",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5960",
+      "description": "RETAIL-NONSTORE RETAILERS",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5961",
+      "description": "RETAIL-CATALOG & MAIL-ORDER HOUSES",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "5990",
+      "description": "RETAIL-RETAIL STORES, NEC",
+      "category": "Retail Trade",
+      "subcategory": "Miscellaneous Retail"
+    },
+    {
+      "code": "6021",
+      "description": "NATIONAL COMMERCIAL BANKS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6022",
+      "description": "STATE COMMERCIAL BANKS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6029",
+      "description": "COMMERCIAL BANKS, NEC",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6035",
+      "description": "SAVINGS INSTITUTION, FEDERALLY CHARTERED",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6036",
+      "description": "SAVINGS INSTITUTIONS, NOT FEDERALLY CHARTERED",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6099",
+      "description": "FUNCTIONS RELATED TO DEPOSITORY BANKING, NEC",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6111",
+      "description": "FEDERAL & FEDERALLY-SPONSORED CREDIT AGENCIES",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6141",
+      "description": "PERSONAL CREDIT INSTITUTIONS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6153",
+      "description": "SHORT-TERM BUSINESS CREDIT INSTITUTIONS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6159",
+      "description": "MISCELLANEOUS BUSINESS CREDIT INSTITUTION",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6162",
+      "description": "MORTGAGE BANKERS & LOAN CORRESPONDENTS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6163",
+      "description": "LOAN BROKERS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6172",
+      "description": "FINANCE LESSORS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6189",
+      "description": "ASSET-BACKED SECURITIES",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6199",
+      "description": "FINANCE SERVICES",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Banking"
+    },
+    {
+      "code": "6200",
+      "description": "SECURITY & COMMODITY BROKERS, DEALERS, EXCHANGES & SERVICES",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Credit Agencies"
+    },
+    {
+      "code": "6211",
+      "description": "SECURITY BROKERS, DEALERS & FLOTATION COMPANIES",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Credit Agencies"
+    },
+    {
+      "code": "6221",
+      "description": "COMMODITY CONTRACTS BROKERS & DEALERS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Credit Agencies"
+    },
+    {
+      "code": "6282",
+      "description": "INVESTMENT ADVICE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Credit Agencies"
+    },
+    {
+      "code": "6311",
+      "description": "LIFE INSURANCE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6321",
+      "description": "ACCIDENT & HEALTH INSURANCE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6324",
+      "description": "HOSPITAL & MEDICAL SERVICE PLANS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6331",
+      "description": "FIRE, MARINE & CASUALTY INSURANCE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6351",
+      "description": "SURETY INSURANCE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6361",
+      "description": "TITLE INSURANCE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6399",
+      "description": "INSURANCE CARRIERS, NEC",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Securities & Commodities"
+    },
+    {
+      "code": "6411",
+      "description": "INSURANCE AGENTS, BROKERS & SERVICE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Insurance"
+    },
+    {
+      "code": "6500",
+      "description": "REAL ESTATE",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6510",
+      "description": "REAL ESTATE OPERATORS (NO DEVELOPERS) & LESSORS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6512",
+      "description": "OPERATORS OF NONRESIDENTIAL BUILDINGS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6513",
+      "description": "OPERATORS OF APARTMENT BUILDINGS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6519",
+      "description": "LESSORS OF REAL PROPERTY, NEC",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6531",
+      "description": "REAL ESTATE AGENTS & MANAGERS (FOR OTHERS)",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6532",
+      "description": "REAL ESTATE DEALERS (FOR THEIR OWN ACCOUNT)",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6552",
+      "description": "LAND SUBDIVIDERS & DEVELOPERS (NO CEMETERIES)",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6770",
+      "description": "BLANK CHECKS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6792",
+      "description": "OIL ROYALTY TRADERS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6794",
+      "description": "PATENT OWNERS & LESSORS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6795",
+      "description": "MINERAL ROYALTY TRADERS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6798",
+      "description": "REAL ESTATE INVESTMENT TRUSTS",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "6799",
+      "description": "INVESTORS, NEC",
+      "category": "Finance, Insurance & Real Estate",
+      "subcategory": "Real Estate"
+    },
+    {
+      "code": "7000",
+      "description": "HOTELS, ROOMING HOUSES, CAMPS & OTHER LODGING PLACES",
+      "category": "Services",
+      "subcategory": "Hotels & Lodging"
+    },
+    {
+      "code": "7011",
+      "description": "HOTELS & MOTELS",
+      "category": "Services",
+      "subcategory": "Hotels & Lodging"
+    },
+    {
+      "code": "7200",
+      "description": "SERVICES-PERSONAL SERVICES",
+      "category": "Services",
+      "subcategory": "Personal Services"
+    },
+    {
+      "code": "7310",
+      "description": "SERVICES-ADVERTISING",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7311",
+      "description": "SERVICES-ADVERTISING AGENCIES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7320",
+      "description": "SERVICES-CONSUMER CREDIT REPORTING, COLLECTION AGENCIES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7330",
+      "description": "SERVICES-MAILING, REPRODUCTION, COMMERCIAL ART & PHOTOGRAPHY",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7331",
+      "description": "SERVICES-DIRECT MAIL ADVERTISING SERVICES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7340",
+      "description": "SERVICES-TO DWELLINGS & OTHER BUILDINGS",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7350",
+      "description": "SERVICES-MISCELLANEOUS EQUIPMENT RENTAL & LEASING",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7359",
+      "description": "SERVICES-EQUIPMENT RENTAL & LEASING, NEC",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7361",
+      "description": "SERVICES-EMPLOYMENT AGENCIES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7363",
+      "description": "SERVICES-HELP SUPPLY SERVICES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7370",
+      "description": "SERVICES-COMPUTER PROGRAMMING, DATA PROCESSING, ETC.",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7371",
+      "description": "SERVICES-COMPUTER PROGRAMMING SERVICES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7372",
+      "description": "SERVICES-PREPACKAGED SOFTWARE",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7373",
+      "description": "SERVICES-COMPUTER INTEGRATED SYSTEMS DESIGN",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7374",
+      "description": "SERVICES-COMPUTER PROCESSING & DATA PREPARATION",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7377",
+      "description": "SERVICES-COMPUTER RENTAL & LEASING",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7380",
+      "description": "SERVICES-MISCELLANEOUS BUSINESS SERVICES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7381",
+      "description": "SERVICES-DETECTIVE, GUARD & ARMORED CAR SERVICES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7384",
+      "description": "SERVICES-PHOTOFINISHING LABORATORIES",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7385",
+      "description": "SERVICES-TELEPHONE INTERCONNECT SYSTEMS",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7389",
+      "description": "SERVICES-BUSINESS SERVICES, NEC",
+      "category": "Services",
+      "subcategory": "Business Services"
+    },
+    {
+      "code": "7500",
+      "description": "SERVICES-AUTOMOTIVE REPAIR, SERVICES & PARKING",
+      "category": "Services",
+      "subcategory": "Auto Services"
+    },
+    {
+      "code": "7510",
+      "description": "SERVICES-AUTO RENTAL & LEASING (NO DRIVERS)",
+      "category": "Services",
+      "subcategory": "Auto Services"
+    },
+    {
+      "code": "7600",
+      "description": "SERVICES-MISCELLANEOUS REPAIR SERVICES",
+      "category": "Services",
+      "subcategory": "Miscellaneous Repair Services"
+    },
+    {
+      "code": "7812",
+      "description": "SERVICES-MOTION PICTURE & VIDEO TAPE PRODUCTION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7819",
+      "description": "SERVICES-ALLIED TO MOTION PICTURE PRODUCTION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7822",
+      "description": "SERVICES-MOTION PICTURE & VIDEO TAPE DISTRIBUTION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7829",
+      "description": "SERVICES-ALLIED TO MOTION PICTURE DISTRIBUTION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7830",
+      "description": "SERVICES-MOTION PICTURE THEATERS",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7841",
+      "description": "SERVICES-VIDEO TAPE RENTAL",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7900",
+      "description": "SERVICES-AMUSEMENT & RECREATION SERVICES",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7948",
+      "description": "SERVICES-RACING, INCLUDING TRACK OPERATION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7990",
+      "description": "SERVICES-MISCELLANEOUS AMUSEMENT & RECREATION",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "7997",
+      "description": "SERVICES-MEMBERSHIP SPORTS & RECREATION CLUBS",
+      "category": "Services",
+      "subcategory": "Motion Pictures & Entertainment"
+    },
+    {
+      "code": "8000",
+      "description": "SERVICES-HEALTH SERVICES",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8011",
+      "description": "SERVICES-OFFICES & CLINICS OF DOCTORS OF MEDICINE",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8050",
+      "description": "SERVICES-NURSING & PERSONAL CARE FACILITIES",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8051",
+      "description": "SERVICES-SKILLED NURSING CARE FACILITIES",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8060",
+      "description": "SERVICES-HOSPITALS",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8062",
+      "description": "SERVICES-GENERAL MEDICAL & SURGICAL HOSPITALS, NEC",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8071",
+      "description": "SERVICES-MEDICAL LABORATORIES",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8082",
+      "description": "SERVICES-HOME HEALTH CARE SERVICES",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8090",
+      "description": "SERVICES-MISC HEALTH & ALLIED SERVICES, NEC",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8093",
+      "description": "SERVICES-SPECIALTY OUTPATIENT FACILITIES, NEC",
+      "category": "Services",
+      "subcategory": "Health Services"
+    },
+    {
+      "code": "8111",
+      "description": "SERVICES-LEGAL SERVICES",
+      "category": "Services",
+      "subcategory": "Legal Services"
+    },
+    {
+      "code": "8200",
+      "description": "SERVICES-EDUCATIONAL SERVICES",
+      "category": "Services",
+      "subcategory": "Educational Services"
+    },
+    {
+      "code": "8300",
+      "description": "SERVICES-SOCIAL SERVICES",
+      "category": "Services",
+      "subcategory": "Social Services"
+    },
+    {
+      "code": "8351",
+      "description": "SERVICES-CHILD DAY CARE SERVICES",
+      "category": "Services",
+      "subcategory": "Social Services"
+    },
+    {
+      "code": "8600",
+      "description": "SERVICES-MEMBERSHIP ORGANIZATIONS",
+      "category": "Services",
+      "subcategory": "Museums & Organizations"
+    },
+    {
+      "code": "8700",
+      "description": "SERVICES-ENGINEERING, ACCOUNTING, RESEARCH, MANAGEMENT",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8711",
+      "description": "SERVICES-ENGINEERING SERVICES",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8731",
+      "description": "SERVICES-COMMERCIAL PHYSICAL & BIOLOGICAL RESEARCH",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8734",
+      "description": "SERVICES-TESTING LABORATORIES",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8741",
+      "description": "SERVICES-MANAGEMENT SERVICES",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8742",
+      "description": "SERVICES-MANAGEMENT CONSULTING SERVICES",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8744",
+      "description": "SERVICES-FACILITIES SUPPORT MANAGEMENT SERVICES",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8880",
+      "description": "AMERICAN DEPOSITARY RECEIPTS",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8888",
+      "description": "FOREIGN GOVERNMENTS",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "8900",
+      "description": "SERVICES-SERVICES, NEC",
+      "category": "Services",
+      "subcategory": "Engineering & Management"
+    },
+    {
+      "code": "9721",
+      "description": "INTERNATIONAL AFFAIRS",
+      "category": "Public Administration",
+      "subcategory": "National Security"
+    },
+    {
+      "code": "9995",
+      "description": "NON-OPERATING ESTABLISHMENTS",
+      "category": "Public Administration",
+      "subcategory": "National Security"
+    }
+  ]
+}
