@@ -1,0 +1,2545 @@
+{
+  "source": "Workers Compensation Classification Codes (Manual DN0059)",
+  "line_of_business": "Work Comp Codes",
+  "count": 423,
+  "codes": [
+    {
+      "code": "0005",
+      "description": "Nursery Employees & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0006",
+      "description": "Farm Noc & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0007",
+      "description": "Fruit Farm & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0031",
+      "description": "Vegetable, Berry Or Grape Farm & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0034",
+      "description": "Poultry Farm & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0035",
+      "description": "Florist-Cultivating Or Gardening-& Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "0042",
+      "description": "Landscape Gardening & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0050",
+      "description": "Farm Machinery Operation-By Contractor-& Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Farm Operations"
+    },
+    {
+      "code": "0106",
+      "description": "Tree Pruning, Repairing Or Trimming & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Agricultural Services"
+    },
+    {
+      "code": "0251",
+      "description": "Irrigation Works Operation & Drivers",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Agricultural Services"
+    },
+    {
+      "code": "0767",
+      "description": "Non-Ratable Element Code",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "0771",
+      "description": "Non-Ratable Element Code",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "0908",
+      "description": "Domestic Workers-Inside-Occasional",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Domestic Services"
+    },
+    {
+      "code": "0909",
+      "description": "Domestic Workers-Outside-Occasional-Including Occasional Chauffeurs",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Domestic Services"
+    },
+    {
+      "code": "0912",
+      "description": "Domestic Workers-Outside-Including Private Chauffeurs",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Domestic Services"
+    },
+    {
+      "code": "0913",
+      "description": "Domestic Workers-Inside",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Domestic Services"
+    },
+    {
+      "code": "0917",
+      "description": "Domestic Service Contractor-Inside",
+      "category": "Agriculture & Domestic Services",
+      "subcategory": "Domestic Services"
+    },
+    {
+      "code": "1170",
+      "description": "Mining Noc-With Shafts, Tunnels Or Drifts-& Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Mining Operations"
+    },
+    {
+      "code": "1320",
+      "description": "Gas Or Oil Lease Operator-Natural Gas-All Operations-& Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1430",
+      "description": "Smelting, Sintering Or Refining Lead & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Smelting & Refining"
+    },
+    {
+      "code": "1438",
+      "description": "Smelting, Sintering Or Refining-Metals-Not Iron Or Lead-Noc-& Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Smelting & Refining"
+    },
+    {
+      "code": "1439",
+      "description": "Smelting-Electric Process",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Smelting & Refining"
+    },
+    {
+      "code": "1452",
+      "description": "Ore Milling & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Mining Operations"
+    },
+    {
+      "code": "1463",
+      "description": "Asphalt Works & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Stone & Materials Processing"
+    },
+    {
+      "code": "1470",
+      "description": "Alcohol Mfg.-Wood-& Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1624",
+      "description": "Quarry Noc & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Mining Operations"
+    },
+    {
+      "code": "1701",
+      "description": "Cement Mfg.",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Stone & Materials Processing"
+    },
+    {
+      "code": "1710",
+      "description": "Stone Crushing & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Stone & Materials Processing"
+    },
+    {
+      "code": "1741",
+      "description": "Flint Or Spar Grinding & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1747",
+      "description": "Emery Works & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1748",
+      "description": "Abrasive Wheel Mfg. & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Stone & Materials Processing"
+    },
+    {
+      "code": "1809",
+      "description": "Stone Cutting Or Polishing-Marble Or Limestone-& Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1810",
+      "description": "Stone Cutting Or Polishing Noc & Drivers",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1853",
+      "description": "Mica Goods Mfg. & Mica Preparing",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1860",
+      "description": "Abrasive Paper Or Cloth Preparation",
+      "category": "Mining & Basic Materials",
+      "subcategory": "Stone & Materials Processing"
+    },
+    {
+      "code": "1924",
+      "description": "Wire Drawing-Not Iron Or Steel",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "1925",
+      "description": "Die Casting Mfg.",
+      "category": "Mining & Basic Materials",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2001",
+      "description": "Cookie Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2002",
+      "description": "Macaroni Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2003",
+      "description": "Bakery & Route Salespersons, Route Supervisors, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2014",
+      "description": "Feed Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2021",
+      "description": "Sugar Refining",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2039",
+      "description": "Ice Cream Mfg.& Route Salespersons, Route Supervisors, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2041",
+      "description": "Candy, Chocolate Or Cocoa Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2065",
+      "description": "Milk Products Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2070",
+      "description": "Milk Depot Or Milk Dealer-& Route Salespersons, Route Supervisors, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2081",
+      "description": "Butchering",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2089",
+      "description": "Packing House-All Operations",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2095",
+      "description": "Meat Products Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2101",
+      "description": "Fish Curing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2105",
+      "description": "Fruit Packing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2111",
+      "description": "Cannery Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2112",
+      "description": "Fruit Evaporating Or Preserving",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2114",
+      "description": "Oyster Processing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2121",
+      "description": "Brewery & Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Food Production"
+    },
+    {
+      "code": "2143",
+      "description": "Fruit Juice Mfg.-All Operations",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2150",
+      "description": "Ice Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2157",
+      "description": "Bottling Noc & Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2172",
+      "description": "Cigarette, Cigar Or Tobacco Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2211",
+      "description": "Cotton Batting, Wadding Or Waste Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2286",
+      "description": "Wool Spinning And Weaving",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2288",
+      "description": "Felt Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2302",
+      "description": "Silk Thread Or Yarn Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2303",
+      "description": "Silk Throwing And Weaving",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2305",
+      "description": "Textile Fiber Mfg.-Synthetic",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2362",
+      "description": "Knit Goods Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2380",
+      "description": "Net Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2383",
+      "description": "Carbon Paper Or Typewriter Ribbon Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2387",
+      "description": "Braid Or Fringe Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2388",
+      "description": "Embroidery Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2402",
+      "description": "Carpet Or Rug Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2413",
+      "description": "Textile-Bleaching, Dyeing, Mercerizing, Finishing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2416",
+      "description": "Thread Or Yarn Dyeing Or Finishing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2417",
+      "description": "Cloth Printing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2501",
+      "description": "Clothing Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2503",
+      "description": "Custom Clothing Or Tailor Shop-Alterations-No Mass Mfg., Dry Cleaning Or Laundering",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2534",
+      "description": "Feather Or Flower Mfg.-Artificial",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2553",
+      "description": "Furnishing Goods Mfg. Noc-From Textile Fabrics",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2570",
+      "description": "Box Spring Or Mattress Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2571",
+      "description": "Pillow, Quilt Or Cushion Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2576",
+      "description": "Awning Or Tent Mfg.-Shop Only",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2578",
+      "description": "Bag Or Sack Mfg.-Cloth",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2590",
+      "description": "Dry Cleaning-Retail-& Route Salespersons, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2591",
+      "description": "Dry Cleaning Or Laundry Commercial-& Route Salespersons, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2593",
+      "description": "Carpet, Rug Or Upholstery Cleaning-Shop Or Outside-& Route Salespersons, Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Textile Operations"
+    },
+    {
+      "code": "2594",
+      "description": "Linen, Towel, Uniform Or Apron Rental And Cleaning Company & Route",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2600",
+      "description": "Fur Mfg.-Preparing Skins",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2623",
+      "description": "Leather Mfg.-Patent Or Enamel",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2640",
+      "description": "Leather Embossing",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2660",
+      "description": "Boot Or Shoe Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2670",
+      "description": "Glove Mfg.-Leather Or Textile",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2683",
+      "description": "Luggage Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2688",
+      "description": "Leather Goods Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2689",
+      "description": "Pocketbook Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2702",
+      "description": "Logging Or Lumbering & Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2710",
+      "description": "Saw Mill",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2714",
+      "description": "Veneer Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2731",
+      "description": "Molding Or Planing Mill",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2735",
+      "description": "Furniture Stock Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2737",
+      "description": "Door, Sash Or Assembled Millwork Mfg. & Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2759",
+      "description": "Box Or Box Shook Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2790",
+      "description": "Pattern Making Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2802",
+      "description": "Carpentry-Shop Only-& Drivers",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2816",
+      "description": "Cabinet Work-With Power Machinery",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2817",
+      "description": "Cabinet Work-With Power Machinery",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2818",
+      "description": "Cabinet Work-With Power Machinery",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2835",
+      "description": "Brush Or Broom Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2841",
+      "description": "Woodenware Mfg. Noc",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2881",
+      "description": "Furniture Assembly-Wood-From Manufactured Parts",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2883",
+      "description": "Furniture Mfg. Noc-Wood",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "Leather & Wood Products"
+    },
+    {
+      "code": "2913",
+      "description": "Rattan, Willow Or Twisted Fiber Products Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2916",
+      "description": "Veneer Products Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2923",
+      "description": "Musical Instrument Mfg. Noc-Wood",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "2942",
+      "description": "Crayon, Pencil Or Penholder Mfg.",
+      "category": "Food, Textile & Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3004",
+      "description": "Iron Or Steel-Manufacturing-Steel Making-& Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3018",
+      "description": "Iron Or Steel-Manufacturing-Rolling Mill-& Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3022",
+      "description": "Pipe Or Tube Mfg. Noc & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3027",
+      "description": "Rolling Mill Noc & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3028",
+      "description": "Pipe Or Tube Mfg.-Iron Or Steel-& Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3030",
+      "description": "Iron Or Steel Fabrication -Iron Or Steel Works Shop-Structural-& Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3040",
+      "description": "Iron Or Steel Fabrication-Iron Or Steel Works Shop-Ornamental-& Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3041",
+      "description": "Iron Or Steel Fabrication-Iron Or Steel Works Shop-Decorative Or Artistic & Foundries, Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3042",
+      "description": "Elevator Or Escalator Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3060",
+      "description": "Door, Door Frame Or Sash Mfg.-Wood-Metal Covered",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3064",
+      "description": "Sign Mfg. Or Repair-Metal-Shop Only",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3066",
+      "description": "Sheet Metal Work-Shop Only",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3067",
+      "description": "Sheet Metal Work-Shop Only",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3076",
+      "description": "Fireproof Equipment Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3081",
+      "description": "Foundry Noc-Ferrous",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3085",
+      "description": "Foundry-Non-Ferrous",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3110",
+      "description": "Forging Work-Drop Or Machine",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3111",
+      "description": "Blacksmith",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3113",
+      "description": "Tool Mfg. Noc-Not Drop Or Machine Forged",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3114",
+      "description": "Tool Mfg. Noc-Drop Or Machine Forged-Machining Or Finishing Of Tools Or Die Making Operations",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3118",
+      "description": "Saw Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3122",
+      "description": "Cutlery Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3126",
+      "description": "Tool Mfg.-Agricultural, Construction, Logging, Mining, Oil Or Artesian Well",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3129",
+      "description": "Buckle Or Button Mfg.-Metal",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3132",
+      "description": "Bolt Or Nut Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3145",
+      "description": "Automatic Screw Machine Products Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3146",
+      "description": "Hardware Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3169",
+      "description": "Stove Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3179",
+      "description": "Electrical Apparatus Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3188",
+      "description": "Plumbers' Supplies Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3190",
+      "description": "Electric Lighting Fixture, Lantern Or Lamp Mfg.-Assembly & Finishing",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3191",
+      "description": "Electric Lighting Fixture, Lantern Or Lamp Mfg.-All Other Operations",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3200",
+      "description": "Arms Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3220",
+      "description": "Can Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3227",
+      "description": "Aluminum Ware Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3241",
+      "description": "Wire Drawing-Iron Or Steel",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3255",
+      "description": "Wire Cloth Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3257",
+      "description": "Wire Goods Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3270",
+      "description": "Fastener Mfg.-Metal",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3300",
+      "description": "Bed Spring Or Wire Mattress Spring Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3303",
+      "description": "Spring Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3307",
+      "description": "Heat Treating-Metal",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3315",
+      "description": "Brass Or Copper Goods Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3336",
+      "description": "Type Foundry",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3365",
+      "description": "Welding Or Cutting Noc & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Iron & Steel Works"
+    },
+    {
+      "code": "3372",
+      "description": "Electroplating",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3381",
+      "description": "Silverware Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3383",
+      "description": "Jewelry Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Metal Products"
+    },
+    {
+      "code": "3384",
+      "description": "Precious Stone Setting",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3385",
+      "description": "Clock Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3400",
+      "description": "Metal Stamped Products Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3507",
+      "description": "Agricultural Or Construction Machinery Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3515",
+      "description": "Textile Machinery Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3548",
+      "description": "Bookbinding Or Printing Machinery Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3559",
+      "description": "Confection Machinery Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3561",
+      "description": "Sewing Machine Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3574",
+      "description": "Office Computing Or Recording Machine Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3581",
+      "description": "Fuel Injection Device Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3612",
+      "description": "Pump Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3620",
+      "description": "Tank Building-Metal-Shop",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3629",
+      "description": "Precision Machined Parts Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3632",
+      "description": "Machine Shop Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3634",
+      "description": "Valve Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3635",
+      "description": "Gear Mfg. Or Grinding",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3638",
+      "description": "Ball Or Roller Bearing Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3642",
+      "description": "Battery Mfg.-Dry",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3643",
+      "description": "Electric Power Or Transmission Equipment Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3647",
+      "description": "Battery Mfg.-Storage",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3648",
+      "description": "Automobile Lighting, Ignition Or Starting Apparatus Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3681",
+      "description": "Radio, Telephone Or Television Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3685",
+      "description": "Instrument Mfg. Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3686",
+      "description": "Musical Instrument Mfg. Noc-Metal",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3724",
+      "description": "Machinery Or Equipment Erection Or Installation Noc & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3726",
+      "description": "Boiler Installation Or Repair-Steam",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3737",
+      "description": "Machinery Or Equipment Repair Or Servicing At Customers' Premises Noc & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3807",
+      "description": "Automobile Radiator Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3808",
+      "description": "Automobile Mfg. Or Assembly",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3821",
+      "description": "Automobile Dismantling & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3823",
+      "description": "Automobile, Bus, Truck Or Trailer Body Mfg.-Riveted Or Welded",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3824",
+      "description": "Automobile, Bus, Truck Or Trailer Body Mfg.-Noc",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3826",
+      "description": "Aircraft Engine Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3827",
+      "description": "Automobile Engine Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "Machinery & Equipment"
+    },
+    {
+      "code": "3830",
+      "description": "Airplane Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3832",
+      "description": "Sheet Metal Airplane Parts Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3865",
+      "description": "Baby Carriage Mfg.",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "3881",
+      "description": "Car Mfg. - Railroad - & Drivers",
+      "category": "Metal Works & Heavy Manufacturing",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "4000",
+      "description": "Sand Or Gravel Digging & Drivers",
+      "category": "Paper, Chemical & Specialized Manufacturing",
+      "subcategory": "Glass & Ceramics"
+    },
+    {
+      "code": "5000",
+      "description": "Chimney Construction-Not Metal",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5022",
+      "description": "Masonry Noc",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Construction"
+    },
+    {
+      "code": "5037",
+      "description": "Painting-Metal Structures-Over Two Stories In Height-& Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "Specialized Trades"
+    },
+    {
+      "code": "5040",
+      "description": "Iron Or Steel Erection-Frame Structures",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5057",
+      "description": "Iron Or Steel Erection Noc",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5059",
+      "description": "Iron Or Steel Erection-Frame Structures-Not Over Two Stories In Height",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5069",
+      "description": "Iron Or Steel Erection-Construction Of Dwellings-Not Over Two Stories In Height",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5102",
+      "description": "Door, Door Frame Or Sash Erection-Metal Or Metal Covered",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5160",
+      "description": "Elevator Erection Or Repair",
+      "category": "Construction & Building Trades",
+      "subcategory": "Specialized Trades"
+    },
+    {
+      "code": "5183",
+      "description": "Plumbing Noc & Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "Specialized Trades"
+    },
+    {
+      "code": "5184",
+      "description": "Boiler Or Steam Pipe Insulating & Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5188",
+      "description": "Automatic Sprinkler Installation & Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5190",
+      "description": "Electrical Wiring-Within Buildings-& Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "Specialized Trades"
+    },
+    {
+      "code": "5191",
+      "description": "Office Machine Installation, Inspection, Adjustment Or Repair",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5192",
+      "description": "Vending Or Coin Operated Machines-Installation, Service Or Repair-& Rte Sales, Rte Supervsrs, Driver",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5193",
+      "description": "Oil Or Gas Burner Installation, Service Or Repair & Shop & Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "5213",
+      "description": "Concrete Construction Noc",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Construction"
+    },
+    {
+      "code": "5221",
+      "description": "Concrete Or Cement Work-Floors, Driveways, Yards Or Sidewalks-& Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Construction"
+    },
+    {
+      "code": "5222",
+      "description": "Concrete Construction In Connection With Bridges Or Culverts",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Construction"
+    },
+    {
+      "code": "5223",
+      "description": "Swimming Pool Construction-Not Iron Or Steel-& Drivers",
+      "category": "Construction & Building Trades",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6003",
+      "description": "Pile Driving Noc & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "6005",
+      "description": "Breakwater Or Jetty Construction-All Operations To Completion-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6017",
+      "description": "Dam Or Lock Construction-Concrete Work-& Drivers-In Connection With Dams Or Locks-All Types",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6018",
+      "description": "Dam Or Lock Construction-Earth Moving Or Placing-& Drivers-In Connection With Dams Or Locks-All Type",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6045",
+      "description": "Levee Construction-All Operations To Completion-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "6204",
+      "description": "Drilling Noc & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Specialized Construction"
+    },
+    {
+      "code": "6216",
+      "description": "Gas Or Oil Lease Work Noc-Natural Gas-By Contractor-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6217",
+      "description": "Excavation Noc & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Specialized Construction"
+    },
+    {
+      "code": "6229",
+      "description": "Irrigation System Construction & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6233",
+      "description": "Gas Or Oil Pipeline Construction & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Utilities Construction"
+    },
+    {
+      "code": "6235",
+      "description": "Oil Or Gas Well-Drilling Or Redrilling-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Specialized Construction"
+    },
+    {
+      "code": "6251",
+      "description": "Tunneling-Not Pneumatic-All Operations",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "6252",
+      "description": "Caisson Work-All Operations To Completion",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "6260",
+      "description": "Tunneling-Pneumatic-All Operations",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Heavy Construction"
+    },
+    {
+      "code": "6306",
+      "description": "Sewer Construction-All Operations-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Utilities Construction"
+    },
+    {
+      "code": "6319",
+      "description": "Gas Main Or Connection Construction & Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Utilities Construction"
+    },
+    {
+      "code": "6325",
+      "description": "Conduit Construction-For Cables Or Wires-& Drivers",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "Utilities Construction"
+    },
+    {
+      "code": "6400",
+      "description": "Fence Erection-Metal",
+      "category": "Heavy Construction & Infrastructure",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7133",
+      "description": "Railroad-All Employees-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7197",
+      "description": "Trucking-Parcels Or Packages-Home Delivery From Retail Stores-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7201",
+      "description": "Boarding Or Livery Stable-Not Sales Stable-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7207",
+      "description": "Club Or Riding Academy - & Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7219",
+      "description": "Trucking Noc-All Employees-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7231",
+      "description": "Messenger Service Companies-Delivering Mail, Parcels Or Packages- All Employees-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7242",
+      "description": "Messenger Service Companies-Bicycle Delivery Of Envelopes, Parcels, Or Packages",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7309",
+      "description": "Stevedoring Noc",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7313",
+      "description": "Coal Dock Operation & Stevedoring",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7317",
+      "description": "Stevedoring-By Hand Or Hand Trucks-Exclusively",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7327",
+      "description": "Stevedoring-Containerized Freight-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7333",
+      "description": "Dredging-All Types-Program I",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7335",
+      "description": "Dredging-All Types-Program Ii-State Act",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7337",
+      "description": "Dredging-All Types-Program Ii-Usl Act",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7364",
+      "description": "Independent Livery Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7366",
+      "description": "Freight Handlers On Piers Or In Terminals Or Areas Adjoining Piers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7367",
+      "description": "Freight Handlers Noc-State Act Only",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7368",
+      "description": "Taxicab Or Livery Service-Public-All Other Employees-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "Ground Transportation"
+    },
+    {
+      "code": "7370",
+      "description": "Ambulance Operation - Volunteer Ambulance Service Company",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7377",
+      "description": "Limousine Or Livery Service-Private-All Other Employees-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7380",
+      "description": "Drivers And Helpers Noc-Commercial",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7390",
+      "description": "Beer Or Ale Dealer-Wholesale-& Drivers",
+      "category": "Transportation & Utilities",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "7394",
+      "description": "Diving-Marine-Program I",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7395",
+      "description": "Diving-Marine-Program Ii-State Act",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7398",
+      "description": "Diving-Marine-Program Ii-Usl Act",
+      "category": "Transportation & Utilities",
+      "subcategory": "Marine Operations"
+    },
+    {
+      "code": "7403",
+      "description": "Aviation - Aerial Application, Seeding, Herding Or Scintillometer Surveying - All Other Emps. & D",
+      "category": "Transportation & Utilities",
+      "subcategory": "Aviation & Utilities"
+    },
+    {
+      "code": "8001",
+      "description": "Florist Store & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8006",
+      "description": "Grocery Store-Retail-No Fresh Meat",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8008",
+      "description": "Clothing Or Wearing Apparel Store-Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8012",
+      "description": "Quick Printing",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8013",
+      "description": "Jewelry Store",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8016",
+      "description": "Photocopy Shops-All Employees-& Clerical, Outside Salespersons, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8017",
+      "description": "Retail Store Noc-No Service Of Food",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8018",
+      "description": "Wholesale Store Noc",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8021",
+      "description": "Meat Dealer-Wholesale",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8025",
+      "description": "Bicycle Store - Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8031",
+      "description": "Meat Store-Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8032",
+      "description": "Clothing Or Wearing Apparel Store-Wholesale",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8033",
+      "description": "Supermarket-Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8034",
+      "description": "Grocery Store-Wholesale",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8039",
+      "description": "Department Store-Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8043",
+      "description": "Retail Store Noc-Including Service Of Food-Not Restaurants",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8044",
+      "description": "Furniture Store-Wholesale Or Retail-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8046",
+      "description": "Automobile Accessories Store Noc-Retail-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8047",
+      "description": "Drug Store-Wholesale",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8048",
+      "description": "Fruit Or Vegetable Store-Wholesale",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8068",
+      "description": "Art Gallery & Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8069",
+      "description": "Cellular Telephone Store - Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8072",
+      "description": "Book Store-Retail",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8090",
+      "description": "Auctioneers & Salespersons-Outside",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8102",
+      "description": "Seed Merchant",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8103",
+      "description": "Wool Merchant & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8105",
+      "description": "Hide Or Leather Dealer",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8106",
+      "description": "Iron Or Steel Merchant & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8107",
+      "description": "Machinery Dealer Noc-Store Or Yard-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8111",
+      "description": "Plumbers' Supplies Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8116",
+      "description": "Farm Machinery Dealer-All Operations-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8199",
+      "description": "Farm Or Feed Supply Dealer-Retail-Exclusively",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8209",
+      "description": "Vegetable Packing & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8215",
+      "description": "Hay, Grain, Feed Or Fertilizer Dealer-& Local Managers, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8227",
+      "description": "Construction Or Erection Permanent Yard",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8232",
+      "description": "Building Material Dealer-No Second-Hand Material-& Local Managers, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8235",
+      "description": "Door, Sash Or Finished Millwork Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8263",
+      "description": "Junk Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8264",
+      "description": "Bottle, Rubber, Paper Stock Or Rag Dealer-Second-Hand-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8265",
+      "description": "Iron Or Steel Scrap Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8280",
+      "description": "Racing Stable & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8288",
+      "description": "Livestock Dealer Or Commission Merchant-& Outside Salespersons, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8291",
+      "description": "Storage Warehouse-Cold",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8292",
+      "description": "Storage Warehouse Noc",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8293",
+      "description": "Furniture Moving And/Or Storage & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8350",
+      "description": "Gasoline Or Oil Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8353",
+      "description": "Gas Company-Gas Dealer-L.P.G.-All Operations-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8381",
+      "description": "Automobile Gasoline Station -Self-Service Gasoline Exclusively - No Convenience Store",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8382",
+      "description": "Automobile Gasoline And/Or Service Stations - Self-Service Gasoline Station-With Convenience Store",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8385",
+      "description": "Bus Company-Garage Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8391",
+      "description": "Automobile Sales Or Service Agency-All Operations-& Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8392",
+      "description": "Automobile Parking Lot & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8394",
+      "description": "Bus Company-All Other Employees & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8500",
+      "description": "Metal Scrap Dealer & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Wholesale Trade"
+    },
+    {
+      "code": "8601",
+      "description": "Engineer Or Architect - Consulting",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8709",
+      "description": "Stevedoring-Talliers And Checking Clerks Engaged In Connection With Stevedore Work- U.S. Act",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8719",
+      "description": "Stevedoring-Talliers And Checking Clerks Engaged In Connection With Stevedore Work-State Act Only",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8720",
+      "description": "Inspection Of Risks For Insurance Or Valuation Purposes Noc",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8723",
+      "description": "Insurance Companies & Clerical, Salespersons",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8726",
+      "description": "Steamship Line Or Agency-Port Emps-Superintendents, Capts, Engineers, Stewards & Assts, Pay Clerks",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8731",
+      "description": "Boiler Inspection",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8742",
+      "description": "Salespersons, Collectors Or Messengers-Outside",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8745",
+      "description": "News Agent Or Distributor Of Magazines Or Other Periodicals-Not Retail Dlr-& Outside Salespersons, D",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8747",
+      "description": "Showroom Salespersons",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8748",
+      "description": "Automobile Salespersons",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Retail Operations"
+    },
+    {
+      "code": "8751",
+      "description": "Route Salespersons And Route Supervisors",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8755",
+      "description": "Labor Union-All Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8800",
+      "description": "Mailing Or Addressing Co.",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8802",
+      "description": "Vinyl Letter Processing",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8803",
+      "description": "Clerical Service Contractor-Traveling",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8809",
+      "description": "Executive Officers Noc-Not Foremen, Workers Or Salespersons",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8810",
+      "description": "Clerical Office Employees Noc",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8820",
+      "description": "Attorney-All Employees-& Clerical, Messengers, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8829",
+      "description": "Convalescent Or Nursing Home-All Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8831",
+      "description": "Veterinary Hospital & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8832",
+      "description": "Physician & Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8833",
+      "description": "Hospital-Professional Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8835",
+      "description": "Home, Public and Traveling Healthcare - All Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8837",
+      "description": "Charitable Organization - All Operation & Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8838",
+      "description": "Public Library-Professional Employees-Includes Attendants & Ushers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8840",
+      "description": "Religious House Of Worship-Professional Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8854",
+      "description": "Health Care Services -Medical Or Other Professional Services-Traveling",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8855",
+      "description": "Banks and Trust Companies â€” All Employees & Clerical, Outside Salespersons, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8857",
+      "description": "Social Case Workers-Traveling",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8864",
+      "description": "Developmental Organizations - Incl. Workshop - All Employees & Salespersons, Drivers",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8865",
+      "description": "Alcohol Or Drug Rehabilitation Facility-All Employees-& Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8866",
+      "description": "Assisted Living Facility-All Employees-& Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8868",
+      "description": "School-Professional Employees & Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "Professional Services"
+    },
+    {
+      "code": "8869",
+      "description": "Day Care Centers-Children-Professional Employees & Clerical, Salespersons",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8871",
+      "description": "Telecommuter Clerical Employees",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "8901",
+      "description": "Telephone Or Telegraph Co-Office Or Exchange Employees & Clerical",
+      "category": "Retail, Wholesale & Professional Services",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9014",
+      "description": "Exterminator & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9015",
+      "description": "Baths",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9016",
+      "description": "Amusement Park Or Exhibition Operation & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9019",
+      "description": "Bridge Or Vehicular Tunnel Operation & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9025",
+      "description": "Cleaning Outside Surfaces Of Buildings & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9026",
+      "description": "Building Operation-Commercial-No Dwelling Occupancy Except By Owner Or Custodian",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9027",
+      "description": "Building Operation-Dwelling Or Dwelling/Commercial Occ. No More Than One Story For Comm. Purposes",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9028",
+      "description": "Building Operation Noc-Dwelling Or Combined Dwelling And Commercial Occupancy",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9029",
+      "description": "Building Noc-Maintenance Or Ordinary Repair Only-Not Contractors",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9030",
+      "description": "Building Service Contractor",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9040",
+      "description": "Hospital-All Other Employees",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9044",
+      "description": "Hotel-Casino Gambling-All Other Employees-& Outside Salespersons",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9048",
+      "description": "Camp Operation-Recreational Or Educational-All Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9051",
+      "description": "Health Care Services-Daily Living Skills Services-Traveling",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9052",
+      "description": "Hotel Noc-All Other Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9055",
+      "description": "Exercise Or Health Institute",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9058",
+      "description": "Hotel Noc-Restaurant Employees",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9059",
+      "description": "Day Care Centers-Children-All Other Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9060",
+      "description": "Club-Country, Golf, Fishing Or Yacht-& Clerical",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9061",
+      "description": "Clubs Noc-All Employees-& Clerical",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9063",
+      "description": "Ymca, Ywca, Ymha Or Ywha, Institution-All Employees-& Clerical",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9065",
+      "description": "Club-Tennis-& Clerical",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9071",
+      "description": "Restaurant-Full-Service-Including Entertainers And/Or Musicians",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9072",
+      "description": "Restaurant-Fast Food-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9074",
+      "description": "Bar, Dance Club, Lounge, Nightclub Or Tavern-Including Entertainers And/Or Musicians",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9079",
+      "description": "Restaurants",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9088",
+      "description": "Fireworks Exhibition & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9089",
+      "description": "Billiard Hall",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9093",
+      "description": "Bowling Lane",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9101",
+      "description": "School Or College-All Other Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9102",
+      "description": "Park Noc-All Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9108",
+      "description": "Aviation Aircraft Operation Seat Surcharge",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9111",
+      "description": "Charitable Organization - Professional Employees & C",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9149",
+      "description": "Theater-Drive-In-All Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9157",
+      "description": "Theatrical Prod. In Which Players/ Ents. Dance, Skate, Perform Acrobatics -Players, Ents, Musicians",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9158",
+      "description": "Theatrical Prod. In Which Players/Ents. Dance, Skate Or Perform Acrobatics -All Other Employees",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9159",
+      "description": "Theatrical Production Noc-Players, Entertainers Or Musicians",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9160",
+      "description": "Theatrical Production Noc-All Other Employees",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9178",
+      "description": "Athletic Team Or Park-Non-Contact Sports",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9179",
+      "description": "Athletic Team Or Park-Contact Sports",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9180",
+      "description": "Amusement Device Operation Noc-Not Traveling-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9182",
+      "description": "Athletic Team Or Park-Operation Of Park-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9186",
+      "description": "Carnival, Circus Or Amusement Device Operator-Traveling-All Employees-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Entertainment & Recreation"
+    },
+    {
+      "code": "9220",
+      "description": "Cemetery Operation & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Public Services"
+    },
+    {
+      "code": "9402",
+      "description": "Street Cleaning & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9403",
+      "description": "Garbage, Ashes Or Refuse Collection & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9410",
+      "description": "Municipal, Township, County Or State Employee Noc",
+      "category": "General Services & Public Administration",
+      "subcategory": "Public Services"
+    },
+    {
+      "code": "9501",
+      "description": "Painting-Shop Only-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9505",
+      "description": "Automobile, Bus, Truck Or Trailer Body Mfg.-Painting",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9519",
+      "description": "Household Appliances-Electrical-Installation, Service Or Repair-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9521",
+      "description": "House Furnishings Installation Noc & Upholstering",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9522",
+      "description": "Upholstering",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9526",
+      "description": "Scaffolds, Hod Hoists, Construction Elevators-Built-Up From Ground-Installation, Rep. Or Removal-& D",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9527",
+      "description": "Scaffolds-Sidewalk Bridges-Not Over One Story In Height-Installation, Repair Or Removal-& Driver",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9534",
+      "description": "Mobile Crane And Hoisting Service Contractors Noc & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9539",
+      "description": "Awning, Tent Or Canvas Goods Erection, Removal Or Repair & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9545",
+      "description": "Bill Posting & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9549",
+      "description": "Advertising Co. & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9552",
+      "description": "Sign Erection Or Repair-Away From Shop-Not Outdoor Advertising Companies-& Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9553",
+      "description": "Sign Painting Or Lettering On Buildings Or Structures & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9585",
+      "description": "Shoe Repair Shop",
+      "category": "General Services & Public Administration",
+      "subcategory": "Building & Maintenance Services"
+    },
+    {
+      "code": "9586",
+      "description": "Barber Shop",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9600",
+      "description": "Taxidermist",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9610",
+      "description": "Motion Picture Production-In Studios Or Outside All Operations Up To The Develop. Of Negatives-& D",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9620",
+      "description": "Funeral Directors & Drivers",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9984",
+      "description": "Atomic Energy-Project Work",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    },
+    {
+      "code": "9985",
+      "description": "Atomic Energy-Radiation Exposure NOC",
+      "category": "General Services & Public Administration",
+      "subcategory": "General Operations"
+    }
+  ]
+}
