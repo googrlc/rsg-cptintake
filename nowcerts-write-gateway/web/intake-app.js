@@ -169,6 +169,24 @@ function renderSendToAms() {
   </div>`;
 }
 
+function renderClassification() {
+  const c = state.bundle?.classification;
+  if (!c) return "";
+  const types = [["naics", "NAICS"], ["sic", "SIC"], ["gl", "GL class"], ["wc", "WC class"]];
+  const codeChip = (e) => `<span class="code-chip"><b>${escapeHtml(e.code)}</b> ${escapeHtml(e.description ?? "")}</span>`;
+  const block = ([key, label]) => {
+    const entry = c[key] ?? {};
+    const validated = entry.validated
+      ? `<div class="code-validated">✓ ${escapeHtml(entry.validated.code)} ${escapeHtml(entry.validated.description ?? "")} <small>(validated in table)</small></div>`
+      : "";
+    const cands = (entry.candidates ?? []);
+    return `<div class="class-col"><h4>${label}</h4>${validated}${cands.length ? cands.map(codeChip).join("") : `<span class="code-none">No table match — enter manually</span>`}</div>`;
+  };
+  return `<div class="classification-block"><div class="class-head"><h4>Reference classification</h4><span class="safe">deterministic · confirm before use</span></div>
+    <p class="class-note">${escapeHtml(c.note)}</p>
+    <div class="class-grid">${types.map(block).join("")}</div></div>`;
+}
+
 function renderProperty() {
   // Operator-triggered, optional. Property data is only relevant when the
   // assessment covers property (homeowners, BOP, commercial property) — an
@@ -210,7 +228,7 @@ function renderOutput() {
         <div><span>Red flags</span><strong>${assessment?.red_flags?.length ?? "—"}</strong></div>
         <div><span>Confidence</span><strong>${assessment?.confidence == null ? "—" : `${assessment.confidence}%`}</strong></div>
       </div>${assessment ? `<div class="assessment-summary">${escapeHtml(assessment.summary)}</div>
-        <div class="risk-columns"><div><h4>Coverage needs</h4>${(assessment.coverage_requirements ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Red flags</h4>${(assessment.red_flags ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Missing / verify</h4>${(assessment.missing_items ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None identified</span>"}</div></div>${renderProperty()}` : `<div class="blank-state">No assessment prepared yet.</div>`}</div>`;
+        <div class="risk-columns"><div><h4>Coverage needs</h4>${(assessment.coverage_requirements ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Red flags</h4>${(assessment.red_flags ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Missing / verify</h4>${(assessment.missing_items ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None identified</span>"}</div></div>${renderClassification()}${renderProperty()}` : `<div class="blank-state">No assessment prepared yet.</div>`}</div>`;
   }
   if (state.outputTab === "report") {
     const ready = state.bundle?.assessment?.status === "COMPLETE" && state.bundle?.report_url;

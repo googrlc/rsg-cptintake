@@ -27,6 +27,7 @@ import { attomClientFromEnv } from "./connectors/attom-client.js";
 import { FemaFloodClient } from "./connectors/fema-flood-client.js";
 import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
 import { lookupPropertyProfile } from "./intake/property-lookup.js";
+import { attachClassification, lookupCode, searchCodes, REFERENCE_TYPES } from "./intake/reference-classifier.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -460,6 +461,9 @@ const httpServer = createServer(async (req, res) => {
         pdfWarnings.push(`Business enrichment unavailable: ${error.message}`);
       }
       bundle = applyHermesPreview(bundle, draft, research, pdfWarnings);
+      // Deterministic classification against the RSG reference tables — attaches
+      // NAICS/SIC/GL/WC candidates for review; validates any existing NAICS.
+      attachClassification(bundle);
       await intakeStore.save(bundle);
       sendJson(res, 201, bundle);
     } catch (error) {
@@ -468,6 +472,32 @@ const httpServer = createServer(async (req, res) => {
         message: error?.issues?.map((issue) => issue.message).join("; ") ?? error.message,
       });
     }
+    return;
+  }
+
+  // Read-only reference-table lookups (NAICS/SIC/GL/WC) — deterministic, no auth
+  // concern. search?type=&q=&limit= ranks candidates; validate?type=&code= checks
+  // a single code. Lets the operator/UI find codes in the tables, never guess.
+  if (req.method === "GET" && url.pathname === "/api/reference/search") {
+    const type = url.searchParams.get("type");
+    const q = url.searchParams.get("q") ?? "";
+    const limit = Math.min(Number(url.searchParams.get("limit")) || 5, 25);
+    if (!REFERENCE_TYPES.includes(type)) {
+      sendJson(res, 400, { status: "INVALID", message: `type must be one of: ${REFERENCE_TYPES.join(", ")}.` });
+      return;
+    }
+    sendJson(res, 200, searchCodes(type, q, { limit }));
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/api/reference/validate") {
+    const type = url.searchParams.get("type");
+    const code = url.searchParams.get("code") ?? "";
+    if (!REFERENCE_TYPES.includes(type)) {
+      sendJson(res, 400, { status: "INVALID", message: `type must be one of: ${REFERENCE_TYPES.join(", ")}.` });
+      return;
+    }
+    const result = lookupCode(type, code);
+    sendJson(res, 200, { ...result, valid: Boolean(result.entry) });
     return;
   }
 
