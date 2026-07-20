@@ -20,12 +20,22 @@ services:
       LIVE_AMS_WRITES: "on"
       MOMENTUM_MCP_URL: https://mcp.momentumamp.com/mcp
       MOMENTUM_MCP_TOKEN_FILE: /run/secrets/momentum-mcp-token
+      # Property enrichment for the "Get property details" button (read-only,
+      # report-only). ATTOM = building characteristics + coords; FEMA flood is
+      # keyless. Base URLs default in-code; only the key file is needed.
+      ATTOM_API_KEY_FILE: /run/secrets/attom-api-key
+      # NAICS classification key — staged/forward-ready. The NaicsEnricher is not
+      # yet consumed by server.js (runIntake path), so this is inert until that
+      # enricher is wired into the live pipeline; harmless to set now.
+      NAICS_API_KEY_FILE: /run/secrets/naics-api-key
     ports:
       - "127.0.0.1:8790:8787"
     volumes:
       - /var/lib/rsg-intake-gate:/data
       - /etc/rsg-intake-gate/nowcerts-mcp-token:/run/secrets/nowcerts-mcp-token:ro
       - /etc/rsg-intake-gate/momentum-mcp-token:/run/secrets/momentum-mcp-token:ro
+      - /etc/rsg-intake-gate/attom-api-key:/run/secrets/attom-api-key:ro
+      - /etc/rsg-intake-gate/naics-api-key:/run/secrets/naics-api-key:ro
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m

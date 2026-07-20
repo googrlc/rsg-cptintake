@@ -27,6 +27,8 @@ const state = {
   approvalResult: null,
   commitBusy: false,
   commitResult: null,
+  propertyBusy: false,
+  property: null,
   message: "Add every source for one client, then prepare the combined intake.",
 };
 let lookupTimer = null;
@@ -167,6 +169,49 @@ function renderSendToAms() {
   </div>`;
 }
 
+function renderClassification() {
+  const c = state.bundle?.classification;
+  if (!c) return "";
+  const types = [["naics", "NAICS"], ["sic", "SIC"], ["gl", "GL class"], ["wc", "WC class"]];
+  const codeChip = (e) => `<span class="code-chip"><b>${escapeHtml(e.code)}</b> ${escapeHtml(e.description ?? "")}</span>`;
+  const block = ([key, label]) => {
+    const entry = c[key] ?? {};
+    const validated = entry.validated
+      ? `<div class="code-validated">✓ ${escapeHtml(entry.validated.code)} ${escapeHtml(entry.validated.description ?? "")} <small>(validated in table)</small></div>`
+      : "";
+    const cands = (entry.candidates ?? []);
+    return `<div class="class-col"><h4>${label}</h4>${validated}${cands.length ? cands.map(codeChip).join("") : `<span class="code-none">No table match — enter manually</span>`}</div>`;
+  };
+  return `<div class="classification-block"><div class="class-head"><h4>Reference classification</h4><span class="safe">deterministic · confirm before use</span></div>
+    <p class="class-note">${escapeHtml(c.note)}</p>
+    <div class="class-grid">${types.map(block).join("")}</div></div>`;
+}
+
+function renderProperty() {
+  // Operator-triggered, optional. Property data is only relevant when the
+  // assessment covers property (homeowners, BOP, commercial property) — an
+  // auto-only quote skips this entirely.
+  if (!isStandalone) return "";
+  const p = state.property;
+  const rows = (profile) => [
+    ["Year built", profile.year_built], ["Square feet", profile.square_feet],
+    ["Construction", profile.construction], ["Roof", profile.roof],
+    ["Condition", profile.condition], ["Stories", profile.stories],
+    ["FEMA flood zone", profile.flood_zone],
+    ["Protection class", profile.protection_class],
+    ["Replacement cost", typeof profile.replacement_cost === "number" ? `$${profile.replacement_cost.toLocaleString()}` : profile.replacement_cost],
+  ].map(([label, value]) => `<div><span>${label}</span><strong>${escapeHtml(value ?? "—")}</strong></div>`).join("");
+  let body;
+  if (p?.ok && p.property_profile?.length) {
+    body = `<div class="property-result"><small>${escapeHtml(p.property_profile[0].address ?? "")} · ATTOM suggested — confirm before relying on it</small><div class="metric-grid small">${rows(p.property_profile[0])}</div></div>`;
+  } else if (p && !p.ok) {
+    body = `<div class="blank-state">${escapeHtml(p.message ?? "No property record matched.")}</div>`;
+  } else {
+    body = `<div class="property-hint">Optional — only for property lines (homeowners, BOP, commercial property). Skip for auto-only quotes. Looks up the insured address in ATTOM and attaches year built, size, construction, and roof to the report.</div>`;
+  }
+  return `<div class="property-block"><div class="property-head"><h4>Property details</h4><button id="get-property" class="secondary" ${state.propertyBusy ? "disabled" : ""}>${state.propertyBusy ? "Looking up…" : p?.ok ? "Refresh property details" : "Get property details"}</button></div>${body}</div>`;
+}
+
 function renderOutput() {
   const assessment = state.bundle?.assessment;
   if (state.outputTab === "ams") {
@@ -183,7 +228,7 @@ function renderOutput() {
         <div><span>Red flags</span><strong>${assessment?.red_flags?.length ?? "—"}</strong></div>
         <div><span>Confidence</span><strong>${assessment?.confidence == null ? "—" : `${assessment.confidence}%`}</strong></div>
       </div>${assessment ? `<div class="assessment-summary">${escapeHtml(assessment.summary)}</div>
-        <div class="risk-columns"><div><h4>Coverage needs</h4>${(assessment.coverage_requirements ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Red flags</h4>${(assessment.red_flags ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Missing / verify</h4>${(assessment.missing_items ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None identified</span>"}</div></div>` : `<div class="blank-state">No assessment prepared yet.</div>`}</div>`;
+        <div class="risk-columns"><div><h4>Coverage needs</h4>${(assessment.coverage_requirements ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Red flags</h4>${(assessment.red_flags ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None extracted</span>"}</div><div><h4>Missing / verify</h4>${(assessment.missing_items ?? []).map((item) => `<span>${escapeHtml(item)}</span>`).join("") || "<span>None identified</span>"}</div></div>${renderClassification()}${renderProperty()}` : `<div class="blank-state">No assessment prepared yet.</div>`}</div>`;
   }
   if (state.outputTab === "report") {
     const ready = state.bundle?.assessment?.status === "COMPLETE" && state.bundle?.report_url;
@@ -289,6 +334,7 @@ function bindEvents() {
     const button = document.querySelector("#approve-proposal");
     if (button) button.disabled = state.proposalBusy || state.confirmInput.trim() !== (state.proposal?.expected_confirmation ?? " ");
   });
+  document.querySelector("#get-property")?.addEventListener("click", getPropertyDetails);
   document.querySelector("#send-ams")?.addEventListener("click", () => sendToAms());
   document.querySelector("#retry-commit")?.addEventListener("click", () => sendToAms());
   document.querySelector("#confirm-duplicate")?.addEventListener("click", () => sendToAms(true));
@@ -314,6 +360,26 @@ async function sendToAms(override = false) {
     state.message = `Send failed: ${error.message}`;
   } finally {
     state.commitBusy = false;
+    render();
+  }
+}
+
+async function getPropertyDetails() {
+  if (!state.bundle?.intake_id) return;
+  state.propertyBusy = true;
+  render();
+  try {
+    const response = await fetch(`/api/intakes/${state.bundle.intake_id}/property`, { method: "POST" });
+    const result = await response.json();
+    state.property = result;
+    if (state.bundle && result.ok) state.bundle.property_profile = result.property_profile;
+    state.message = result.ok
+      ? "Property details attached to the report (suggested — confirm before relying on them)."
+      : `Property lookup: ${statusLabel(result.status)}${result.message ? ` — ${result.message}` : ""}`;
+  } catch (error) {
+    state.message = `Property lookup failed: ${error.message}`;
+  } finally {
+    state.propertyBusy = false;
     render();
   }
 }
@@ -522,6 +588,7 @@ async function prepareIntake() {
     state.confirmInput = "";
     state.commitResult = null;
     state.commitBusy = false;
+    state.property = null;
     state.outputTab = "overview";
     const gaps = result.assessment?.missing_items?.length ?? 0;
     state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; nothing was written to NowCerts.`;
