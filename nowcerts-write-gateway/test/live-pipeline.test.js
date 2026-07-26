@@ -1,17 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { applyHermesPreview, buildEvidenceText } from "../src/intake/live-pipeline.js";
-import { prepareSourceBundle } from "../src/intake/source-bundle.js";
-
-const capturedAt = "2026-07-17T12:00:00.000Z";
-
-function bundle() {
-  return prepareSourceBundle({
-    client_name: "Integration Test LLC",
-    existing_client_id: "insured-123",
-    sources: [{ kind: "notes", title: "Call notes", content: "The client performs electrical contracting.", captured_at: capturedAt }],
-  }, { now: capturedAt, intakeId: "00000000-0000-4000-8000-000000000001" });
-}
+import { bundle } from "./fixtures.js";
 
 test("evidence text preserves source markers for synthesis", () => {
   const text = buildEvidenceText(bundle());

@@ -1,4 +1,5 @@
 import { EXTRACTION_SCHEMA_VERSION, FieldStatus } from "../src/documents/extraction.js";
+import { prepareSourceBundle } from "../src/intake/source-bundle.js";
 
 // Synthetic, dependency-free PDF byte fixtures for intake tests. These are not
 // real rendered PDFs; they carry exactly the structural markers the intake
@@ -120,4 +121,15 @@ export function samplePayload(overrides = {}) {
     .map(([code, value]) => `${code}${value}`)
     .join(LF);
   return `@${LF}${CR}ANSI 636060090002DL00410278ZG03190008DL${body}${LF}${CR}`;
+}
+
+// A prepared source bundle for the live (Hermes-synthesis) intake path.
+// Shared so tests do not import each other's files, which would re-run them.
+export function bundle() {
+  const capturedAt = "2026-07-17T12:00:00.000Z";
+  return prepareSourceBundle({
+    client_name: "Integration Test LLC",
+    existing_client_id: "insured-123",
+    sources: [{ kind: "notes", title: "Call notes", content: "The client performs electrical contracting.", captured_at: capturedAt }],
+  }, { now: capturedAt, intakeId: "00000000-0000-4000-8000-000000000001" });
 }

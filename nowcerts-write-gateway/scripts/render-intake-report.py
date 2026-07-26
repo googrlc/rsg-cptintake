@@ -361,6 +361,25 @@ def build_report(bundle, destination):
         ["Entity / field", "Proposed value", "Source"],
         ams_rows, [1.8 * inch, 2.44 * inch, 2.5 * inch], styles, empty_row="No AMS fields approved",
     ))
+    # CRM routing. These are pipeline records bound for Hermes, never the AMS —
+    # a per-LOB opportunity must not become a speculative NowCerts quote, which
+    # would corrupt renewal urgency and scoreboard metrics.
+    sub(story, "CRM Routing Preview (Hermes)", styles)
+    crm_rows = []
+    for record in bundle.get("crm_records", []) or []:
+        label = str(record.get("entity", "")).title()
+        if record.get("index"):
+            label = f"{label} {record['index']}"
+        for field in record.get("fields", []) or []:
+            crm_rows.append([label, field.get("field"), field.get("value"), record.get("nowcerts_write", "manual")])
+        for item in record.get("needs_review", []) or []:
+            crm_rows.append([label, item.get("field"), f"NEEDS REVIEW - {item.get('reason')}", record.get("nowcerts_write", "manual")])
+    story.append(heading_table(
+        ["Record", "Field", "Value", "AMS write"],
+        crm_rows, [1.2 * inch, 1.7 * inch, 2.44 * inch, 0.9 * inch], styles,
+        empty_row="No CRM records identified",
+    ))
+
     sub(story, "Assessment-Only Information Retained in This PDF", styles)
     ao = routing.get("assessment_only", []) or [{"field": "None", "value": "No assessment-only facts identified."}]
     for item in ao:

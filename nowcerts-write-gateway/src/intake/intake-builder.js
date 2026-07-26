@@ -2,6 +2,7 @@ import { reconcileFields, ReviewReason, FieldStatus } from "../documents/extract
 import { assessDuplicateRisk } from "../documents/duplicate-search.js";
 import { normalizeEntityType } from "../policy.js";
 import { citationToSource } from "./intake-schema.js";
+import { CRM_DESTINATION, NOWCERTS_WRITE_MANUAL } from "./crm-records.js";
 
 // Turns a parsed new-business intake into (a) a reviewable draft for the panel
 // and (b), when a verified write contract is supplied, a shadow NowCerts
@@ -150,13 +151,13 @@ function buildCrmRecord(reconciledRecord, capturedAt) {
   }
 
   return {
-    destination: "hermes",
+    destination: CRM_DESTINATION,
     entity: record.entity,
     role: record.role,
     operation: record.operation,
     fields,
     needs_review: needsReview,
-    nowcerts_write: "manual",
+    nowcerts_write: NOWCERTS_WRITE_MANUAL,
   };
 }
 

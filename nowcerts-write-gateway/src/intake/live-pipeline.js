@@ -1,4 +1,5 @@
 import { resolveFieldContract } from "../contracts/nowcerts-field-contracts.js";
+import { buildCrmRecords } from "./crm-records.js";
 
 function asList(value) {
   return Array.isArray(value) ? value.filter((item) => item != null && item !== "") : [];
@@ -110,6 +111,10 @@ export function applyHermesPreview(bundle, draft, research = null, pdfWarnings =
   }] : [];
   const enrichedPayload = { ...payload, account: { ...account, naics: account.naics ?? researchNaics, sic: account.sic ?? research?.sic } };
   const { amsFields, unsupported } = amsCandidates(enrichedPayload, bundle);
+  const crmRecords = buildCrmRecords(enrichedPayload, {
+    citation: source,
+    clientName: bundle.client.display_name,
+  });
   if (bundle.client.intended_operation === "create") {
     const requiredFields = ["Insured.Name", "Insured.Address", "Insured.City", "Insured.State", "Insured.Zip", "Insured.Type"];
     for (const field of requiredFields) {
@@ -128,7 +133,14 @@ export function applyHermesPreview(bundle, draft, research = null, pdfWarnings =
     status: missing.length ? "READY_FOR_REVIEW" : "PREVIEW_READY",
     synthesis: { status: "COMPLETE", draft_id: draft.draft_id, payload, warnings: asList(draft.validation_warnings) },
     research: research ? { status: "COMPLETE", ...research } : { status: "UNAVAILABLE" },
+    // Three-way routing: AMS-contracted fields to NowCerts, pipeline context to
+    // Hermes as crm_records, everything else cited stays on the report. Per-LOB
+    // opportunities never become speculative AMS quotes — see crm-records.js.
     routing: { ...bundle.routing, ams_fields: amsFields, assessment_only: assessmentOnly, missing_items: missing },
+    crm_records: crmRecords,
+    // The Hermes write is a separate reviewed stage; crm_records is its input.
+    // Nothing here writes to the CRM.
+    crm_write: "deferred",
     assessment: {
       ...bundle.assessment,
       status: "COMPLETE",
@@ -145,7 +157,8 @@ export function applyHermesPreview(bundle, draft, research = null, pdfWarnings =
     },
     pipeline: {
       synthesis: "READY", reference_code_lookup: research ? "READY" : "NEEDS_REVIEW",
-      risk_assessment: "READY", nowcerts_preview: amsFields.length ? "SCHEMA_ALIGNED" : "NEEDS_REVIEW", retained_pdf: "READY",
+      risk_assessment: "READY", nowcerts_preview: amsFields.length ? "SCHEMA_ALIGNED" : "NEEDS_REVIEW",
+      crm_preview: crmRecords.length ? "READY" : "NEEDS_REVIEW", retained_pdf: "READY",
     },
     approval: {
       status: "LOCKED", reason: "Live NowCerts field mappings, pre-write reread, idempotency, and post-write read-back are not yet certified.",

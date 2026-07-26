@@ -31,6 +31,19 @@ test("completed assessment generates a downloadable PDF", async () => {
   };
   bundle.routing.ams_fields = [{ field: "commercial_name", value: "Example Contracting LLC", citation: "SRC-001" }];
   bundle.routing.assessment_only = [{ field: "operations narrative", value: "Commercial plumbing contractor", citation: "SRC-001" }];
+  // Hermes-bound pipeline records, including one needing review, so the CRM
+  // routing section of the appendix is exercised rather than only parsed.
+  bundle.crm_records = [
+    {
+      destination: "hermes", entity: "opportunity", role: "opportunity", operation: "create", index: 1,
+      fields: [{ field: "line_of_business", value: "General Liability", citation: "SRC-001" }],
+      needs_review: [], nowcerts_write: "manual",
+    },
+    {
+      destination: "hermes", entity: "opportunity", role: "opportunity", operation: "create", index: 2,
+      fields: [], needs_review: [{ field: "line_of_business", reason: "MISSING" }], nowcerts_write: "manual",
+    },
+  ];
   const outputDir = process.env.REPORT_TEST_OUTPUT_DIR ?? await mkdtemp(path.join(os.tmpdir(), "rsg-report-"));
   const out = await generateIntakeReport(bundle, outputDir);
   assert.equal(out.bytes.subarray(0, 5).toString("latin1"), "%PDF-");
