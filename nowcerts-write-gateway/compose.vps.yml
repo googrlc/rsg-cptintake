@@ -28,6 +28,20 @@ services:
       # yet consumed by server.js (runIntake path), so this is inert until that
       # enricher is wired into the live pipeline; harmless to set now.
       NAICS_API_KEY_FILE: /run/secrets/naics-api-key
+      # Encryption at rest for intake bundles and proposals. Must be present
+      # before any contact DOB / driver's licence is captured. Generate with
+      # `openssl rand -hex 32`; back it up in 1Password before first use —
+      # losing it makes already-encrypted records unrecoverable.
+      GATEWAY_ENCRYPTION_KEY_FILE: /run/secrets/record-encryption-key
+      # Malware scanning for uploads. Mandatory now that images are accepted:
+      # REQUIRE_MALWARE_SCAN=on refuses uploads if no scanner is configured, and
+      # a scanner outage rejects uploads rather than admitting them unscanned.
+      CLAMAV_HOST: clamav
+      CLAMAV_PORT: "3310"
+      REQUIRE_MALWARE_SCAN: "on"
+    depends_on:
+      clamav:
+        condition: service_healthy
     ports:
       - "127.0.0.1:8790:8787"
     volumes:
@@ -36,6 +50,7 @@ services:
       - /etc/rsg-intake-gate/momentum-mcp-token:/run/secrets/momentum-mcp-token:ro
       - /etc/rsg-intake-gate/attom-api-key:/run/secrets/attom-api-key:ro
       - /etc/rsg-intake-gate/naics-api-key:/run/secrets/naics-api-key:ro
+      - /etc/rsg-intake-gate/record-encryption-key:/run/secrets/record-encryption-key:ro
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m
@@ -47,6 +62,31 @@ services:
       - default
       - nowcerts
       - hermes
+
+  # Malware scanning for uploaded PDFs and images. Reachable only on the compose
+  # default network — no host port is published, so nothing outside this stack
+  # can talk to clamd. Signature updates come from freshclam inside the image.
+  clamav:
+    image: clamav/clamav:1.4
+    container_name: rsg-intake-clamav
+    restart: unless-stopped
+    environment:
+      CLAMAV_NO_MILTERD: "true"
+    volumes:
+      - /var/lib/rsg-intake-clamav:/var/lib/clamav
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # clamdcheck confirms the daemon has loaded its signature database, not
+      # merely that the container is up. Long start period: the first
+      # freshclam pull takes a few minutes on a cold volume.
+      test: ["CMD-SHELL", "clamdcheck.sh || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 300s
+    networks:
+      - default
 
 networks:
   nowcerts:

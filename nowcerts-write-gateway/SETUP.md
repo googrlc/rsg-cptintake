@@ -29,15 +29,53 @@ All automated NowCerts/Momentum mutations must originate in this Intake Gate. He
 
 The ChatGPT copy of the interface is preview-only. Final approval belongs on the private Tailscale operator page after the live Tailscale `whois` resolver replaces caller-supplied actor/approver fields.
 
+## Document intake
+
+Accepted uploads: `application/pdf` plus JPEG, PNG, TIFF, WebP, and HEIC. The
+declared `Content-Type` is never trusted — the real type is confirmed from magic
+bytes, and images are additionally checked for zero and bomb dimensions.
+
+Order of operations on every upload: **malware scan → type inspection → parse.**
+Nothing parses bytes that have not been scanned.
+
+- **Malware scanning is fail-closed.** A configured scanner that is unreachable
+  rejects the upload; it is never admitted unscanned. Set `REQUIRE_MALWARE_SCAN=on`
+  so an unconfigured scanner also blocks uploads. The `clamav` service in
+  `compose.vps.yml` provides this and publishes no host port.
+- **Driver's licences are decoded, not OCR'd.** The PDF417 barcode on the back of
+  the card carries the cardholder's details as structured AAMVA text, so name,
+  date of birth, licence number, and issuing state are read exactly rather than
+  recognized. Photograph the **back** of the card. The decoder is WASM bundled in
+  `node_modules` and loaded from disk — no network call, nothing leaves the host.
+- **Other images fall through to OCR** via a local Tesseract binary, for scanned
+  ACORDs, dec pages, and loss runs. OCR reports mean per-word confidence and
+  flags low-quality scans for manual review.
+
+Licence fields are SUGGESTED like any other extracted value. They reach the AMS
+only through a certified `Contact.*` contract and explicit human approval.
+
+## Data protection
+
+Intake bundles and write proposals are encrypted at rest with AES-256-GCM when
+`GATEWAY_ENCRYPTION_KEY_FILE` is set. This is **mandatory** wherever contact date
+of birth or driver's licence numbers are captured — that is regulated PII.
+
+Generate with `openssl rand -hex 32` and back the key up in 1Password
+(`rsg_infrastructure`) *before* first use: losing it makes already-encrypted
+records unrecoverable. Records written before a key was configured stay readable,
+and each rewrite upgrades them. The audit log is intentionally left unencrypted —
+it holds ids, statuses, and fingerprints rather than client data, and must stay
+greppable during an incident.
+
 ## Production work still required
 
 - Run the gateway on the private Tailscale host and publish `/app` through a Tailscale Serve URL. Do not enable Tailscale Funnel.
 - Wire Tailscale LocalAPI `whois` and map Lamar's and Gretchen's tailnet identities to their roles. Never accept the `actor` or `approver` field as identity in production.
 - If the ChatGPT App is retained, connect the MCP endpoint through OpenAI Secure MCP Tunnel because ChatGPT cannot directly route to a private tailnet URL. Keep that surface preview-only.
-- Complete ChatGPT file transfer, malware scanning, OCR/model extraction, and citation validation.
+- Complete ChatGPT file transfer and citation validation. (Malware scanning, image intake, licence barcode decoding, and OCR are implemented — see "Document intake".)
 - Connect the synthesis engine, RSG reference-table lookups, and full evidence-backed risk assessment.
 - The retained PDF renderer and download route are built; the download remains locked until an assessment is marked complete.
-- Replace the file store with the production audit database and encrypt sensitive proposal data.
+- Replace the file store with the production audit database. (Encryption at rest is implemented — see "Data protection".)
 - Implement exact NowCerts API/UI connectors entity by entity.
 - Wire the existing target-snapshot concurrency check to a real pre-write NowCerts reread. Same-field changes must stop; unrelated changes must be preserved and re-previewed.
 - Add connector-level idempotency keys, post-write read-back, and field comparison.

@@ -17,8 +17,12 @@ ENV NODE_ENV=production \
     GATEWAY_DATA_DIR=/data \
     PYTHON_BIN=/opt/report-venv/bin/python3
 
+# tesseract-ocr + the English language pack power OCR of scanned documents.
+# Barcode decoding needs no system package — the WASM decoder ships in
+# node_modules and is loaded from disk, never fetched.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates poppler-utils python3 python3-venv \
+       tesseract-ocr tesseract-ocr-eng \
     && python3 -m venv /opt/report-venv \
     && /opt/report-venv/bin/pip install --no-cache-dir reportlab==4.4.3 \
     && rm -rf /var/lib/apt/lists/*

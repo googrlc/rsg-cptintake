@@ -12,6 +12,10 @@ import { z } from "zod";
 import { FileProposalStore } from "./store.js";
 import { NowCertsGateway } from "./gateway.js";
 import { inspectPdf, DEFAULT_MAX_BYTES } from "./documents/pdf-intake.js";
+import { inspectImage, DEFAULT_MAX_IMAGE_BYTES, ACCEPTED_IMAGE_MIME_TYPES } from "./documents/image-intake.js";
+import { ClamAvScanner, screenUpload } from "./documents/malware-scan.js";
+import { readDriverLicense } from "./documents/license-intake.js";
+import { ocrImage } from "./documents/ocr.js";
 import { TempDocumentStore } from "./documents/temp-store.js";
 import { prepareSourceBundle, prepareSourceBundleSchema } from "./intake/source-bundle.js";
 import { FileIntakeSourceStore } from "./intake/source-store.js";
@@ -71,6 +75,12 @@ const momentumWriter =
       })
     : null;
 const liveWritesEnabled = Boolean(momentumWriter);
+// Malware scanning for uploads. Configured => every upload is scanned and a
+// scanner outage rejects uploads rather than admitting them unscanned.
+// REQUIRE_MALWARE_SCAN=on additionally refuses to accept uploads at all when no
+// scanner is configured — set it in any deployment that accepts images.
+const malwareScanner = ClamAvScanner.fromEnv();
+const requireMalwareScan = process.env.REQUIRE_MALWARE_SCAN === "on";
 const documentStore = new TempDocumentStore(path.join(dataDir, "documents"));
 const intakeStore = new FileIntakeSourceStore(path.join(dataDir, "intakes"));
 const intakeAppUri = "ui://rsg/intake-gate.html";
@@ -344,6 +354,11 @@ const httpServer = createServer(async (req, res) => {
         live_data: mode === "pilot" && Boolean(nowcertsReader),
         synthesis_ready: Boolean(hermesPreview),
         live_writes: liveWritesEnabled,
+        uploads: {
+          accepted: ["application/pdf", ...ACCEPTED_IMAGE_MIME_TYPES],
+          malware_scanning: malwareScanner.configured,
+          scanner_required: requireMalwareScan,
+        },
         operator_page: "/app",
       }));
     return;
@@ -398,20 +413,65 @@ const httpServer = createServer(async (req, res) => {
 
   if (req.method === "POST" && url.pathname === "/api/intake/documents") {
     try {
-      if (req.headers["content-type"]?.split(";")[0] !== "application/pdf") {
-        sendJson(res, 415, { status: "REJECTED", message: "Only application/pdf uploads are accepted." });
+      const declaredType = req.headers["content-type"]?.split(";")[0]?.trim() ?? "";
+      const isPdf = declaredType === "application/pdf";
+      const isImage = ACCEPTED_IMAGE_MIME_TYPES.includes(declaredType);
+      if (!isPdf && !isImage) {
+        sendJson(res, 415, {
+          status: "REJECTED",
+          message: `Accepted uploads: application/pdf, ${ACCEPTED_IMAGE_MIME_TYPES.join(", ")}.`,
+        });
         return;
       }
-      const rawName = String(req.headers["x-file-name"] ?? "upload.pdf");
-      const filename = decodeURIComponent(rawName).replace(/[\\/]/g, "_").slice(0, 255) || "upload.pdf";
-      const bytes = await readBody(req, DEFAULT_MAX_BYTES);
-      const inspected = inspectPdf(bytes, { filename });
+      const rawName = String(req.headers["x-file-name"] ?? (isPdf ? "upload.pdf" : "upload"));
+      const filename = decodeURIComponent(rawName).replace(/[\\/]/g, "_").slice(0, 255) || "upload";
+      const bytes = await readBody(req, isPdf ? DEFAULT_MAX_BYTES : DEFAULT_MAX_IMAGE_BYTES);
+
+      // Malware scan BEFORE anything parses the bytes. Fail closed: a configured
+      // scanner that cannot be reached rejects the upload rather than letting it
+      // through unscanned. Images especially — an image decoder is a far larger
+      // attack surface than pdftotext.
+      const screened = await screenUpload(bytes, malwareScanner, { required: requireMalwareScan });
+      if (!screened.ok) {
+        sendJson(res, screened.statusCode, {
+          status: "REJECTED",
+          reason: screened.reason,
+          message: screened.message,
+        });
+        return;
+      }
+
+      // The declared Content-Type is attacker-controlled, so the real type is
+      // confirmed from the magic bytes here, not from the header.
+      const inspected = isPdf ? inspectPdf(bytes, { filename }) : inspectImage(bytes, { filename });
       if (!inspected.ok) {
         sendJson(res, 422, { status: "REJECTED", ...inspected });
         return;
       }
       await documentStore.put(bytes, inspected.document);
-      sendJson(res, 201, { status: "DOCUMENT_ACCEPTED", document: inspected.document, live_writes: false });
+
+      // Images get an automatic licence read: if the photo is the back of a
+      // driver's licence its PDF417 barcode decodes to exact AAMVA fields. A
+      // non-licence image simply reports NO_BARCODE and falls through to OCR.
+      let license = null;
+      let ocr = null;
+      if (isImage) {
+        license = await readDriverLicense(bytes);
+        if (!license.ok) {
+          const text = await ocrImage(bytes);
+          ocr = text.ok
+            ? { status: "OK", text: text.text, confidence: text.confidence, low_confidence: text.low_confidence }
+            : { status: text.reason, message: text.message };
+        }
+      }
+
+      sendJson(res, 201, {
+        status: "DOCUMENT_ACCEPTED",
+        document: inspected.document,
+        ...(license ? { license } : {}),
+        ...(ocr ? { ocr } : {}),
+        live_writes: false,
+      });
     } catch (error) {
       sendJson(res, error.statusCode ?? 400, { status: "REJECTED", message: error.message });
     }

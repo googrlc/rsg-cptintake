@@ -99,3 +99,25 @@ export function cleanPolicyExtraction(overrides = {}) {
     ...overrides,
   });
 }
+
+// A realistic AAMVA driver's licence barcode payload (Georgia, AAMVA v09).
+// Lives here rather than in a test file so importing it does not re-run another
+// file's test cases.
+export function samplePayload(overrides = {}) {
+  const LF = String.fromCharCode(10);
+  const CR = String.fromCharCode(13);
+  const elements = {
+    DCA: "C", DCB: "NONE", DCD: "NONE",
+    DBA: "08312028", DCS: "UKOH", DAC: "JANE", DAD: "M",
+    DBD: "08312024", DBB: "04021955", DBC: "2",
+    DAU: "065 in", DAY: "BRO",
+    DAG: "2147 POST OAK TRITT RD", DAI: "MARIETTA", DAJ: "GA", DAK: "300620000",
+    DAQ: "059123456", DCF: "1234567890", DCG: "USA",
+    ...overrides,
+  };
+  const body = Object.entries(elements)
+    .filter(([, value]) => value !== null)
+    .map(([code, value]) => `${code}${value}`)
+    .join(LF);
+  return `@${LF}${CR}ANSI 636060090002DL00410278ZG03190008DL${body}${LF}${CR}`;
+}
