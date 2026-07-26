@@ -32,6 +32,7 @@ import { FemaFloodClient } from "./connectors/fema-flood-client.js";
 import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
 import { lookupPropertyProfile } from "./intake/property-lookup.js";
 import { attachClassification, lookupCode, searchCodes, REFERENCE_TYPES } from "./intake/reference-classifier.js";
+import { writeOpportunities } from "./intake/crm-writer.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -79,6 +80,9 @@ const liveWritesEnabled = Boolean(momentumWriter);
 // scanner outage rejects uploads rather than admitting them unscanned.
 // REQUIRE_MALWARE_SCAN=on additionally refuses to accept uploads at all when no
 // scanner is configured — set it in any deployment that accepts images.
+// Hermes CRM opportunity writes. Ships dark: verify against one real intake,
+// then enable. Opportunities are additive and never block the intake.
+const hermesCrmWrites = process.env.HERMES_CRM_WRITES === "1";
 const malwareScanner = ClamAvScanner.fromEnv();
 const requireMalwareScan = process.env.REQUIRE_MALWARE_SCAN === "on";
 const documentStore = new TempDocumentStore(path.join(dataDir, "documents"));
@@ -524,6 +528,25 @@ const httpServer = createServer(async (req, res) => {
       // Deterministic classification against the RSG reference tables — attaches
       // NAICS/SIC/GL/WC candidates for review; validates any existing NAICS.
       attachClassification(bundle);
+
+      // Fan per-LOB opportunities out to the CRM. Additive and non-blocking:
+      // a Hermes outage is reported in bundle.crm and never stops the intake
+      // from returning its proposal preview and retained report.
+      try {
+        bundle.crm = await writeOpportunities(bundle, {
+          client: hermesPreview,
+          enabled: hermesCrmWrites,
+          insuredId: bundle.client.existing_client_id ?? null,
+        });
+      } catch (error) {
+        bundle.crm = {
+          status: "ERROR",
+          attempted: 0, created: 0, adopted: 0,
+          failed: [{ line_of_business: null, status: "ERROR", detail: error.message }],
+          skipped: [],
+        };
+      }
+
       await intakeStore.save(bundle);
       sendJson(res, 201, bundle);
     } catch (error) {

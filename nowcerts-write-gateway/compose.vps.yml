@@ -39,6 +39,9 @@ services:
       CLAMAV_HOST: clamav
       CLAMAV_PORT: "3310"
       REQUIRE_MALWARE_SCAN: "on"
+      # Hermes CRM opportunity writes. Ships dark -- flip to "1" only after
+      # verifying against one real intake. Additive; never blocks an intake.
+      HERMES_CRM_WRITES: "0"
     depends_on:
       clamav:
         condition: service_healthy
