@@ -50,7 +50,7 @@ const intakeRecordSchema = z
     entity: z.string().trim().min(1),
     operation: z.enum(["create", "update"]),
     role: z.enum(["primary_insured", "contact", "opportunity"]),
-    write_target: z.enum(["nowcerts", "espocrm", "pdf_only"]),
+    write_target: z.enum(["nowcerts", "hermes", "pdf_only"]),
     fields: z.array(intakeFieldSchema),
   })
   .strict();

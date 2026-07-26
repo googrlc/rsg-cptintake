@@ -1,4 +1,4 @@
-import { reconcileFields, ReviewReason } from "../documents/extraction.js";
+import { reconcileFields, ReviewReason, FieldStatus } from "../documents/extraction.js";
 import { assessDuplicateRisk } from "../documents/duplicate-search.js";
 import { normalizeEntityType } from "../policy.js";
 import { citationToSource } from "./intake-schema.js";
@@ -7,8 +7,11 @@ import { citationToSource } from "./intake-schema.js";
 // and (b), when a verified write contract is supplied, a shadow NowCerts
 // proposal for the primary insured routed through the unchanged gateway.
 //
-// Routing rule from the brief: "what should be in the AMS goes into the AMS;
-// everything else will still live on the PDF." Fields that match an AMS entity
+// Routing is three-way (updated 2026-07-25). AMS identity fields go to NowCerts
+// through the gateway; pipeline context (per-LOB opportunities, stage, current
+// carriers) goes to Hermes as crm_records and is NEVER written to the AMS as a
+// speculative quote; everything else cited stays on the PDF record.
+// Fields that match an AMS entity
 // schema become proposed writes; cited-but-non-AMS fields are kept as pdf_only;
 // missing/ambiguous/conflicting fields are surfaced for review and never
 // guessed. Enriched values are allowed only because they carry a real source
@@ -115,6 +118,61 @@ async function buildInsuredProposal({ reconciledRecord, actor, search, writeCont
   return { status: "PROPOSAL_BUILT", proposal, search: searchResult };
 }
 
+// Records targeted at Hermes (the RSG CRM) are not AMS entities. They carry
+// pipeline context — per-LOB opportunities, stage, requested coverage, current
+// carriers — which must NEVER become a NowCerts quote or policy. Speculative
+// per-LOB records in the AMS corrupt renewal urgency and scoreboard metrics; a
+// NowCerts quote/policy is created by a human when the risk is actually
+// marketed. `nowcerts_write: "manual"` is the tripwire that says so explicitly.
+//
+// These records skip AMS entity validation (they have no AMS schema to validate
+// against) but obey the same never-guess rule: only status-ok, cited fields are
+// carried forward; everything else is surfaced for review, never guessed.
+function buildCrmRecord(reconciledRecord, capturedAt) {
+  const { record } = reconciledRecord;
+  const fields = [];
+  const needsReview = [];
+
+  for (const field of record.fields) {
+    if (field.status !== FieldStatus.OK) {
+      needsReview.push({ field: field.field, reason: reasonForFieldStatus(field.status) });
+      continue;
+    }
+    if (!field.citation) {
+      needsReview.push({ field: field.field, reason: ReviewReason.NO_EVIDENCE });
+      continue;
+    }
+    fields.push({
+      field: field.field,
+      value: field.value,
+      source: citationToSource(field.citation, capturedAt),
+    });
+  }
+
+  return {
+    destination: "hermes",
+    entity: record.entity,
+    role: record.role,
+    operation: record.operation,
+    fields,
+    needs_review: needsReview,
+    nowcerts_write: "manual",
+  };
+}
+
+function reasonForFieldStatus(status) {
+  switch (status) {
+    case FieldStatus.MISSING:
+      return ReviewReason.MISSING;
+    case FieldStatus.AMBIGUOUS:
+      return ReviewReason.AMBIGUOUS;
+    case FieldStatus.CONFLICT:
+      return ReviewReason.CONFLICT;
+    default:
+      return ReviewReason.UNREADABLE;
+  }
+}
+
 // Assemble the full intake record that the PDF will carry — everything parsed,
 // with provenance, whether or not it lands in the AMS.
 function assemblePdfRecord(parsedIntake, reconciledRecords, capturedAt) {
@@ -193,10 +251,19 @@ export async function runIntake(gateway, params) {
     }
   }
 
-  // Contacts and opportunity are captured now and queued entity-by-entity in a
-  // later reviewed stage; they are shown in the draft but not yet prepared.
+  // Hermes-targeted records (per-LOB opportunities, pipeline context) are built
+  // out now. They are NOT written here — this is still shadow — but unlike the
+  // deferred AMS entities they carry their full cited payload so the CRM write
+  // stage has something to consume.
+  const crmRecords = reconciledRecords
+    .filter((r) => r !== primary && r.record.write_target === "hermes")
+    .map((r) => buildCrmRecord(r, capture));
+
+  // Remaining AMS-bound records (contacts, additional insureds) are captured now
+  // and queued entity-by-entity in a later reviewed stage; they are shown in the
+  // draft but not yet prepared.
   const deferred = reconciledRecords
-    .filter((r) => r !== primary)
+    .filter((r) => r !== primary && r.record.write_target !== "hermes")
     .map((r) => ({ entity: r.record.entity, role: r.record.role, write_target: r.record.write_target }));
 
   return {
@@ -204,7 +271,11 @@ export async function runIntake(gateway, params) {
     submitted_by: submittedBy,
     insured,
     pdf_record: pdfRecord,
+    crm_records: crmRecords,
     deferred,
+    // Hermes/Supabase write is a separate reviewed stage; crm_records above is
+    // its input. Nothing here writes to the CRM.
+    crm_write: "deferred",
     // The PDF and Nextcloud archival stages are deferred; the assembled record
     // above is their input.
     pdf_generation: "deferred",
