@@ -21,7 +21,7 @@ import { prepareSourceBundle, prepareSourceBundleSchema } from "./intake/source-
 import { FileIntakeSourceStore } from "./intake/source-store.js";
 import { generateIntakeReport } from "./reports/intake-report.js";
 import { NowCertsMcpClient, summarizeInsured } from "./connectors/nowcerts-mcp.js";
-import { HermesPreviewClient } from "./connectors/hermes-preview.js";
+import { HermesPreviewClient, hermesTokenFromEnv } from "./connectors/hermes-preview.js";
 import { extractPdfText } from "./documents/pdf-text.js";
 import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js";
 import { buildInsuredProposal } from "./intake/intake-proposal.js";
@@ -47,8 +47,11 @@ const nowcertsReader = process.env.NOWCERTS_MCP_URL && process.env.NOWCERTS_MCP_
       tokenFile: process.env.NOWCERTS_MCP_TOKEN_FILE,
     })
   : null;
+// Optional bearer for the few token-gated Hermes routes. Throws at startup on a
+// configured-but-empty token rather than degrading into silent anonymous calls.
+const hermesToken = hermesTokenFromEnv();
 const hermesPreview = process.env.HERMES_PREVIEW_URL
-  ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL })
+  ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL, token: hermesToken })
   : null;
 // Optional, operator-triggered property enrichment (ATTOM). Null unless a key is
 // configured — the "Get property details" button reports NOT_ENABLED then.
@@ -357,6 +360,7 @@ const httpServer = createServer(async (req, res) => {
         mode,
         live_data: mode === "pilot" && Boolean(nowcertsReader),
         synthesis_ready: Boolean(hermesPreview),
+        hermes_authenticated: Boolean(hermesPreview?.authenticated),
         live_writes: liveWritesEnabled,
         uploads: {
           accepted: ["application/pdf", ...ACCEPTED_IMAGE_MIME_TYPES],
