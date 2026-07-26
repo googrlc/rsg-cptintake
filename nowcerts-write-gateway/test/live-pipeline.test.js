@@ -36,7 +36,15 @@ test("Hermes preview maps account and contacts but keeps approval locked", () =>
   assert.equal(value.routing.ams_fields.find((item) => item.field === "Insured.NAICS").value, "238210");
   assert.equal(value.routing.ams_fields.find((item) => item.field === "Insured.NAICS").contract.write_tool, "update_cl_rating_data_tool");
   assert.equal(value.routing.ams_fields.some((item) => item.field === "Insured.Phone"), false);
-  assert.equal(value.routing.assessment_only.some((item) => item.field === "Contact[1].Email"), true);
+  // Contacts now route to the AMS via the certified contact insert tool instead
+  // of being dropped into the report as unsupported.
+  const contactEmail = value.routing.ams_fields.find((item) => item.field === "Contact[1].Email");
+  assert.ok(contactEmail, "contact email must route to the AMS");
+  assert.equal(contactEmail.contract.write_tool, "insert_insured_prospect_primary_contact_in_ams_tool");
+  assert.equal(value.routing.assessment_only.some((item) => item.field === "Contact[1].Email"), false);
+  // The full name is split so it matches the tool's firstName/lastName contract.
+  assert.equal(value.routing.ams_fields.find((item) => item.field === "Contact[1].FirstName").value, "Jamie");
+  assert.equal(value.routing.ams_fields.find((item) => item.field === "Contact[1].LastName").value, "Example");
   assert.equal(value.approval.status, "LOCKED");
   assert.equal(value.pipeline.nowcerts_preview, "SCHEMA_ALIGNED");
 });

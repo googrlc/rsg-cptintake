@@ -10,6 +10,15 @@ function labelFlag(value) {
   return [value.flag ?? value.item ?? value.name, value.severity ? `(${value.severity})` : null, value.why_needed].filter(Boolean).join(" — ");
 }
 
+// "Jane Ukoh" -> first Jane / last Ukoh. Middle tokens join the first name so a
+// surname is never invented, and anything that is not clearly two-or-more parts
+// returns nulls so the caller can fall back to the uncontracted Name field.
+export function splitContactName(value) {
+  const parts = String(value ?? "").trim().split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return { first: null, last: null };
+  return { first: parts.slice(0, -1).join(" "), last: parts.at(-1) };
+}
+
 function sourceCitation(bundle, preferred = null) {
   if (preferred) return String(preferred);
   return bundle.source_index.map((source) => `${source.source_id} ${source.reference}`).join("; ") || "Source bundle";
@@ -33,7 +42,22 @@ function amsCandidates(payload, bundle) {
   ];
   for (const [index, contact] of asList(payload.contacts).entries()) {
     const prefix = `Contact[${index + 1}]`;
-    fields.push([`${prefix}.Name`, contact.full_name], [`${prefix}.Phone`, contact.phone], [`${prefix}.Email`, contact.email], [`${prefix}.Role`, contact.role]);
+    // The AMS contact tool takes firstName/lastName separately, so a synthesized
+    // full name is split rather than sent whole. An unsplittable single-token
+    // name keeps its Name field, which has no contract and lands on the report
+    // for a human to resolve — never guessed into a surname.
+    const { first, last } = splitContactName(contact.full_name);
+    fields.push(
+      ...(first && last
+        ? [[`${prefix}.FirstName`, first], [`${prefix}.LastName`, last]]
+        : [[`${prefix}.Name`, contact.full_name]]),
+      [`${prefix}.Phone`, contact.phone],
+      [`${prefix}.Email`, contact.email],
+      [`${prefix}.Role`, contact.role],
+      [`${prefix}.DOB`, contact.date_of_birth ?? contact.dob],
+      [`${prefix}.LicenseNumber`, contact.license_number ?? contact.dl_number],
+      [`${prefix}.LicenseState`, contact.license_state ?? contact.dl_state],
+    );
   }
   const amsFields = [];
   const unsupported = [];
