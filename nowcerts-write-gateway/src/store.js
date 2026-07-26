@@ -1,12 +1,18 @@
 import { appendFile, mkdir, readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
+import { RecordCipher } from "./storage/record-cipher.js";
 
 export class FileProposalStore {
-  constructor(dataDir) {
+  // Proposals carry the cited client payload, so they are encrypted at rest when
+  // a key is configured. The audit log is deliberately NOT encrypted: it records
+  // ids, statuses, and fingerprints rather than client data, and it has to stay
+  // greppable for incident review.
+  constructor(dataDir, cipher = RecordCipher.fromEnv()) {
     this.dataDir = path.resolve(dataDir);
     this.proposalDir = path.join(this.dataDir, "proposals");
     this.auditPath = path.join(this.dataDir, "audit.jsonl");
+    this.cipher = cipher;
   }
 
   async init() {
@@ -22,7 +28,7 @@ export class FileProposalStore {
     await this.init();
     const destination = this.proposalPath(record.id);
     const temporary = `${destination}.${randomUUID()}.tmp`;
-    await writeFile(temporary, `${JSON.stringify(record, null, 2)}\n`, {
+    await writeFile(temporary, this.cipher.serialize(record), {
       encoding: "utf8",
       mode: 0o600,
     });
@@ -32,7 +38,7 @@ export class FileProposalStore {
 
   async get(id) {
     try {
-      return JSON.parse(await readFile(this.proposalPath(id), "utf8"));
+      return this.cipher.deserialize(await readFile(this.proposalPath(id), "utf8"));
     } catch (error) {
       if (error?.code === "ENOENT") return null;
       throw error;
@@ -43,7 +49,9 @@ export class FileProposalStore {
     await this.init();
     const names = (await readdir(this.proposalDir)).filter((name) => name.endsWith(".json"));
     return Promise.all(
-      names.map(async (name) => JSON.parse(await readFile(path.join(this.proposalDir, name), "utf8"))),
+      names.map(async (name) =>
+        this.cipher.deserialize(await readFile(path.join(this.proposalDir, name), "utf8")),
+      ),
     );
   }
 
