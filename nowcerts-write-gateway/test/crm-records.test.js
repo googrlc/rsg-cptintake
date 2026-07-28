@@ -90,7 +90,7 @@ test("the live pipeline now emits crm_records instead of dropping pipeline conte
 
   assert.ok(Array.isArray(value.crm_records), "crm_records must be on the live bundle");
   assert.equal(value.crm_records.length, 3, "two opportunities plus account context");
-  assert.equal(value.crm_write, "deferred", "the CRM write is a separate reviewed stage");
+  assert.equal(value.crm_write, "PENDING", "unsubmitted is visibly unsubmitted, not a clean no-op");
   assert.equal(value.pipeline.crm_preview, "READY");
   // Per-LOB records must never appear as AMS writes.
   assert.ok(!value.routing.ams_fields.some((f) => /line_of_business|opportunity/i.test(f.field)));
