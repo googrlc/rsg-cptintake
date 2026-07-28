@@ -39,9 +39,19 @@ services:
       CLAMAV_HOST: clamav
       CLAMAV_PORT: "3310"
       REQUIRE_MALWARE_SCAN: "on"
-      # Hermes CRM opportunity writes. Ships dark -- flip to "1" only after
-      # verifying against one real intake. Additive; never blocks an intake.
+      # Hermes CRM intake submission -- the intake's destination. Ships dark:
+      # flip to "1" only after verifying against one real intake. Additive and
+      # never blocks an intake; a CRM outage is reported, not thrown.
+      #
+      # Nothing on this path reaches NowCerts. An intake is a prospect, and the
+      # insured/policy are written to the AMS when a deal is WON. The "Send to
+      # AMS" proposal path stays available as an explicit operator action.
       HERMES_CRM_WRITES: "0"
+      # Key for Hermes' POST /api/intake (its RSG_INTAKE_API_KEY). A DIFFERENT
+      # credential from the bearer: sent as X-RSG-API-Key. Configured-but-empty
+      # throws at startup rather than degrading into 401s that look like an
+      # outage; leave the file unmounted to run without CRM submission.
+      HERMES_INTAKE_KEY_FILE: /run/secrets/hermes-intake-key
     depends_on:
       clamav:
         condition: service_healthy
@@ -54,6 +64,7 @@ services:
       - /etc/rsg-intake-gate/attom-api-key:/run/secrets/attom-api-key:ro
       - /etc/rsg-intake-gate/naics-api-key:/run/secrets/naics-api-key:ro
       - /etc/rsg-intake-gate/record-encryption-key:/run/secrets/record-encryption-key:ro
+      - /etc/rsg-intake-gate/hermes-intake-key:/run/secrets/hermes-intake-key:ro
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m
