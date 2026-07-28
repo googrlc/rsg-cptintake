@@ -21,7 +21,7 @@ import { prepareSourceBundle, prepareSourceBundleSchema } from "./intake/source-
 import { FileIntakeSourceStore } from "./intake/source-store.js";
 import { generateIntakeReport } from "./reports/intake-report.js";
 import { NowCertsMcpClient, summarizeInsured } from "./connectors/nowcerts-mcp.js";
-import { HermesPreviewClient, hermesTokenFromEnv } from "./connectors/hermes-preview.js";
+import { HermesPreviewClient, hermesTokenFromEnv, intakeKeyFromEnv } from "./connectors/hermes-preview.js";
 import { extractPdfText } from "./documents/pdf-text.js";
 import { applyHermesPreview, buildEvidenceText } from "./intake/live-pipeline.js";
 import { buildInsuredProposal } from "./intake/intake-proposal.js";
@@ -32,7 +32,8 @@ import { FemaFloodClient } from "./connectors/fema-flood-client.js";
 import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
 import { lookupPropertyProfile } from "./intake/property-lookup.js";
 import { attachClassification, lookupCode, searchCodes, REFERENCE_TYPES } from "./intake/reference-classifier.js";
-import { writeOpportunities } from "./intake/crm-writer.js";
+import { submitToCrm } from "./intake/crm-writer.js";
+import { buildCrmSubmission } from "./intake/crm-submission.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
@@ -50,8 +51,15 @@ const nowcertsReader = process.env.NOWCERTS_MCP_URL && process.env.NOWCERTS_MCP_
 // Optional bearer for the few token-gated Hermes routes. Throws at startup on a
 // configured-but-empty token rather than degrading into silent anonymous calls.
 const hermesToken = hermesTokenFromEnv();
+// A separate credential from the bearer: Hermes gates `/api/intake` on
+// X-RSG-API-Key. Same fail-loud rule — configured-but-empty throws at startup.
+const hermesIntakeKey = intakeKeyFromEnv();
 const hermesPreview = process.env.HERMES_PREVIEW_URL
-  ? new HermesPreviewClient({ url: process.env.HERMES_PREVIEW_URL, token: hermesToken })
+  ? new HermesPreviewClient({
+      url: process.env.HERMES_PREVIEW_URL,
+      token: hermesToken,
+      intakeKey: hermesIntakeKey,
+    })
   : null;
 // Optional, operator-triggered property enrichment (ATTOM). Null unless a key is
 // configured — the "Get property details" button reports NOT_ENABLED then.
@@ -533,24 +541,11 @@ const httpServer = createServer(async (req, res) => {
       // NAICS/SIC/GL/WC candidates for review; validates any existing NAICS.
       attachClassification(bundle);
 
-      // Fan per-LOB opportunities out to the CRM. Additive and non-blocking:
-      // a Hermes outage is reported in bundle.crm and never stops the intake
-      // from returning its proposal preview and retained report.
-      try {
-        bundle.crm = await writeOpportunities(bundle, {
-          client: hermesPreview,
-          enabled: hermesCrmWrites,
-          insuredId: bundle.client.existing_client_id ?? null,
-        });
-      } catch (error) {
-        bundle.crm = {
-          status: "ERROR",
-          attempted: 0, created: 0, adopted: 0,
-          failed: [{ line_of_business: null, status: "ERROR", detail: error.message }],
-          skipped: [],
-        };
-      }
-
+      // Nothing is sent to the CRM here. Synthesis produces a bundle for an
+      // operator to READ — flagged items, missing evidence, suggested class codes
+      // — and sending it before they have read it would make the review theatre.
+      // The operator presses Approve and POSTs /api/intakes/:id/crm; that is the
+      // one moment this intake becomes CRM records.
       await intakeStore.save(bundle);
       sendJson(res, 201, bundle);
     } catch (error) {
@@ -585,6 +580,74 @@ const httpServer = createServer(async (req, res) => {
     }
     const result = lookupCode(type, code);
     sendJson(res, 200, { ...result, valid: Boolean(result.entry) });
+    return;
+  }
+
+  // What the approval button is actually approving. Built by the SAME function
+  // that builds the send, so the screen cannot drift from the payload — an
+  // approval screen that shows its own arithmetic is an approval of nothing.
+  const crmPreview = req.method === "GET" && url.pathname.match(/^\/api\/intakes\/([a-f0-9-]{36})\/crm$/);
+  if (crmPreview) {
+    const bundle = await intakeStore.get(crmPreview[1]);
+    if (!bundle) {
+      sendJson(res, 404, { status: "NOT_FOUND" });
+      return;
+    }
+    const submission = buildCrmSubmission(bundle, { submittedBy: requestActor(req) });
+    const payload = submission.synthesized_payload ?? {};
+    sendJson(res, 200, {
+      enabled: hermesCrmWrites,
+      configured: Boolean(hermesPreview?.canSubmitIntake),
+      already_submitted: bundle.crm?.status === "SUBMITTED",
+      crm: bundle.crm ?? null,
+      account_name: payload.account?.account_name ?? null,
+      lines_of_business: (payload.opportunities ?? []).map((item) => item.line_of_business).filter(Boolean),
+      contact_names: (payload.contacts ?? []).map((item) => item.full_name).filter(Boolean),
+      fact_count: (payload.facts ?? []).length,
+      restricted_fact_count: (payload.facts ?? []).filter((item) => item.sensitivity === "restricted").length,
+      note_title: payload.note?.title ?? null,
+      // The operator should see what is still unresolved before approving.
+      missing_items: bundle.routing?.missing_items ?? [],
+    });
+    return;
+  }
+
+  // "Approve & send to CRM" — the reviewed write. This is the only path by which
+  // an intake becomes CRM records, and it exists so that a person has read the
+  // bundle first: the approver is the tailnet identity, recorded on the
+  // submission, and Hermes commits on that approval rather than asking a second
+  // time. Nothing here touches NowCerts.
+  const crmSubmit = req.method === "POST" && url.pathname.match(/^\/api\/intakes\/([a-f0-9-]{36})\/crm$/);
+  if (crmSubmit) {
+    try {
+      const bundle = await intakeStore.get(crmSubmit[1]);
+      if (!bundle) {
+        sendJson(res, 404, { status: "NOT_FOUND", message: "Intake bundle not found." });
+        return;
+      }
+      // Re-sending is safe — the submission is idempotent on the intake id, so a
+      // double-click adopts the existing row rather than filing a second intake.
+      // Reported as a replay rather than pretended to be a fresh approval.
+      if (bundle.crm?.status === "SUBMITTED") {
+        sendJson(res, 200, { ...bundle.crm, already_submitted: true });
+        return;
+      }
+      const approver = requestActor(req);
+      const result = await submitToCrm(bundle, {
+        client: hermesPreview,
+        enabled: hermesCrmWrites,
+        submittedBy: approver,
+        approvedBy: approver,
+      });
+      bundle.crm = result;
+      bundle.crm_write = result.status;
+      await intakeStore.save(bundle);
+      // A refused or unconfigured submission is not a server error — it is an
+      // answer about configuration, and the operator needs to read it.
+      sendJson(res, result.status === "SUBMITTED" ? 201 : 200, result);
+    } catch (error) {
+      sendJson(res, error.statusCode ?? 502, { status: "ERROR", message: error.message });
+    }
     return;
   }
 

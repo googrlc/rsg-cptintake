@@ -133,14 +133,17 @@ export function applyHermesPreview(bundle, draft, research = null, pdfWarnings =
     status: missing.length ? "READY_FOR_REVIEW" : "PREVIEW_READY",
     synthesis: { status: "COMPLETE", draft_id: draft.draft_id, payload, warnings: asList(draft.validation_warnings) },
     research: research ? { status: "COMPLETE", ...research } : { status: "UNAVAILABLE" },
-    // Three-way routing: AMS-contracted fields to NowCerts, pipeline context to
-    // Hermes as crm_records, everything else cited stays on the report. Per-LOB
-    // opportunities never become speculative AMS quotes — see crm-records.js.
+    // The intake's destination is the CRM. `ams_fields` is no longer a routing
+    // decision — it is the PREVIEW of what an operator would send to NowCerts if
+    // they later chose to, via the three explicit steps (propose -> approve ->
+    // commit). An intake never takes that path on its own: a prospect is not a
+    // record of insurance, and the insured reaches the AMS when a deal is won.
     routing: { ...bundle.routing, ams_fields: amsFields, assessment_only: assessmentOnly, missing_items: missing },
     crm_records: crmRecords,
-    // The Hermes write is a separate reviewed stage; crm_records is its input.
-    // Nothing here writes to the CRM.
-    crm_write: "deferred",
+    // Set by the caller once the submission is attempted (bundle.crm). Left as
+    // PENDING here so a bundle that never reached the submit step is visibly
+    // unsubmitted rather than looking like a clean no-op.
+    crm_write: "PENDING",
     assessment: {
       ...bundle.assessment,
       status: "COMPLETE",

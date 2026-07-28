@@ -29,6 +29,8 @@ const state = {
   commitResult: null,
   propertyBusy: false,
   property: null,
+  crmPreview: null,
+  crmBusy: false,
   message: "Add every source for one client, then prepare the combined intake.",
 };
 let lookupTimer = null;
@@ -212,8 +214,66 @@ function renderProperty() {
   return `<div class="property-block"><div class="property-head"><h4>Property details</h4><button id="get-property" class="secondary" ${state.propertyBusy ? "disabled" : ""}>${state.propertyBusy ? "Looking up…" : p?.ok ? "Refresh property details" : "Get property details"}</button></div>${body}</div>`;
 }
 
+function renderCrm() {
+  // The approval screen. Everything shown here comes from GET /crm, which is
+  // built by the same function that builds the send — so what is on screen is
+  // what will happen, not a second opinion about it.
+  const p = state.crmPreview;
+  const crm = state.bundle?.crm ?? p?.crm ?? null;
+  const head = `<div class="output-block"><h3>Send to the CRM</h3><p>The account, its contacts, every cited fact, the assessment note and one opportunity per line of business. Nothing here is written to NowCerts — an intake is a prospect, and the insured reaches the AMS when a deal is won.</p>`;
+
+  if (!state.bundle) return `${head}<div class="blank-state">Prepare the intake first.</div></div>`;
+  if (!p) return `${head}<div class="blank-state">Loading what would be sent…</div></div>`;
+
+  if (crm?.status === "SUBMITTED") {
+    // "In the CRM" is only said when Hermes reported the rows it wrote. A queued
+    // submission gets the weaker, true sentence instead.
+    const headline = crm.committed
+      ? `In the CRM${crm.idempotent_replay ? " (already on file)" : ""}`
+      : `Accepted by the CRM — not committed yet`;
+    const detail = crm.committed
+      ? `${crm.opportunity_count} opportunit${crm.opportunity_count === 1 ? "y" : "ies"}, ${crm.contact_count} contact${crm.contact_count === 1 ? "" : "s"}, ${crm.fact_count} cited fact${crm.fact_count === 1 ? "" : "s"}${crm.note_count ? `, ${crm.note_count} note` : ""} written.`
+      : `Submission ${escapeHtml(crm.submission_id ?? "—")} is queued for approval in the CRM.`;
+    return `${head}<div class="contract-summary"><strong>${escapeHtml(headline)}</strong>
+      <span>${crm.approved_by ? `Approved by ${escapeHtml(crm.approved_by)} · ` : ""}${detail}</span></div>
+      ${(crm.warnings ?? []).length ? `<div class="approval-lock"><strong>${crm.warnings.length} warning${crm.warnings.length === 1 ? "" : "s"} on the payload</strong><span>${crm.warnings.slice(0, 6).map(escapeHtml).join(" · ")}</span></div>` : ""}</div>`;
+  }
+
+  if (!p.enabled || !p.configured) {
+    return `${head}<div class="approval-lock"><strong>CRM sending is off</strong><span>${p.enabled
+      ? "The intake key is not configured on this gateway (HERMES_INTAKE_KEY_FILE)."
+      : "HERMES_CRM_WRITES is not enabled on this gateway."}</span></div></div>`;
+  }
+
+  const rows = [
+    ["Account", p.account_name],
+    ["Contacts", p.contact_names.join(", ")],
+    ["Opportunities", p.lines_of_business.join(", ")],
+    ["Cited facts", `${p.fact_count}${p.restricted_fact_count ? ` (${p.restricted_fact_count} restricted)` : ""}`],
+    ["Note", p.note_title],
+  ].map(([label, value]) => `<div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || "—")}</strong></div>`).join("");
+
+  // An intake with unresolved items can still be approved — the operator may
+  // know the answer isn't coming. It is stated rather than silently allowed.
+  const unresolved = (p.missing_items ?? []).length
+    ? `<div class="approval-lock"><strong>${p.missing_items.length} item${p.missing_items.length === 1 ? "" : "s"} still unresolved</strong><span>${p.missing_items.slice(0, 6).map(escapeHtml).join(" · ")}</span></div>`
+    : "";
+
+  const blocked = !p.account_name && !p.lines_of_business.length;
+  const failure = crm && crm.status !== "SUBMITTED" && crm.detail
+    ? `<div class="approval-lock"><strong>Last attempt failed</strong><span>${escapeHtml(crm.detail)}</span></div>`
+    : "";
+
+  return `${head}<div class="data-list">${rows}</div>${unresolved}${failure}
+    <button id="approve-crm" class="primary" ${state.crmBusy || blocked ? "disabled" : ""}>${
+      state.crmBusy ? "Sending…" : blocked ? "Nothing to send" : "Approve & send to CRM"
+    }</button>
+    <p class="property-hint">Approving records you as the approver. The CRM commits on that approval — it does not ask a second time.</p></div>`;
+}
+
 function renderOutput() {
   const assessment = state.bundle?.assessment;
+  if (state.outputTab === "crm") return renderCrm();
   if (state.outputTab === "ams") {
     const fields = state.bundle?.routing?.ams_fields ?? [];
     return `<div class="output-block"><h3>AMS candidate preview</h3><p>Hermes extracted these candidate fields. They remain locked until each destination is mapped to a verified NowCerts contract and the current record is reread.</p>
@@ -276,7 +336,7 @@ function render() {
       <main class="results-panel">
         <div class="section-heading"><div><span class="eyebrow">2 · SYNTHESIZE & ROUTE</span><h2>Client assessment workspace</h2></div><span class="safe">No AMS write</span></div>
         <nav class="output-tabs" aria-label="Intake outputs">${[
-          ["overview", "Workflow"], ["ams", "AMS data"], ["risk", "Risk assessment"], ["report", "PDF report"],
+          ["overview", "Workflow"], ["crm", "CRM"], ["ams", "AMS data"], ["risk", "Risk assessment"], ["report", "PDF report"],
         ].map(([key, label]) => `<button class="output-tab ${state.outputTab === key ? "active" : ""}" data-output="${key}">${label}</button>`).join("")}</nav>
         ${renderOutput()}
         <div class="routing-note"><div><b>AMS destination</b><span>Verified client, contact, policy, vehicle, driver, location, and supported fields</span></div><div><b>Retained PDF</b><span>Operations narrative, assessment detail, evidence map, research, flags, and unsupported fields</span></div></div>
@@ -309,7 +369,14 @@ function bindEvents() {
   });
   document.querySelector("#client-id")?.addEventListener("input", (event) => { state.existingClientId = event.target.value; });
   document.querySelectorAll(".source-tab").forEach((button) => button.addEventListener("click", () => { state.sourceKind = button.dataset.kind; state.draftTitle = ""; state.draftContent = ""; render(); }));
-  document.querySelectorAll(".output-tab").forEach((button) => button.addEventListener("click", () => { state.outputTab = button.dataset.output; render(); }));
+  document.querySelectorAll(".output-tab").forEach((button) => button.addEventListener("click", () => {
+    state.outputTab = button.dataset.output;
+    render();
+    // Load the preview on arrival, so the approval screen is never a stale copy
+    // of a bundle that has since been rebuilt.
+    if (state.outputTab === "crm") loadCrmPreview();
+  }));
+  document.querySelector("#approve-crm")?.addEventListener("click", approveAndSendToCrm);
   document.querySelector("#upload")?.addEventListener("click", choosePdfs);
   document.querySelector("#file")?.addEventListener("change", (event) => uploadPdfs([...event.target.files]));
   document.querySelector("#source-title")?.addEventListener("input", (event) => { state.draftTitle = event.target.value; });
@@ -339,6 +406,41 @@ function bindEvents() {
   document.querySelector("#retry-commit")?.addEventListener("click", () => sendToAms());
   document.querySelector("#confirm-duplicate")?.addEventListener("click", () => sendToAms(true));
   document.querySelector("#reset-commit")?.addEventListener("click", () => { state.commitResult = null; render(); });
+}
+
+async function loadCrmPreview() {
+  if (!state.bundle?.intake_id) return;
+  try {
+    const response = await fetch(`/api/intakes/${state.bundle.intake_id}/crm`);
+    state.crmPreview = await response.json();
+  } catch (error) {
+    // A preview that failed to load must not render as "nothing to send" —
+    // that reads as an empty intake rather than a broken screen.
+    state.crmPreview = { enabled: false, configured: false, error: error.message };
+    state.message = `Could not load the CRM preview: ${error.message}`;
+  }
+  render();
+}
+
+async function approveAndSendToCrm() {
+  if (!state.bundle?.intake_id) return;
+  state.crmBusy = true;
+  render();
+  try {
+    const response = await fetch(`/api/intakes/${state.bundle.intake_id}/crm`, { method: "POST" });
+    const result = await response.json();
+    state.bundle.crm = result;
+    state.message = result.status !== "SUBMITTED"
+      ? `Not sent (${statusLabel(result.status)}): ${result.detail ?? result.message ?? ""}`
+      : result.committed
+        ? `In the CRM${result.idempotent_replay ? " (already on file)" : ""} — ${result.opportunity_count} opportunit${result.opportunity_count === 1 ? "y" : "ies"}, ${result.fact_count} cited fact${result.fact_count === 1 ? "" : "s"}.`
+        : `Accepted by the CRM and queued — not committed yet.`;
+  } catch (error) {
+    state.message = `Send failed: ${error.message}`;
+  } finally {
+    state.crmBusy = false;
+    await loadCrmPreview();
+  }
 }
 
 async function sendToAms(override = false) {
@@ -589,9 +691,13 @@ async function prepareIntake() {
     state.commitResult = null;
     state.commitBusy = false;
     state.property = null;
+    // A rebuilt bundle invalidates the approval screen — approving a preview of
+    // the previous synthesis would send something nobody read.
+    state.crmPreview = null;
+    state.crmBusy = false;
     state.outputTab = "overview";
     const gaps = result.assessment?.missing_items?.length ?? 0;
-    state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; nothing was written to NowCerts.`;
+    state.message = `Intake synthesized and retained${gaps ? ` with ${gaps} item${gaps === 1 ? "" : "s"} to verify` : ""}. The PDF is ready; review it, then approve the send to the CRM. Nothing was written to NowCerts.`;
   } catch (error) {
     state.message = `The combined intake could not be prepared: ${error.message}`;
   } finally {

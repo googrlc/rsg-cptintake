@@ -55,22 +55,63 @@ export function hermesTokenFromEnv(env = process.env) {
   return null;
 }
 
+/**
+ * Resolve the `/api/intake` key from the environment.
+ *
+ * A DIFFERENT credential from the bearer above: Hermes gates the intake
+ * submission door on an `X-RSG-API-Key` header checked against its own
+ * `RSG_INTAKE_API_KEY`, not on the bearer. Same fail-loud rule though — a
+ * configured-but-empty key is a misconfiguration, and letting it through would
+ * send every intake into a 401 that looks like the CRM being down.
+ */
+export function intakeKeyFromEnv(env = process.env) {
+  const file = env.HERMES_INTAKE_KEY_FILE;
+  if (file) {
+    let contents;
+    try {
+      contents = readFileSync(file, "utf8");
+    } catch (error) {
+      throw new HermesTokenError(`HERMES_INTAKE_KEY_FILE is set to ${file} but could not be read: ${error.message}`);
+    }
+    const key = contents.trim();
+    if (!key) {
+      throw new HermesTokenError(`HERMES_INTAKE_KEY_FILE (${file}) is empty. Remove the variable to disable CRM intake submission, or write the key into the file.`);
+    }
+    return key;
+  }
+  if (env.HERMES_INTAKE_KEY !== undefined) {
+    const key = String(env.HERMES_INTAKE_KEY).trim();
+    if (!key) {
+      throw new HermesTokenError("HERMES_INTAKE_KEY is set but empty. Remove the variable to disable CRM intake submission, or give it a value.");
+    }
+    return key;
+  }
+  return null;
+}
+
 export class HermesPreviewClient {
-  constructor({ url, timeoutMs = 120_000, fetchImpl = fetch, token = null }) {
+  constructor({ url, timeoutMs = 120_000, fetchImpl = fetch, token = null, intakeKey = null }) {
     this.url = String(url).replace(/\/$/, "");
     this.timeoutMs = timeoutMs;
     this.fetch = fetchImpl;
     // Normalize here too, so a caller passing "" gets no header rather than a
     // malformed `Bearer ` one.
     this.token = token ? String(token).trim() || null : null;
+    this.intakeKey = intakeKey ? String(intakeKey).trim() || null : null;
   }
 
   get authenticated() {
     return this.token !== null;
   }
 
-  async #post(path, body) {
-    const headers = { "content-type": "application/json" };
+  // Whether this client can submit intakes to the CRM. Separate from
+  // `authenticated` — the two credentials are independent.
+  get canSubmitIntake() {
+    return this.intakeKey !== null;
+  }
+
+  async #post(path, body, { extraHeaders = {} } = {}) {
+    const headers = { "content-type": "application/json", ...extraHeaders };
     if (this.token) headers.authorization = `Bearer ${this.token}`;
     const response = await this.fetch(`${this.url}${path}`, {
       method: "POST",
@@ -111,6 +152,27 @@ export class HermesPreviewClient {
   // 'crm', after which the inbound AMS sync permanently stops updating it.
   async createOpportunity(payload) {
     return this.#post("/api/opportunities", payload);
+  }
+
+  // Submit the whole intake to the CRM.
+  //
+  // This is the intake's real destination. Hermes queues the submission and its
+  // worker commits the account, contacts, cited facts, underwriting facts, the
+  // assessment note and the per-LOB opportunities — after a human approves it in
+  // Slack. Nothing here reaches NowCerts: an intake is a prospect, and a prospect
+  // is not a record of insurance. The insured reaches the AMS when a deal is won.
+  //
+  // Idempotent on `idempotency_key`. Re-submitting the same intake returns the
+  // existing row with `idempotent_replay: true` — a SUCCESS, not a duplicate, and
+  // the reason a retry after a timeout is always safe.
+  async submitIntake(payload) {
+    if (!this.intakeKey) {
+      throw Object.assign(
+        new Error("The CRM intake key is not configured; set HERMES_INTAKE_KEY_FILE on the gateway."),
+        { statusCode: 401 },
+      );
+    }
+    return this.#post("/api/intake", payload, { extraHeaders: { "x-rsg-api-key": this.intakeKey } });
   }
 
   async researchBusiness(query) {

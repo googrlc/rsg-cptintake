@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { HermesPreviewClient, hermesTokenFromEnv, HermesTokenError } from "../src/connectors/hermes-preview.js";
+import { HermesPreviewClient, hermesTokenFromEnv, intakeKeyFromEnv, HermesTokenError } from "../src/connectors/hermes-preview.js";
 
 function capture(response = { ok: true }) {
   const calls = [];
@@ -103,4 +103,56 @@ test("a 401 while authenticated reports the token as wrong, without the setup hi
       return true;
     },
   );
+});
+
+// --- the intake key (a different credential from the bearer) ----------------
+
+test("the intake key is sent as X-RSG-API-Key, alongside the bearer not instead of it", async () => {
+  const { calls, fetchImpl } = capture();
+  const client = new HermesPreviewClient({ url: "http://h:1", fetchImpl, token: "bearer-tok", intakeKey: "intake-key" });
+  assert.equal(client.canSubmitIntake, true);
+  await client.submitIntake({ idempotency_key: "k" });
+  assert.equal(calls[0].url, "http://h:1/api/intake");
+  assert.equal(calls[0].init.headers["x-rsg-api-key"], "intake-key");
+  assert.equal(calls[0].init.headers.authorization, "Bearer bearer-tok");
+});
+
+test("submitting without an intake key names the fix rather than 401-ing at the far end", async () => {
+  const { calls, fetchImpl } = capture();
+  const client = new HermesPreviewClient({ url: "http://h:1", fetchImpl });
+  assert.equal(client.canSubmitIntake, false);
+  await assert.rejects(
+    () => client.submitIntake({}),
+    (error) => {
+      assert.match(error.message, /set HERMES_INTAKE_KEY_FILE/);
+      return true;
+    },
+  );
+  assert.equal(calls.length, 0, "no request is made without the key");
+});
+
+test("the two credentials are independent — a bearer alone does not enable intake submission", () => {
+  const client = new HermesPreviewClient({ url: "http://h:1", token: "bearer-tok" });
+  assert.equal(client.authenticated, true);
+  assert.equal(client.canSubmitIntake, false);
+});
+
+test("an empty HERMES_INTAKE_KEY is refused, not treated as 'disabled'", () => {
+  assert.throws(() => intakeKeyFromEnv({ HERMES_INTAKE_KEY: "  " }), HermesTokenError);
+  assert.throws(() => intakeKeyFromEnv({ HERMES_INTAKE_KEY: "" }), HermesTokenError);
+});
+
+test("no intake key variables at all is a valid explicit configuration", () => {
+  assert.equal(intakeKeyFromEnv({}), null);
+});
+
+test("an intake key file is read and trimmed, and an empty one is refused", async () => {
+  const good = await tokenFile("  intake-key-from-file\n");
+  assert.equal(intakeKeyFromEnv({ HERMES_INTAKE_KEY_FILE: good }), "intake-key-from-file");
+  const empty = await tokenFile("   \n");
+  assert.throws(() => intakeKeyFromEnv({ HERMES_INTAKE_KEY_FILE: empty }), HermesTokenError);
+});
+
+test("an unreadable intake key file fails loudly rather than disabling submission", () => {
+  assert.throws(() => intakeKeyFromEnv({ HERMES_INTAKE_KEY_FILE: "/nonexistent/rsg-intake-key" }), HermesTokenError);
 });

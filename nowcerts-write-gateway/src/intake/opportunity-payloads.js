@@ -1,30 +1,33 @@
-// Map intake CRM records onto Hermes POST /api/opportunities payloads.
+// The pipeline vocabulary the intake speaks: line-of-business names, who owns a
+// line, and how a source becomes one readable sentence on a card.
 //
-// Contract owner is rsg-hermes (build spec 2026-07-26). Rules that matter and
-// are enforced here rather than left to the caller:
+// Contract owner is rsg-hermes (build spec 2026-07-26). Rules that matter and are
+// enforced here rather than left to the caller:
 //
 //  - One opportunity per line of business. Never a bundled "Commercial Package".
-//  - Send only what we have. Every field except line_of_business and the client
-//    identity is optional, and Hermes derives stage/probability/likelihood from
-//    opportunity_type. A guess is worse than an omission.
-//  - Never send `stage`, `probability`, `likelihood`, or `referral_source`
+//  - Send only what we have. Hermes derives stage/probability/likelihood from
+//    opportunity_type, and a guess is worse than an omission.
+//  - Never send `stage`, `probability`, `likelihood` or `referral_source`
 //    (read-only, owned by the AMS sync), and never `client_identifier` (derived
 //    server-side; computing it here risks a near-miss slug that defeats the
 //    uniqueness constraint).
 //  - assigned_to is a JSON array encoded as a STRING, mirroring NowCerts' shape.
 //    An unowned opportunity is how a renewal goes dark, so it is always set.
 //
+// These used to feed a direct POST /api/opportunities fan-out from the gateway.
+// They no longer do: the intake goes through Hermes' one intake door, which
+// creates the opportunities itself on approval. The vocabulary stayed, because
+// the payload still has to speak it — see crm-submission.js.
+//
 // This module is pure so the mapping is testable without a network.
-
-export const OPPORTUNITY_SOURCE = "intake-gate";
 
 export const OWNER_LAMAR = '["Lamar Coates"]';
 export const OWNER_GRETCHEN = '["Gretchen Coates"]';
 
-export const OPPORTUNITY_TYPES = [
-  "New Business", "Renewals", "Cross-selling", "Upselling", "Remarket",
-  "Bundling", "Competitive Replacements (BOR)", "Life Events", "Seasonal / Event",
-];
+// OPPORTUNITY_SOURCE and OPPORTUNITY_TYPES lived here for the direct
+// POST /api/opportunities fan-out. That fan-out is gone — the CRM opens the
+// opportunities itself from the submitted intake — and the constants went with
+// it rather than being left as vocabulary nothing speaks.
 
 // The book's existing line-of-business vocabulary. Matching it keeps the
 // pipeline from fragmenting into near-duplicate lines. Note the apostrophe in
@@ -106,80 +109,4 @@ export function buildProvenance({ source = null, needsReview = [], unclearOwner 
   if (unclearOwner) parts.push("Owner could not be determined from the line of business; assigned to Lamar Coates.");
   parts.push(...extra.filter(Boolean));
   return parts.join(" ");
-}
-
-function firstPresent(records, fieldName) {
-  for (const record of records) {
-    const hit = (record.fields ?? []).find((f) => f.field === fieldName && f.value != null && f.value !== "");
-    if (hit) return hit.value;
-  }
-  return null;
-}
-
-/**
- * Build one Hermes opportunity payload per line of business.
- *
- * @param {object} bundle an intake bundle carrying crm_records
- * @param {object} [options]
- * @param {string|null} [options.insuredId] NowCerts insured GUID, when known
- * @returns {{payloads: object[], skipped: object[]}}
- */
-export function toOpportunityPayloads(bundle, { insuredId = null } = {}) {
-  const records = Array.isArray(bundle?.crm_records) ? bundle.crm_records : [];
-  const opportunities = records.filter((r) => r.entity === "opportunity");
-  const accountRecords = records.filter((r) => r.entity === "account");
-
-  const insuredName = bundle?.client?.display_name ?? firstPresent(accountRecords, "account_name");
-  const accountType = firstPresent(accountRecords, "account_type");
-  const fein = firstPresent([...opportunities, ...accountRecords], "fein");
-  // An intake against an existing client is a cross-sell; a brand new prospect
-  // is new business.
-  const opportunityType = bundle?.client?.existing_client_id ? "Cross-selling" : "New Business";
-  const primarySource = bundle?.source_index?.[0] ?? null;
-
-  const payloads = [];
-  const skipped = [];
-
-  for (const record of opportunities) {
-    const rawLob = (record.fields ?? []).find((f) => f.field === "line_of_business")?.value ?? null;
-    const lineOfBusiness = canonicalLineOfBusiness(rawLob);
-    // Hermes requires a line of business, and the client identity. Without
-    // either there is nothing to open a pipeline record against.
-    if (!lineOfBusiness || !insuredName) {
-      skipped.push({
-        line_of_business: lineOfBusiness,
-        reason: !lineOfBusiness ? "NO_LINE_OF_BUSINESS" : "NO_INSURED_NAME",
-        needs_review: record.needs_review ?? [],
-      });
-      continue;
-    }
-
-    const { assigned_to: assignedTo, unclear } = assignOwner(lineOfBusiness, { accountType });
-    const get = (name) => (record.fields ?? []).find((f) => f.field === name)?.value ?? null;
-    const premium = get("current_premium") ?? get("premium_estimate");
-    const carrier = get("current_carrier");
-
-    // Only defined keys are added: Hermes treats an absent field as "not
-    // supplied", and sending null would look like a deliberate blank.
-    const payload = {
-      line_of_business: lineOfBusiness,
-      insured_name: insuredName,
-      opportunity_type: opportunityType,
-      assigned_to: assignedTo,
-      description: buildProvenance({
-        source: primarySource,
-        needsReview: record.needs_review ?? [],
-        unclearOwner: unclear,
-      }),
-      source: OPPORTUNITY_SOURCE,
-    };
-    if (fein) payload.fein = fein;
-    if (insuredId) payload.insured_id = insuredId;
-    if (premium != null && premium !== "") payload.premium_estimate = premium;
-    if (carrier) payload.carrier = carrier;
-
-    payloads.push(payload);
-  }
-
-  return { payloads, skipped };
 }
