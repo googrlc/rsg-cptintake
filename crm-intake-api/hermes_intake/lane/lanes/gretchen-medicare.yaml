@@ -1,0 +1,23 @@
+key: gretchen-medicare
+owner: gretchen
+label: "Gretchen's lane"
+sublabel: "Medicare"
+theme: teal
+accepted_doc_types:
+  - scope_of_appointment
+  - prior_policy
+  - dec_page
+  - drivers_license
+extraction_fields:
+  - xdate
+  - insured_name
+  - address
+  - phone
+  - current_carrier
+  - current_premium
+validators:
+  - xdate_present
+  - insured_name_present
+deliverables:
+  - kind: medicare_checklist
+    title: "Medicare intake checklist"

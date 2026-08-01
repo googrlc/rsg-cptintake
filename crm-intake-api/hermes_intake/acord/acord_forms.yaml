@@ -1,0 +1,92 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# ACORD form catalog — the extensible store of ACORDs and supplementals.
+#
+# This is "the place to store and add more accords and supplementals". To make a
+# new form selectable on the intake, add an entry here. No code change is needed
+# to *list, select, attach, and create the opportunity* for a form; a code change
+# (a filler module) is only needed to also produce its filled PDF.
+#
+# Fields:
+#   form_id            stable id (also the deliverable/selection key)
+#   title              human label shown in the selector
+#   role               base | lob | supplemental
+#                        base        — the ACORD 125 applicant hub, always included
+#                        lob         — a line of business (checks a 125 LOB box,
+#                                      creates an opportunity)
+#                        supplemental— an attachment/supplement (no opportunity)
+#   line_of_business   LineOfBusiness value for `lob` forms (drives the 125 box
+#                      + the opportunity); null for base/supplemental
+#   template_env       env var holding the licensed template path (null = shares
+#                      the combined 125/126 template or has no PDF filler yet)
+#   filler             deliverables module that fills the PDF (null = selectable
+#                      and attachable, but no PDF fill yet — check the box + make
+#                      the opportunity today, add the filler later)
+#   per_building       true = fill one copy per property location (ACORD 140)
+# ─────────────────────────────────────────────────────────────────────────────
+forms:
+  - form_id: acord_125
+    title: "ACORD 125 — Commercial Application"
+    role: base
+    line_of_business: null
+    template_env: HERMES_ACORD_125_126_TEMPLATE
+    filler: acord125
+    per_building: false
+
+  - form_id: acord_126
+    title: "ACORD 126 — General Liability"
+    role: lob
+    line_of_business: commercial_gl
+    template_env: HERMES_ACORD_125_126_TEMPLATE   # fills into the combined 125/126 PDF
+    filler: acord126
+    per_building: false
+
+  - form_id: acord_140
+    title: "ACORD 140 — Property"
+    role: lob
+    line_of_business: commercial_property
+    template_env: HERMES_ACORD_140_TEMPLATE
+    filler: acord140
+    per_building: true
+
+  - form_id: acord_130
+    title: "ACORD 130 — Workers Compensation"
+    role: lob
+    line_of_business: workers_comp   # standalone WC app; no 125 LOB box
+    template_env: HERMES_ACORD_130_TEMPLATE
+    filler: acord130
+    per_building: false
+
+  - form_id: acord_131
+    title: "ACORD 131 — Commercial Excess / Umbrella"
+    role: lob
+    line_of_business: commercial_umbrella   # checks the 125 Umbrella box
+    template_env: HERMES_ACORD_131_TEMPLATE
+    filler: acord131
+    per_building: false
+
+  # ── Add more below. Examples (no PDF filler yet — selectable + opportunity +
+  #    125 box today; add a filler module when you build the PDF): ──────────────
+  - form_id: acord_137
+    title: "ACORD 137 — Commercial Auto"
+    role: lob
+    line_of_business: commercial_auto    # checks the 125 Business Auto box
+    template_env: HERMES_ACORD_137_TEMPLATE
+    filler: acord137                      # applicant block only; vehicle/driver schedules pending
+    per_building: false
+
+  - form_id: acord_163
+    title: "ACORD 163 — Commercial Driver Schedule (supplemental)"
+    role: supplemental
+    line_of_business: null
+    template_env: HERMES_ACORD_163_TEMPLATE
+    filler: null       # driver/vehicle schedules are conveyed as an uploaded CSV attachment
+                       # (generate_pack schedule_attachments), not row-filled into the form
+    per_building: false
+
+  - form_id: acord_139
+    title: "ACORD 139 — Statement of Values (supplemental)"
+    role: supplemental
+    line_of_business: null
+    template_env: null
+    filler: null
+    per_building: false

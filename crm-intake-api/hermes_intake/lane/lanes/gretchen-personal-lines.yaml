@@ -1,0 +1,29 @@
+key: gretchen-personal-lines
+owner: gretchen
+label: "Gretchen's lane"
+sublabel: "Personal lines"
+theme: teal                      # teal = Gretchen, purple = Lamar
+accepted_doc_types:
+  - dec_page
+  - mvr
+  - drivers_license
+  - prior_policy
+  - recording
+extraction_fields:               # all must resolve via submission.FIELD_ALIASES
+  - xdate                        # ALWAYS first — highest-priority field
+  - insured_name
+  - address
+  - current_carrier
+  - current_premium
+  - vehicles
+  - drivers
+  - property_details
+validators:
+  - xdate_present                # blocking
+  - insured_name_present         # blocking
+  - premium_is_number            # warning
+deliverables:
+  - kind: quote_worksheet
+    title: "Quote worksheet"
+  - kind: carrier_shortlist
+    title: "Carrier shortlist"

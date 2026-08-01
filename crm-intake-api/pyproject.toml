@@ -1,0 +1,35 @@
+[project]
+name = "rsg-crm-intake-api"
+version = "0.1.0"
+description = "The CRM intake desk — leads, the intake queue, and agency-intake drafting"
+requires-python = ">=3.11,<4"
+
+dependencies = [
+  "rsg-hermes-core @ git+https://github.com/googrlc/rsg-hermes-core@5b7157dd6d7376882c8711b5d12a524eeae131fa",
+  "fastapi>=0.100.0",
+  "uvicorn>=0.23.0",
+  "python-multipart>=0.0.6",
+  "python-dotenv>=1.0.0",
+  "pyyaml>=6.0",
+  "pypdf>=4.0",
+  "pymupdf>=1.24",     # render scanned PDF pages for the vision OCR tier
+  "openpyxl>=3.1",
+  "reportlab==5.0.0",  # ACORD form rendering; pinned for reproducible images
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[project.scripts]
+rsg-crm-intake-api = "hermes_intake.service:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hermes_intake*"]
+
+[tool.setuptools.package-data]
+"hermes_intake.acord" = ["*.yaml", "*.json"]

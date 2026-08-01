@@ -1,0 +1,36 @@
+key: lamar-commercial
+owner: lamar
+label: "Lamar's lane"
+sublabel: "Commercial lines"
+theme: purple
+accepted_doc_types:
+  - dec_page
+  - acord
+  - loss_runs
+  - prior_policy
+  - financials
+extraction_fields:
+  - xdate                        # always first
+  - insured_name
+  - address
+  - current_carrier
+  - current_premium
+  - fein
+  - entity_type
+  - naics
+  - sic
+  - property_details
+validators:
+  - xdate_present                # blocking
+  - insured_name_present         # blocking
+  - address_present              # blocking
+  - current_carrier_present      # blocking
+deliverables:
+  # ACORD 125/126/140 are generated ON DEMAND via the selection model
+  # (deliverables/acord_selection.py), not auto-built here — the agent chooses
+  # which lines/forms to complete for the underwriter. This lane keeps the
+  # lightweight combined data sheet + carrier shortlist.
+  - kind: acord_data
+    title: "ACORD 125/126/140 data"
+  - kind: carrier_shortlist
+    title: "Carrier shortlist"

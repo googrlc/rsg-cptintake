@@ -1,0 +1,27 @@
+key: lamar-benefits
+owner: lamar
+label: "Lamar's lane"
+sublabel: "Group benefits"
+theme: purple
+accepted_doc_types:
+  - census
+  - sbc
+  - prior_policy
+  - dec_page
+extraction_fields:
+  - xdate
+  - insured_name
+  - address
+  - current_carrier
+  - current_premium
+  - fein
+  - entity_type
+validators:
+  - xdate_present
+  - insured_name_present
+  - current_carrier_present
+deliverables:
+  - kind: benefits_worksheet
+    title: "Group benefits worksheet"
+  - kind: carrier_shortlist
+    title: "Carrier shortlist"

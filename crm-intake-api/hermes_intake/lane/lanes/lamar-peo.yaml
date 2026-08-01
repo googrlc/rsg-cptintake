@@ -1,0 +1,25 @@
+key: lamar-peo
+owner: lamar
+label: "Lamar's lane"
+sublabel: "PEO"
+theme: purple
+accepted_doc_types:
+  - census
+  - payroll
+  - prior_policy
+  - dec_page
+extraction_fields:
+  - xdate
+  - insured_name
+  - address
+  - current_carrier
+  - current_premium
+  - fein
+  - entity_type
+validators:
+  - xdate_present
+  - insured_name_present
+  - current_carrier_present
+deliverables:
+  - kind: peo_worksheet
+    title: "PEO submission worksheet"
