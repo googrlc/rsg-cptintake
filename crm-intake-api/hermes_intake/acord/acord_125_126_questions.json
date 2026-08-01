@@ -1,0 +1,1042 @@
+[
+ {
+  "field": "F[0].P1[0].Policy_Status_QuoteIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the response expected from the company is a quote."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_IssueIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the response expected from the company is an issued policy."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_RenewIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the response expected from the company is a renewed policy."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_BoundIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the coverage has been bound."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_ChangeIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the policy is being submitted for a policy change."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_CancelIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the policy is being submitted for cancellation."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_EffectiveTimeAMIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the effective time of the policy status is before 12:00 pm."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Status_EffectiveTimePMIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the effective time of the policy status is 12:00 pm or later."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_BoilerAndMachineryIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Boiler & Machinery line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_BusinessAutoIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Business Auto line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_BusinessOwnersIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Business Owners line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_CommercialGeneralLiability_A[0]",
+  "page": 1,
+  "question": "Indicates that Commercial General Liability line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_CommercialInlandMarineIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Commercial Inland Marine line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_CommercialProperty_A[0]",
+  "page": 1,
+  "question": "Indicates that Commercial Property line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_CrimeIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Crime line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_CyberAndPrivacy_A[0]",
+  "page": 1,
+  "question": "Indicates that Cyber and Privacy line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_FiduciaryLiabilityIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Fiduciary Liability line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_GarageAndDealersIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Garage and Dealers line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_LiquorLiabilityIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Liquor Liability line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_MotorCarrierIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Motor Carrier line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_TruckersIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Truckers line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_UmbrellaIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Umbrella line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_YachtIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that Yacht line of business is being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_D[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_E[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_LineOfBusiness_OtherIndicator_F[0]",
+  "page": 1,
+  "question": "Indicates that lines of business other than those listed are being selected for coverage."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_AccountsReceivableValuablePapersIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Accounts Receivable /  Valuable Papers section is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_AdditionalInterestScheduleIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates ACORD 45, Additional Interest Schedule is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_AdditionalPremisesScheduleIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Additional Premises Information Schedule is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_ApartmentBuildingSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Apartment Building Supplement is attached."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_CondominiumAssociationByLawsIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the condominium association bylaws are attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_ContractorsSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Contractors Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_CoveragesScheduleIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a coverages schedule is attached."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_DealerIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Dealers Section is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_DriverInformationScheduleIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Driver Information Schedule is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_ElectronicDataProcessingIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Electronic Data Processing Section is attached to this application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_GlassAndSignIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Glass and Sign Section is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_HotelMotelSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Hotel / Motel Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_InstallationBuildersRiskIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Installation / Builder's Risk Section is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_InternationalLiabilityExposureSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an International Liability Exposure Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_InternationalPropertyExposureSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an International Property Exposure Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_LossSummaryIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that a loss summary report is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_OpenCargoIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates an Open Cargo Section is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_PremiumPaymentSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Premium Payment Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_ProfessionalLiabilitySupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Professional Liability Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_RestaurantTavernSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Restaurant / Tavern Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_StatementOfValuesIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Statement / Schedule of Values is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_StateSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates that a state supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_VacantBuildingSupplementIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Vacant Building Supplement is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_SectionAttached_VehicleScheduleIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates a Vehicle Schedule is attached to the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_D[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_E[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].CommercialPolicy_Attachment_OtherIndicator_F[0]",
+  "page": 1,
+  "question": "Indicates there is an attachment other than those listed on the application."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Payment_DirectBillIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the policy is to be direct billed."
+ },
+ {
+  "field": "F[0].P1[0].Policy_Payment_ProducerBillIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the policy is to be producer / agency billed."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_CorporationIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_IndividualIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Individual\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_JointVentureIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Joint Venture\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_LimitedLiabilityCorporationIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Limited Liability Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_NotForProfitIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Not For Profit Organization\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_PartnershipIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Partnership\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_SubchapterSCorporationIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Subchapter S Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_TrustIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Trust\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_OtherIndicator_A[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is other than those listed on the form."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_CorporationIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_IndividualIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Individual\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_JointVentureIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Joint Venture\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_LimitedLiabilityCorporationIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Limited Liability Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_NotForProfitIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Not For Profit Organization\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_PartnershipIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Partnership\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_SubchapterSCorporationIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Subchapter S Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_TrustIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Trust\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_OtherIndicator_B[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is other than those listed on the form."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_CorporationIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_IndividualIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Individual\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_JointVentureIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Joint Venture\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_LimitedLiabilityCorporationIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Limited Liability Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_NotForProfitIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Not For Profit Organization\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_PartnershipIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Partnership\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_SubchapterSCorporationIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Subchapter S Corporation\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_TrustIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is \"Trust\"."
+ },
+ {
+  "field": "F[0].P1[0].NamedInsured_LegalEntity_OtherIndicator_C[0]",
+  "page": 1,
+  "question": "Indicates the legal entity code for the named insured is other than those listed on the form."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryHomePhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a home phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryBusinessPhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a business phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryCellPhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a cell phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryHomePhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a home phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryBusinessPhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a business phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryCellPhoneIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a cell phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryHomePhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a home phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryBusinessPhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a business phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_PrimaryCellPhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's primary phone is a cell phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryHomePhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a home phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryBusinessPhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a business phone."
+ },
+ {
+  "field": "F[0].P2[0].NamedInsured_Contact_SecondaryCellPhoneIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the contact's secondary phone number is a cell phone."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_InsideCityLimitsIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the building is within the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OutsideCityLimitsIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the building is outside the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OtherIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the building is not inside nor outside city limits.  For example, unincorporated."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OwnerIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its owner."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_TenantIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its tenant."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OtherIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_InsideCityLimitsIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the building is within the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OutsideCityLimitsIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the building is outside the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OtherIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the building is not inside nor outside city limits.  For example, unincorporated."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OwnerIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its owner."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_TenantIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its tenant."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OtherIndicator_B[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_InsideCityLimitsIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the building is within the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OutsideCityLimitsIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the building is outside the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OtherIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the building is not inside nor outside city limits.  For example, unincorporated."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OwnerIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its owner."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_TenantIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its tenant."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OtherIndicator_C[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_InsideCityLimitsIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the building is within the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OutsideCityLimitsIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the building is outside the city limits."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_RiskLocation_OtherIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the building is not inside nor outside city limits.  For example, unincorporated."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OwnerIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its owner."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_TenantIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is as its tenant."
+ },
+ {
+  "field": "F[0].P2[0].CommercialStructure_InsuredInterest_OtherIndicator_D[0]",
+  "page": 2,
+  "question": "Indicates the named insured's interest in the building is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_ApartmentsIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is apartments."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_CondominiumsIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is condominiums."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_ContractorIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is a contractor."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_InstitutionalIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is institutional."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_ManufacturingIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is manufacturing."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_OfficeIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is an office."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_RestaurantIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is a restaurant."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_RetailIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is retail."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_ServiceIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is service."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_WholesaleIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is wholesale."
+ },
+ {
+  "field": "F[0].P2[0].BusinessInformation_BusinessType_OtherIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the nature of business is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_AdditionalInsuredIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is an additional insured."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_BreachOfWarrantyIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a breach of warranty."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_CoOwnerIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a co-owner."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_EmployeeAsLessorIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is an employee as lessor."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_LeasebackOwnerIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a leaseback owner."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_LendersLossPayableIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a lender's loss payable."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_LienholderIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a lien holder."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_LossPayeeIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a loss payee."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_MortgageeIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a mortgagee."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_OwnerIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is an owner."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_RegistrantIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a registrant."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_TrusteeIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest type is a trustee."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_Interest_OtherIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest is other than those listed."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_CertificateRequiredIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates if the additional interest requires a Certificate of Insurance."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_PolicyRequiredIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the additional interest requires a copy of the policy."
+ },
+ {
+  "field": "F[0].P2[0].AdditionalInterest_SendBillIndicator_A[0]",
+  "page": 2,
+  "question": "Indicates the bill should be sent to the additional interest."
+ },
+ {
+  "field": "F[0].P3[0].CommercialPolicy_FormalSafetyProgram_SafetyManualIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates a safety manual is part of the formal safety program."
+ },
+ {
+  "field": "F[0].P3[0].CommercialPolicy_FormalSafetyProgram_SafetyPositionIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates a safety position is part of the formal safety program."
+ },
+ {
+  "field": "F[0].P3[0].CommercialPolicy_FormalSafetyProgram_MonthlyMeetingsIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates monthly meetings are part of the formal safety program."
+ },
+ {
+  "field": "F[0].P3[0].CommercialPolicy_FormalSafetyProgram_OSHAIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the formal safety program meets OSHA guidelines."
+ },
+ {
+  "field": "F[0].P3[0].CommercialPolicy_FormalSafetyProgram_OtherIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates there is a formal safety program other than those listed."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_NonPaymentIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the policy is being cancelled due to non-payment of premium."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_NonRenewalIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the policy is being cancelled due to non-renewal."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_AgentNoLongerWritesForInsurerIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the policy is being cancelled because the agent is no longer writing business for the insurer."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_UnderwritingIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the policy is being cancelled due to underwriting reasons."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_UnderwritingConditionCorrectedIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the underwriting condition that caused the policy to not be written has been corrected."
+ },
+ {
+  "field": "F[0].P3[0].CancelNonRenew_OtherIndicator_A[0]",
+  "page": 3,
+  "question": "Indicates the policy is being cancelled due to reasons other than those listed."
+ },
+ {
+  "field": "F[0].P4[0].LossHistory_NoPriorLossesIndicator_A[0]",
+  "page": 4,
+  "question": "Indicates there are no prior losses or occurrences that may give rise to claims for the mandated number of years."
+ },
+ {
+  "field": "F[0].P4[0].Policy_InformationPracticesNoticeIndicator_A[0]",
+  "page": 4,
+  "question": "Indicates that a copy of the Notice of Information Practices (ACORD 38 or state specific ACORD 38) has been given to the applicant.  State specific 38s are available for applicants in AZ, DE, KS, MN, ND, NY, OR, VA, and WV.  In addition, ACORD 38 contains CA and MA state specific language."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_CoverageIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the claims made or occurrence option applies for the general liability policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_ClaimsMadeIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the \"claims made\" option applies on the general liability policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_OccurrenceIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the general liability policy, occurrence basis applies."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_OwnersAndContractorsProtectiveIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the owners and contractors protective option applies for the general liability policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_OtherCoverageIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates other coverage not found on the form exists for the general liability policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_PropertyDamage_DeductibleIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates if a property damage deductible is requested."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_BodilyInjury_DeductibleIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates if a bodily injury deductible is requested."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_OtherDeductibleIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that a deductible is requested on the coverage other than Property Damage or Bodily Injury."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_DeductiblePerClaimIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that a per claim deductible applies to individual claims even if the claims are all related to the same occurrence or event."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_DeductiblePerOccurrenceIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that a per occurrence deductible applies once to each occurrence no matter how many individual claims result from the occurrence or event."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_GeneralAggregate_LimitAppliesPerPolicyIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the general liability policy, general aggregate limit applies per policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_GeneralAggregate_LimitAppliesPerProjectIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the general liability policy, general aggregate limit applies per project."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_GeneralAggregate_LimitAppliesPerLocationIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the general liability policy, general aggregate limit applies per location."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_GeneralAggregate_LimitAppliesToOtherIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates the general liability policy, general aggregate limit applies to option is other than those listed on the form."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_UninsuredUnderinsuredMotorists_CoverageAvailableIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates if uninsured/underinsured motorist coverage is to be provided under the policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_UninsuredUnderinsuredMotorists_CoverageAvailableNoIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that  uninsured/underinsured motorist coverage is not  to be provided under the policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_MedicalPayments_CoverageAvailableIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that medical payment coverage is to be provided under the policy."
+ },
+ {
+  "field": "F[0].P5[0].GeneralLiability_MedicalPayments_CoverageAvailableNoIndicator_A[0]",
+  "page": 5,
+  "question": "Indicates that medical payment coverage is not to be provided under the policy."
+ },
+ {
+  "field": "F[0].P7[0].GeneralLiabilityLineOfBusiness_Attachment_AdditionalInterestIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates that further additional interests appear on the attached ACORD 45."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_AdditionalInsuredIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is an additional insured."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_EmployeeAsLessorIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is an employee as lessor."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_LendersLossPayableIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is a lender's loss payable."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_LienholderIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is a lien holder."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_LossPayeeIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is a loss payee."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_MortgageeIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest type is a mortgagee."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_Interest_OtherIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the additional interest is other than those listed."
+ },
+ {
+  "field": "F[0].P7[0].AdditionalInterest_CertificateRequiredIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates if the additional interest requires a Certificate of Insurance."
+ },
+ {
+  "field": "F[0].P7[0].CommercialInlandMarineProperty_PropertySubClass_SmallToolsIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the subclass / grouping of property into which the item falls is small tools."
+ },
+ {
+  "field": "F[0].P7[0].CommercialInlandMarineProperty_PropertySubClass_LargeEquipmentIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the subclass / grouping of property into which the item falls is large equipment."
+ },
+ {
+  "field": "F[0].P7[0].CommercialInlandMarineProperty_PropertySubClass_SmallToolsIndicator_B[0]",
+  "page": 7,
+  "question": "Indicates the subclass / grouping of property into which the item falls is small tools."
+ },
+ {
+  "field": "F[0].P7[0].CommercialInlandMarineProperty_PropertySubClass_LargeEquipmentIndicator_B[0]",
+  "page": 7,
+  "question": "Indicates the subclass / grouping of property into which the item falls is large equipment."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_ApprovedFenceIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the swimming pool is surrounded by a fence that is an approved height."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_LimitedAccessIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates there is limited access to the swimming pool."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_DivingBoardIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the swimming pool has a diving board."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_SlideIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the swimming pool has a slide."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_AboveGroundIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the swimming pool is above ground."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_InGroundIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the swimming pool is in the ground."
+ },
+ {
+  "field": "F[0].P7[0].SwimmingPool_LifeGuardIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates there is life guard for the swimming pool."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_TwelveAndUnderIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are 12 years old or under."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_ThirteenThroughEighteenIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are 13 through 18 years old."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_OverEighteenIndicator_A[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are over 18 years old."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_TwelveAndUnderIndicator_B[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are 12 years old or under."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_ThirteenThroughEighteenIndicator_B[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are 13 through 18 years old."
+ },
+ {
+  "field": "F[0].P7[0].AthleticTeam_AgeGroup_OverEighteenIndicator_B[0]",
+  "page": 7,
+  "question": "Indicates the sport participants are over 18 years old."
+ }
+]

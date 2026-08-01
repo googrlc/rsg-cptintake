@@ -1,0 +1,210 @@
+<!--
+  HERMES COMMAND CENTER — Intake lane (new CC).
+  Drop a submission + its docs -> extract -> review-gate -> approve -> download.
+  Served at /api/command-center/intake/page; talks to /api/command-center/intake/*.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Solutions Group — Intake</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23142e37'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23fff' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#faf8f2; --panel:#ffffff; --border:#eae6db; --border-soft:#f0ece2;
+    --text:#17271f; --ink-soft:#3b4a43; --muted:#8a938d; --muted-2:#9aa39d;
+    --teal:#1f7a5f; --teal-soft:#e9f1ec; --green:#2f7d5c; --red:#b0442f; --amber:#b6862a;
+    --radius:11px; --inset:#f6f3ea; --sidebar:#142e37;
+    --mono:ui-monospace,Menlo,monospace;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding:22px 18px 60px}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .logo{width:36px;height:36px;border-radius:9px;background:var(--sidebar);display:grid;place-items:center;font-weight:700;color:#fff;font-size:20px;font-family:var(--serif)}
+  .brandwrap{display:flex;flex-direction:column;gap:1px}
+  .brandname{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .top h1{font-family:var(--serif);font-size:20px;font-weight:600}.top h1 small{display:block;font-size:11px;color:var(--muted);font-weight:400;font-family:var(--sans)}
+  .grid{display:grid;grid-template-columns:340px 1fr;gap:18px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .lbl{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  label{display:block;font-size:11px;color:var(--muted);margin:10px 0 4px}
+  input,select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;color:var(--text);padding:9px 11px;font-family:var(--sans);font-size:13px}
+  input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px #1f7a5f1a}
+  .drop{margin-top:12px;border:1.5px dashed var(--border);border-radius:10px;padding:22px 12px;text-align:center;color:var(--muted);cursor:pointer;font-size:12px}
+  .drop.over{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+  .files{margin-top:8px;font-size:11px;color:var(--muted);font-family:var(--mono)}
+  .btn{margin-top:14px;width:100%;padding:11px;border:none;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans);background:var(--teal);color:#fff}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:#f1ede3;color:var(--ink-soft);border:1px solid var(--border)}
+  .btn.go{background:var(--green);color:#fff}
+  .row{display:flex;gap:8px;align-items:center}
+  .sub{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+  .sh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .sh .nm{flex:1;font-weight:600;font-size:14px}
+  .pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .pill.building{background:#b6862a1a;color:var(--amber)}
+  .pill.blocked{background:#b0442f14;color:var(--red)}
+  .pill.review{background:#2f6f8f14;color:#2f6f8f}
+  .pill.ready{background:#2f7d5c14;color:var(--green)}
+  .meta{font-size:10px;color:var(--muted-2);font-family:var(--mono);margin-bottom:8px}
+  .flag{display:flex;gap:8px;align-items:center;background:var(--inset);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:7px;padding:8px 10px;margin:6px 0}
+  .flag.warn{border-left-color:var(--amber)}
+  .flag .fx{flex:1;font-size:12px}
+  .flag .fx small{display:block;color:var(--muted-2);font-size:10px}
+  .flag input{width:150px;padding:6px 8px}
+  .delivs{margin-top:8px;font-size:11px;color:var(--muted)}
+  .delivs span{display:inline-block;background:#f1ede3;border:1px solid var(--border);border-radius:5px;padding:2px 7px;margin:3px 4px 0 0;color:var(--teal)}
+  .actions{display:flex;gap:8px;margin-top:10px}
+  .actions .btn{margin-top:0;flex:1}
+  .empty{color:var(--muted);text-align:center;padding:26px 0;font-size:12.5px}
+  .note{font-size:10.5px;color:var(--muted-2);margin-top:8px;line-height:1.5}
+  .err{color:var(--red);font-size:11.5px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">R</div>
+    <div class="brandwrap">
+      <div class="brandname">Risk Solutions Group</div>
+      <h1>Intake<small id="lanesub">Gretchen · Personal lines</small></h1>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- new submission -->
+    <div>
+      <div class="card">
+        <div class="lbl">New submission</div>
+        <label>Lane</label>
+        <select id="lane"></select>
+        <label>Client name</label>
+        <input id="client" placeholder="e.g. Jane Roe" />
+        <div class="drop" id="drop">⬆ Drop dec page / docs here, or click to choose
+          <div class="files" id="filelist"></div>
+        </div>
+        <input type="file" id="fileinput" multiple style="display:none" />
+        <button class="btn" id="submit" onclick="submitNew()">Create &amp; extract</button>
+        <div class="err" id="newerr"></div>
+        <div class="note">Files upload to private storage. Extraction is automatic; whatever it can't read gets flagged for you below — nothing leaves unreviewed.</div>
+      </div>
+    </div>
+
+    <!-- queue -->
+    <div>
+      <div class="row" style="margin-bottom:10px">
+        <div class="lbl" style="margin:0;flex:1">Queue</div>
+        <span class="btn ghost" style="width:auto;margin:0;padding:6px 12px" onclick="loadQueue()">↻ Refresh</span>
+      </div>
+      <div id="queue"><div class="empty">Loading…</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "/api/command-center/intake";
+let LANES = [], chosen = [];
+
+const pill = (s, blocking) => {
+  if (s === "approved" || s === "delivered") return ["ready", "✅ ready"];
+  if (s === "in_review") return blocking ? ["blocked", "⛔ needs info"] : ["review", "🟠 ready to approve"];
+  return ["building", "🟡 building"];
+};
+const esc = (s) => (s == null ? "" : String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+async function jget(u){ const r = await fetch(u); if(!r.ok) throw new Error((await r.json().catch(()=>({}))).detail || ("HTTP "+r.status)); return r.json(); }
+async function jpost(u,b){ const r = await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}); const d = await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.detail||("HTTP "+r.status)); return d; }
+
+async function loadLanes(){
+  const d = await jget(API + "/lanes");
+  LANES = d.lanes;
+  const sel = document.getElementById("lane");
+  sel.innerHTML = LANES.map(l => `<option value="${l.key}">${esc(l.label)} — ${esc(l.sublabel||"")}</option>`).join("");
+}
+
+// drag/drop
+const drop = document.getElementById("drop"), fi = document.getElementById("fileinput");
+drop.onclick = () => fi.click();
+fi.onchange = () => setFiles([...fi.files]);
+["dragover","dragenter"].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.add("over");}));
+["dragleave","drop"].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.remove("over");}));
+drop.addEventListener("drop", ev => setFiles([...ev.dataTransfer.files]));
+function setFiles(fs){ chosen = fs; document.getElementById("filelist").textContent = fs.length ? fs.map(f=>f.name).join(", ") : ""; }
+
+async function submitNew(){
+  const err = document.getElementById("newerr"); err.textContent = "";
+  const lane = document.getElementById("lane").value;
+  const client = document.getElementById("client").value.trim();
+  if(!client){ err.textContent = "Client name is required."; return; }
+  const btn = document.getElementById("submit"); btn.disabled = true; btn.textContent = "Creating…";
+  try{
+    const sub = await jpost(API + "/submissions", {lane, client_name: client});
+    if(chosen.length){
+      btn.textContent = "Uploading + extracting…";
+      const fd = new FormData(); chosen.forEach(f => fd.append("files", f));
+      const r = await fetch(`${API}/submissions/${sub.id}/files`, {method:"POST", body: fd});
+      if(!r.ok) throw new Error((await r.json().catch(()=>({}))).detail || ("upload HTTP "+r.status));
+    }
+    document.getElementById("client").value = ""; setFiles([]);
+    await loadQueue();
+  }catch(e){ err.textContent = "⚠ " + e.message; }
+  finally{ btn.disabled = false; btn.textContent = "Create & extract"; }
+}
+
+async function loadQueue(){
+  const el = document.getElementById("queue");
+  try{
+    const d = await jget(API + "/submissions");
+    if(!d.submissions.length){ el.innerHTML = '<div class="empty">No submissions yet.</div>'; return; }
+    el.innerHTML = d.submissions.map(renderSub).join("");
+  }catch(e){ el.innerHTML = '<div class="err">⚠ '+e.message+'</div>'; }
+}
+
+function renderSub(s){
+  const flags = s.flags || [];
+  const blocking = flags.filter(f => f.severity === "blocking");
+  const [cls, label] = pill(s.status, blocking.length > 0);
+  const lane = LANES.find(l => l.key === s.lane);
+  const flagHtml = flags.map(f =>
+    `<div class="flag ${f.severity==='warning'?'warn':''}">
+       <span class="fx">${esc(f.message)}<small>field: ${esc(f.field)}</small></span>
+       ${f.severity==='blocking' ? `<input id="fx-${s.id}-${f.field}" placeholder="${f.field==='xdate'?'YYYY-MM-DD':'value'}">` : ''}
+     </div>`).join("");
+  const fixBtn = blocking.length ? `<button class="btn ghost" style="margin-top:8px" onclick="saveFixes('${s.id}', ${JSON.stringify(blocking.map(f=>f.field)).replace(/"/g,'&quot;')})">Save fixes &amp; re-check</button>` : "";
+  const approved = s.status === "approved" || s.status === "delivered";
+  return `<div class="sub" id="sub-${s.id}">
+    <div class="sh"><span class="nm">${esc(s.client_name)}</span><span class="pill ${cls}">${label}</span></div>
+    <div class="meta">${esc(s.lane)} · ${esc((s.created_by||''))} · ${esc((s.updated_at||'').slice(0,16).replace('T',' '))}</div>
+    ${flagHtml}${fixBtn}
+    ${lane ? `<div class="delivs">Deliverables: ${lane.deliverables.map(d=>`<span>${esc(d)}</span>`).join("")}</div>` : ""}
+    <div class="actions">
+      <button class="btn go" ${blocking.length||approved?'disabled':''} onclick="approve('${s.id}')">Approve all</button>
+      <button class="btn" ${approved?'':'disabled'} onclick="location.href='${API}/submissions/${s.id}/download'">↓ Download .zip</button>
+    </div>
+    <div class="note">Download &amp; CRM push unlock only after review — nothing leaves unreviewed.</div>
+    <div class="err" id="err-${s.id}"></div>
+  </div>`;
+}
+
+async function saveFixes(id, fields){
+  const updates = {};
+  fields.forEach(f => { const v = document.getElementById(`fx-${id}-${f}`)?.value.trim(); if(v) updates[f] = v; });
+  if(!Object.keys(updates).length){ document.getElementById("err-"+id).textContent = "Enter at least one value."; return; }
+  try{ await jpost(`${API}/submissions/${id}/fields`, {updates}); await loadQueue(); }
+  catch(e){ document.getElementById("err-"+id).textContent = "⚠ " + e.message; }
+}
+
+async function approve(id){
+  try{ await jpost(`${API}/submissions/${id}/approve`, {}); await loadQueue(); }
+  catch(e){ document.getElementById("err-"+id).textContent = "⚠ " + e.message; }
+}
+
+(async () => { try{ await loadLanes(); }catch(e){} await loadQueue(); })();
+</script>
+</body>
+</html>
