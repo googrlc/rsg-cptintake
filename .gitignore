@@ -5,6 +5,12 @@
 node_modules/
 npm-debug.log*
 
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+*.pyc
+
 # Env / secrets — never commit
 .env
 .env.*
