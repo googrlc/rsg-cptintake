@@ -174,6 +174,14 @@ export class HermesPreviewClient {
     }
     return this.#post("/api/intake", payload, { extraHeaders: { "x-rsg-api-key": this.intakeKey } });
   }
+  /**
+   * Audit an AMS write on the Hermes write_in core (portal_write_log + queue).
+   * Path lives on the NowCerts core instance (HERMES_API_URL / write_in).
+   */
+  async recordAmsWrite(payload) {
+    return this.#post("/api/ams/intake-write-log", payload);
+  }
+
 
   async researchBusiness(query) {
     const result = await this.#post("/dispatch", { command: `research business ${query}`, confirm: false });

@@ -862,7 +862,24 @@ const httpServer = createServer(async (req, res) => {
         readClient: nowcertsReader,
         override,
         intakeNote,
+        hermesClient: hermesPreview,
       });
+      // Stamp the NowCerts GUID onto the intake bundle so CRM writes key on it.
+      if (result?.receipt?.insured_database_id && record.intake_id) {
+        try {
+          const bundle = await intakeStore.get(record.intake_id);
+          if (bundle) {
+            bundle.client = {
+              ...(bundle.client ?? {}),
+              nowcerts_insured_guid: result.receipt.insured_database_id,
+              intended_operation: result.status === "ADOPTED" ? "update" : (bundle.client?.intended_operation ?? "create"),
+            };
+            await intakeStore.save(bundle);
+          }
+        } catch (error) {
+          console.warn("failed to stamp NowCerts GUID on intake bundle", error?.message ?? error);
+        }
+      }
       const code = result.ok
         ? 200
         : result.status === "NOT_FOUND"

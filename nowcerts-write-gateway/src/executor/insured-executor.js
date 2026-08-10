@@ -1,3 +1,5 @@
+import { notifyHermesAmsWrite } from "../connectors/hermes-audit.js";
+
 // Guarded live-write executor for insured create — the "Send to AMS" action.
 // Runs ONLY on a reviewed + approved (SHADOW_APPROVED), fingerprinted proposal.
 // Sequence: pre-write duplicate reread -> idempotency guard -> single commit ->
@@ -41,6 +43,64 @@ export function classifyMatch(candidateName, targetName) {
   if (canonCandidate === canonTarget) return "LIKELY";
   if (canonCandidate.includes(canonTarget) || canonTarget.includes(canonCandidate)) return "LIKELY";
   return "NONE";
+}
+
+
+export function candidateEmail(candidate) {
+  return normalizeValue(
+    candidate.email ?? candidate.eMail ?? candidate.EMail ?? candidate.Email ?? ""
+  );
+}
+
+export function candidateDob(candidate) {
+  const raw = candidate.dateOfBirth ?? candidate.DateOfBirth ?? candidate.dob ?? candidate.DOB ?? "";
+  if (!raw) return "";
+  // Compare on YYYY-MM-DD when possible.
+  const s = String(raw).trim();
+  const m = s.match(/(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : normalizeValue(s);
+}
+
+export function proposalEmail(fields) {
+  return normalizeValue(fields.eMail ?? fields.email ?? fields.Email ?? "");
+}
+
+export function proposalDob(fields) {
+  const raw = fields.dateOfBirth ?? fields.DateOfBirth ?? fields.dob ?? "";
+  if (!raw) return "";
+  const s = String(raw).trim();
+  const m = s.match(/(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : normalizeValue(s);
+}
+
+/**
+ * Pre-create existence check: adopt an existing GUID when name matches AND
+ * (email or DOB) matches. Name-only near matches still require DUPLICATE_REVIEW.
+ */
+export function findAdoptableMatch(candidates, fields) {
+  const commercialName = fields.commercialName;
+  const email = proposalEmail(fields);
+  const dob = proposalDob(fields);
+  const scored = [];
+  for (const candidate of candidates ?? []) {
+    const name = candidate.commercialName ?? candidate.CommercialName ?? candidate.name ?? "";
+    const match = classifyMatch(name, commercialName);
+    if (match === "NONE") continue;
+    const row = {
+      database_id: String(candidate.databaseId ?? candidate.DatabaseId ?? candidate.id ?? ""),
+      name: String(name),
+      match,
+      email: candidateEmail(candidate),
+      dob: candidateDob(candidate),
+    };
+    const emailHit = Boolean(email && row.email && email === row.email);
+    const dobHit = Boolean(dob && row.dob && dob === row.dob);
+    if ((match === "EXACT" || match === "LIKELY") && (emailHit || dobHit) && row.database_id) {
+      return { adopt: row, reason: emailHit ? "name+email" : "name+dob", matches: scored };
+    }
+    scored.push(row);
+  }
+  return { adopt: null, reason: null, matches: scored };
 }
 
 export function extractInsuredFields(changes = []) {
@@ -100,7 +160,22 @@ async function persistCommit(store, record, liveReceipt, status) {
   });
 }
 
-export async function commitApprovedInsured({ record, store, writeClient, readClient, override = false, intakeNote = null, now = () => new Date().toISOString() }) {
+
+async function auditHermes(hermesClient, receipt, record, operation) {
+  if (!receipt?.insured_database_id) return null;
+  return notifyHermesAmsWrite(hermesClient, {
+    object_type: "client",
+    object_id: receipt.insured_database_id,
+    action: operation,
+    approved_by: receipt.committed_by ?? record.proposal?.actor ?? null,
+    fingerprint: record.fingerprint,
+    adopted: Boolean(receipt.adopted),
+    verified: Boolean(receipt.verified),
+    source: "cptintake_gateway",
+  });
+}
+
+export async function commitApprovedInsured({ record, store, writeClient, readClient, override = false, intakeNote = null, hermesClient = null, now = () => new Date().toISOString() }) {
   if (!record) return { ok: false, status: "NOT_FOUND", message: "Proposal not found." };
 
   // Idempotency: a completed live write is never repeated.
@@ -125,26 +200,38 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
   const commercialName = fields.commercialName;
   if (!commercialName) return { ok: false, status: "INVALID", message: "Proposal is missing commercialName; cannot send." };
 
-  // 1) Pre-write duplicate reread — do not create a second record for a client
-  //    that already exists (or was added since the preview).
+  // 1) Pre-write existence check — adopt an existing GUID on name+email/DOB,
+  //    otherwise ask on name-only near matches, otherwise create.
   let candidates;
   try {
     candidates = await readClient.searchInsureds(commercialName, 10);
   } catch (error) {
     return { ok: false, status: "REREAD_FAILED", message: `Pre-write duplicate check failed; nothing was written: ${error.message}` };
   }
-  const matches = (candidates ?? [])
-    .map((candidate) => {
-      const name = candidate.commercialName ?? candidate.CommercialName ?? candidate.name ?? "";
-      return {
-        database_id: String(candidate.databaseId ?? candidate.DatabaseId ?? candidate.id ?? ""),
-        name: String(name),
-        match: classifyMatch(name, commercialName),
-      };
-    })
-    .filter((candidate) => candidate.match !== "NONE");
-  // Near/exact match -> ask the operator to confirm rather than silently
-  // creating a duplicate or hard-blocking. Confirming re-sends with override.
+  const { adopt, reason: adoptReason, matches } = findAdoptableMatch(candidates, fields);
+  if (adopt) {
+    const idempotencyKey = `insured-adopt:${adopt.database_id}:${record.fingerprint}`;
+    const receipt = buildLiveReceipt({
+      record,
+      insuredId: adopt.database_id,
+      idempotencyKey,
+      verified: true,
+      nowIso: now(),
+      note: `Adopted existing NowCerts insured (${adoptReason}).`,
+    });
+    receipt.adopted = true;
+    receipt.adopt_reason = adoptReason;
+    await persistCommit(store, record, receipt, "COMMITTED_VERIFIED");
+    const hermes_audit = await auditHermes(hermesClient, receipt, record, "adopt");
+    return {
+      ok: true,
+      status: "ADOPTED",
+      message: `Adopted existing NowCerts insured ${adopt.database_id} (${adoptReason}); no duplicate create.`,
+      receipt,
+      matches: [adopt],
+      hermes_audit,
+    };
+  }
   if (matches.length && !override) {
     return {
       ok: false,
@@ -213,6 +300,7 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
 
   const receipt = buildLiveReceipt({ record, insuredId, idempotencyKey, verified, mismatches, nowIso: now(), noteAttached, noteError });
   await persistCommit(store, record, receipt, verified ? "COMMITTED_VERIFIED" : "COMMITTED_MISMATCH");
+  const hermes_audit = await auditHermes(hermesClient, receipt, record, "create");
   const noteSuffix = noteAttached ? " Risk assessment note attached." : noteAttached === false ? " (Note attach failed — add it manually.)" : "";
   return {
     ok: verified,
@@ -221,5 +309,6 @@ export async function commitApprovedInsured({ record, store, writeClient, readCl
       ? `Created and verified in NowCerts (insured ${insuredId}).${noteSuffix}`
       : `Created (${insuredId}) but ${mismatches.length} field(s) did not match on read-back: ${mismatches.join(", ")}. Verify manually.${noteSuffix}`,
     receipt,
+    hermes_audit,
   };
 }

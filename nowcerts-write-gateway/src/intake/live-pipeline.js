@@ -1,4 +1,5 @@
 import { resolveFieldContract } from "../contracts/nowcerts-field-contracts.js";
+import { classifyFieldOwner, OWNER_AMS, partitionByOwner } from "./field-owners.js";
 import { buildCrmRecords } from "./crm-records.js";
 
 function asList(value) {
@@ -68,7 +69,7 @@ function amsCandidates(payload, bundle) {
       unsupported.push({ field, value, citation: sourceCitation(bundle), reason: `No ${bundle.client.intended_operation} + read-back contract is certified for this field.` });
       continue;
     }
-    amsFields.push({ field, current: null, value, citation: sourceCitation(bundle), contract_status: contract.schema_status, contract });
+    amsFields.push({ field, current: null, value, citation: sourceCitation(bundle), contract_status: contract.schema_status, contract, owner: classifyFieldOwner(field) });
   }
   return { amsFields, unsupported };
 }
@@ -138,7 +139,19 @@ export function applyHermesPreview(bundle, draft, research = null, pdfWarnings =
     // they later chose to, via the three explicit steps (propose -> approve ->
     // commit). An intake never takes that path on its own: a prospect is not a
     // record of insurance, and the insured reaches the AMS when a deal is won.
-    routing: { ...bundle.routing, ams_fields: amsFields, assessment_only: assessmentOnly, missing_items: missing },
+    routing: {
+      ...bundle.routing,
+      ams_fields: amsFields,
+      crm_fields: opportunities.map((item) => ({
+        field: "Opportunity.LineOfBusiness",
+        value: item.line_of_business,
+        stage: item.stage ?? null,
+        citation: source,
+        owner: "crm",
+      })).filter((item) => item.value),
+      assessment_only: assessmentOnly.map((item) => ({ ...item, owner: item.owner ?? "assessment" })),
+      missing_items: missing,
+    },
     crm_records: crmRecords,
     // Set by the caller once the submission is attempted (bundle.crm). Left as
     // PENDING here so a bundle that never reached the submit step is visibly
