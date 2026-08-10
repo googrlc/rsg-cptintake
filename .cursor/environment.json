@@ -1,0 +1,18 @@
+{
+  "name": "rsg-cptintake",
+  "install": "bash /agent/repos/rsg-cptintake/.cursor/install.sh",
+  "terminals": [
+    {
+      "name": "intake-gate",
+      "command": "cd /agent/repos/rsg-cptintake/nowcerts-write-gateway && GATEWAY_MODE=shadow HOST=127.0.0.1 PORT=8787 npm start"
+    },
+    {
+      "name": "nowcerts-read-connector",
+      "command": "cd /agent/repos/rsg-cptintake/nowcerts-read-connector && python3 -m uvicorn app:app --host 127.0.0.1 --port 8082"
+    }
+  ],
+  "ports": [
+    { "name": "intake-gate", "port": 8787 },
+    { "name": "nowcerts-read-connector", "port": 8082 }
+  ]
+}
