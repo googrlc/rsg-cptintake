@@ -32,6 +32,7 @@ import { FemaFloodClient } from "./connectors/fema-flood-client.js";
 import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
 import { lookupPropertyProfile } from "./intake/property-lookup.js";
 import { attachClassification, lookupCode, searchCodes, REFERENCE_TYPES } from "./intake/reference-classifier.js";
+import { listPicklist, PICKLIST_TYPES } from "./reference/picklists.js";
 import { submitToCrm } from "./intake/crm-writer.js";
 import { buildCrmSubmission } from "./intake/crm-submission.js";
 
@@ -571,6 +572,17 @@ const httpServer = createServer(async (req, res) => {
     sendJson(res, 200, searchCodes(type, q, { limit }));
     return;
   }
+    if (req.method === "GET" && url.pathname.startsWith("/api/reference/picklists/")) {
+    const listKey = url.pathname.slice("/api/reference/picklists/".length);
+    const options = listPicklist(listKey);
+    if (!options) {
+      sendJson(res, 404, { error: `Unknown picklist. Use one of: ${PICKLIST_TYPES.join(", ")}` });
+      return;
+    }
+    sendJson(res, 200, { list_key: listKey, options, count: options.length });
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/api/reference/validate") {
     const type = url.searchParams.get("type");
     const code = url.searchParams.get("code") ?? "";
@@ -862,7 +874,24 @@ const httpServer = createServer(async (req, res) => {
         readClient: nowcertsReader,
         override,
         intakeNote,
+        hermesClient: hermesPreview,
       });
+      // Stamp the NowCerts GUID onto the intake bundle so CRM writes key on it.
+      if (result?.receipt?.insured_database_id && record.intake_id) {
+        try {
+          const bundle = await intakeStore.get(record.intake_id);
+          if (bundle) {
+            bundle.client = {
+              ...(bundle.client ?? {}),
+              nowcerts_insured_guid: result.receipt.insured_database_id,
+              intended_operation: result.status === "ADOPTED" ? "update" : (bundle.client?.intended_operation ?? "create"),
+            };
+            await intakeStore.save(bundle);
+          }
+        } catch (error) {
+          console.warn("failed to stamp NowCerts GUID on intake bundle", error?.message ?? error);
+        }
+      }
       const code = result.ok
         ? 200
         : result.status === "NOT_FOUND"

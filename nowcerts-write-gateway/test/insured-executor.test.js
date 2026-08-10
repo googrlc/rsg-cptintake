@@ -185,3 +185,47 @@ test("field helpers", () => {
   assert.equal(normalizeValue("  Acme   Welding  "), "acme welding");
   assert.deepEqual(extractInsuredFields([{ field: "city", proposed: "Dayton" }]), { city: "Dayton" });
 });
+
+test("name+email match adopts existing GUID — no insert", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  const readClient = {
+    async searchInsureds() {
+      return [{ databaseId: "EXISTING-42", commercialName: "Acme Welding LLC", eMail: "ops@acme.test" }];
+    },
+  };
+  const record = approvedRecord({
+    proposal: {
+      actor: "gretchen",
+      entity_type: "insured",
+      operation: "create",
+      changes: [
+        { field: "commercialName", proposed: "Acme Welding LLC" },
+        { field: "addressLine1", proposed: "123 Industrial Way" },
+        { field: "city", proposed: "Dayton" },
+        { field: "state", proposed: "OH" },
+        { field: "zipCode", proposed: "45402" },
+        { field: "eMail", proposed: "ops@acme.test" },
+      ],
+    },
+  });
+
+  const result = await commitApprovedInsured({ record, store, writeClient, readClient, now: NOW });
+  assert.equal(result.status, "ADOPTED");
+  assert.equal(result.receipt.insured_database_id, "EXISTING-42");
+  assert.equal(result.receipt.adopted, true);
+  assert.equal(writeClient.calls.length, 0, "must not create a duplicate");
+});
+
+test("name-only near match without email/dob still asks for confirmation", async () => {
+  const store = makeStore();
+  const writeClient = makeWriteClient();
+  const readClient = {
+    async searchInsureds() {
+      return [{ databaseId: "EXISTING-9", commercialName: "Acme Welding" }];
+    },
+  };
+  const result = await commitApprovedInsured({ record: approvedRecord(), store, writeClient, readClient, now: NOW });
+  assert.equal(result.status, "DUPLICATE_REVIEW");
+  assert.equal(writeClient.calls.length, 0);
+});
