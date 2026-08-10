@@ -32,6 +32,7 @@ import { FemaFloodClient } from "./connectors/fema-flood-client.js";
 import { protectionClassClientFromEnv, replacementCostClientFromEnv } from "./connectors/property-risk-clients.js";
 import { lookupPropertyProfile } from "./intake/property-lookup.js";
 import { attachClassification, lookupCode, searchCodes, REFERENCE_TYPES } from "./intake/reference-classifier.js";
+import { listPicklist, PICKLIST_TYPES } from "./reference/picklists.js";
 import { submitToCrm } from "./intake/crm-writer.js";
 import { buildCrmSubmission } from "./intake/crm-submission.js";
 
@@ -571,6 +572,17 @@ const httpServer = createServer(async (req, res) => {
     sendJson(res, 200, searchCodes(type, q, { limit }));
     return;
   }
+    if (req.method === "GET" && url.pathname.startsWith("/api/reference/picklists/")) {
+    const listKey = url.pathname.slice("/api/reference/picklists/".length);
+    const options = listPicklist(listKey);
+    if (!options) {
+      sendJson(res, 404, { error: `Unknown picklist. Use one of: ${PICKLIST_TYPES.join(", ")}` });
+      return;
+    }
+    sendJson(res, 200, { list_key: listKey, options, count: options.length });
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/api/reference/validate") {
     const type = url.searchParams.get("type");
     const code = url.searchParams.get("code") ?? "";
